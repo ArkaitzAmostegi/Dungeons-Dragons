@@ -2,11 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Character extends Model
 {
-    //Relaciones con tablas use, race, profile y campaign
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'race_id',
+        'name',
+        'level',
+        'class',
+        'description',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -30,5 +41,4 @@ class Character extends Model
             ->withPivot('joined_at')
             ->withTimestamps();
     }
-
 }

@@ -1,0 +1,50 @@
+/* Mobile-first (por defecto: móvil) */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.welcome-page {
+    height: 100vh;
+    overflow: hidden; /* evita scroll */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px;
+}
+
+/* móvil*/
+.welcome-dragon {
+    max-height: 30vh;  
+    width: auto;
+    max-width: 90vw;
+    object-fit: contain;
+    display: block;
+    border-radius: 8px;
+     /* Glow dorado/fuego alrededor (sin offset) */
+    box-shadow:
+        0 0 10px rgba(255, 200, 60, 0.55),
+        0 0 24px rgba(255, 160, 20, 0.40),
+        0 0 50px rgba(255, 90, 0, 0.25);
+
+    /* Realza un poco la imagen */
+    filter: saturate(1.05) contrast(1.05);
+}
+
+/* Pantallas medianas (tablet) */
+@media (min-width: 768px) {
+    .welcome-dragon {
+        max-height: 40vh;
+        max-width: 70vw;
+    }
+}
+
+/* Pantallas grandes (desktop) */
+@media (min-width: 1024px) {
+    .welcome-dragon {
+        max-height: 60vh;
+        max-width: 65vw;
+    }
+}
