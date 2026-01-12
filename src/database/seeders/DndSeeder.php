@@ -9,6 +9,7 @@ use App\Models\Race;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DndSeeder extends Seeder
 {
@@ -22,7 +23,9 @@ class DndSeeder extends Seeder
         // 1) Crear usuarios con perfil
         $users = User::factory()
             ->count(8)
-            ->create()
+            ->create([
+                'password' => Hash::make('password'),
+            ])
             ->each(function (User $user) {
                 Profile::factory()->create(['user_id' => $user->id]);
             });
