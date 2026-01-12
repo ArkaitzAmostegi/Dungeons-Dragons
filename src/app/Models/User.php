@@ -52,9 +52,4 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
 
-    public function characters()
-    {
-        return $this->hasMany(Character::class);
-    }
-
 }

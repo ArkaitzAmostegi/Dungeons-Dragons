@@ -26,6 +26,7 @@ class DndSeeder extends Seeder
             ->create([
                 'password' => Hash::make('password'),
             ])
+            // Se crea el profile para cada usuario
             ->each(function (User $user) {
                 Profile::factory()->create(['user_id' => $user->id]);
             });
@@ -39,11 +40,10 @@ class DndSeeder extends Seeder
             $chars = Character::factory()
                 ->count(rand(2, 4))
                 ->create([
-                    'user_id' => $user->id,
                     'race_id' => Race::inRandomOrder()->value('id'),
                 ]);
 
-            // Relación pivot profile <-> character (role owner)
+            // Relación pivot profile <-> character (role owner) (Asociando el profile al character)
             foreach ($chars as $char) {
                 $profile->characters()->attach($char->id, ['role' => 'owner']);
                 $allCharacters->push($char);

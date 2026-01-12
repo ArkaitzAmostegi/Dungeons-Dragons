@@ -18,11 +18,6 @@ class Character extends Model
         'description',
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function race()
     {
         return $this->belongsTo(Race::class);
