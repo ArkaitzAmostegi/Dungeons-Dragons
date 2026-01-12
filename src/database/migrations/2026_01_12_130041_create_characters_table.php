@@ -13,7 +13,18 @@ return new class extends Migration
     {
         Schema::create('characters', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // dueño
+            $table->foreignId('race_id')->constrained()->restrictOnDelete();
+
+            $table->string('name');
+            $table->unsignedTinyInteger('level')->default(1);
+            $table->string('class')->nullable();
+            $table->text('description')->nullable();
+
             $table->timestamps();
+
+            $table->unique(['user_id', 'name']); // evita duplicados por usuario
         });
     }
 

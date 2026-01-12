@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('races', function (Blueprint $table) {
+         Schema::create('races', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
+            $table->text('description')->nullable();
+            $table->json('bonuses')->nullable(); // ej: {"str":1,"dex":2}
             $table->timestamps();
         });
     }

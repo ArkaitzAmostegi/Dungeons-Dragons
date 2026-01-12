@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->enum('status', ['active', 'finished'])->default('active');
             $table->timestamps();
         });
     }
