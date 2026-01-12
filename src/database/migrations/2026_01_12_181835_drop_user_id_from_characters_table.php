@@ -6,14 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::table('characters', function (Blueprint $table) {
+            // si existe FK
             $table->dropForeign(['user_id']);
-            $table->dropUnique(['user_id', 'name']); // si la pusiste
+            // si existe índice unique(['user_id','name'])
+            // (si no lo tienes, comenta la línea siguiente)
+            // $table->dropUnique(['user_id', 'name']);
+
             $table->dropColumn('user_id');
         });
     }
@@ -22,8 +23,8 @@ return new class extends Migration
     {
         Schema::table('characters', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->unique(['user_id', 'name']);
+            // si quieres restaurar el unique:
+            // $table->unique(['user_id', 'name']);
         });
     }
-
 };
