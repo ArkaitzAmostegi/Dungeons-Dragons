@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         {
             $this->call([
                 RaceSeeder::class,
+                JuegoSeeder::class,
                 DndSeeder::class,
             ]);
         }

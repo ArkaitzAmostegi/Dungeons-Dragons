@@ -10,6 +10,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Juego;
 
 class DndSeeder extends Seeder
 {
@@ -50,7 +51,10 @@ class DndSeeder extends Seeder
         }
 
         // 3) Crear campañas
-        $campaigns = Campaign::factory()->count(4)->create(['status' => 'active']);
+        $juegoIds = Juego::pluck('id');
+        $campaigns = Campaign::factory()->count(4)->create([
+            'juego_id' => fn () => $juegoIds->random(),
+            ]);
 
         // 4) Asignar personajes a campañas (3-6 por campaña)
         foreach ($campaigns as $campaign) {

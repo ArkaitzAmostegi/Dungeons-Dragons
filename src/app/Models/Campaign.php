@@ -13,6 +13,7 @@ class Campaign extends Model
         'title',
         'description',
         'status',
+        'juego_id',
     ];
 
     //Relación con User
@@ -30,5 +31,12 @@ class Campaign extends Model
             ->withPivot('user_id')
             ->withTimestamps();
     }
+
+    //Relación con juego
+    public function juego()
+    {
+        return $this->belongsTo(Juego::class, 'juego_id');
+    }
+
 
 }
