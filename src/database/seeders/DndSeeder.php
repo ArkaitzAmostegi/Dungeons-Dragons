@@ -40,12 +40,11 @@ class DndSeeder extends Seeder
             $chars = Character::factory()
                 ->count(rand(2, 4))
                 ->create([
+                    'user_id' => $user->id,
                     'race_id' => Race::inRandomOrder()->value('id'),
                 ]);
 
-            // Relación pivot profile <-> character (role owner) (Asociando el profile al character)
             foreach ($chars as $char) {
-                $profile->characters()->attach($char->id, ['role' => 'owner']);
                 $allCharacters->push($char);
             }
         }
@@ -59,7 +58,8 @@ class DndSeeder extends Seeder
 
             foreach ($members as $character) {
                 $campaign->characters()->attach($character->id, [
-                    'joined_at' => Carbon::now()->subDays(rand(0, 60)),
+                    'user_id' => $character->user_id,
+                    'role' => 'player',
                 ]);
             }
         }

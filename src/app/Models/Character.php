@@ -18,15 +18,18 @@ class Character extends Model
         'description',
     ];
 
+    //Relación con race
     public function race()
     {
         return $this->belongsTo(Race::class);
     }
 
+    //Rerlación con campaigns
     public function campaigns()
     {
-        return $this->belongsToMany(Campaign::class, 'campaign_character')
-            ->withPivot('joined_at')
+        return $this->belongsToMany(Campaign::class, 'campaign_user_character')
+            ->withPivot('user_id', 'role')
             ->withTimestamps();
     }
+
 }

@@ -15,10 +15,20 @@ class Campaign extends Model
         'status',
     ];
 
-    public function characters()
+    //Relación con User
+    public function users()
     {
-        return $this->belongsToMany(Character::class, 'campaign_character')
-            ->withPivot('joined_at')
+        return $this->belongsToMany(User::class, 'campaign_user_character')
+            ->withPivot('character_id')
             ->withTimestamps();
     }
+
+    //Relación con characters
+    public function characters()
+    {
+        return $this->belongsToMany(Character::class, 'campaign_user_character')
+            ->withPivot('user_id')
+            ->withTimestamps();
+    }
+
 }

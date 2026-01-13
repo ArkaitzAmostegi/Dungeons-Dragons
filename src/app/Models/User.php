@@ -52,4 +52,18 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
 
+    //Relación con characters
+    public function characters()
+    {
+        return $this->hasMany(Character::class);
+    }
+
+    //Relación con campaings
+    public function campaigns()
+    {
+        return $this->belongsToMany(Campaign::class, 'campaign_user_character')
+            ->withPivot('character_id')
+            ->withTimestamps();
+    }
+
 }
