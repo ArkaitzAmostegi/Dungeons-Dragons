@@ -23,13 +23,6 @@ class Character extends Model
         return $this->belongsTo(Race::class);
     }
 
-    public function profiles()
-    {
-        return $this->belongsToMany(Profile::class, 'character_profile')
-            ->withPivot('role')
-            ->withTimestamps();
-    }
-
     public function campaigns()
     {
         return $this->belongsToMany(Campaign::class, 'campaign_character')
