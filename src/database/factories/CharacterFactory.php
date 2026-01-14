@@ -24,7 +24,6 @@ class CharacterFactory extends Factory
         ];
 
         return [
-            'user_id'     => User::factory(),
             'race_id'     => Race::factory(),
             'name'        => $this->faker->randomElement($names) . ' ' . $this->faker->unique()->randomNumber(3),
             'level'       => $this->faker->numberBetween(1, 12),

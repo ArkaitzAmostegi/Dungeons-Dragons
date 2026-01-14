@@ -21,10 +21,4 @@ class Profile extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function characters()
-    {
-        return $this->belongsToMany(Character::class, 'character_profile')
-            ->withPivot('role')
-            ->withTimestamps();
-    }
 }

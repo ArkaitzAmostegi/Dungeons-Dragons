@@ -10,6 +10,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Juego;
 
 class DndSeeder extends Seeder
 {
@@ -26,6 +27,7 @@ class DndSeeder extends Seeder
             ->create([
                 'password' => Hash::make('password'),
             ])
+            // Se crea el profile para cada usuario
             ->each(function (User $user) {
                 Profile::factory()->create(['user_id' => $user->id]);
             });
@@ -43,15 +45,16 @@ class DndSeeder extends Seeder
                     'race_id' => Race::inRandomOrder()->value('id'),
                 ]);
 
-            // Relación pivot profile <-> character (role owner)
             foreach ($chars as $char) {
-                $profile->characters()->attach($char->id, ['role' => 'owner']);
                 $allCharacters->push($char);
             }
         }
 
         // 3) Crear campañas
-        $campaigns = Campaign::factory()->count(4)->create(['status' => 'active']);
+        $juegoIds = Juego::pluck('id');
+        $campaigns = Campaign::factory()->count(4)->create([
+            'juego_id' => fn () => $juegoIds->random(),
+            ]);
 
         // 4) Asignar personajes a campañas (3-6 por campaña)
         foreach ($campaigns as $campaign) {
@@ -59,7 +62,8 @@ class DndSeeder extends Seeder
 
             foreach ($members as $character) {
                 $campaign->characters()->attach($character->id, [
-                    'joined_at' => Carbon::now()->subDays(rand(0, 60)),
+                    'user_id' => $character->user_id,
+                    'role' => 'player',
                 ]);
             }
         }

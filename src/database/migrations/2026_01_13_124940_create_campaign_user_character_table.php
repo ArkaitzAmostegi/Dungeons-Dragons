@@ -11,23 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('campaign_character', function (Blueprint $table) {
+        Schema::create('campaign_user_character', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('campaign_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('character_id')->constrained()->cascadeOnDelete();
 
-            $table->timestamp('joined_at')->nullable();
+            $table->foreignId('campaign_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('character_id')->constrained()->cascadeOnDelete();
+            $table->string('role')->default('player');
             $table->timestamps();
 
-            $table->unique(['campaign_id', 'character_id']);
+            $table->unique(['campaign_id', 'user_id', 'character_id']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('campaign_character');
+        Schema::dropIfExists('campaign_user_character');
     }
+
 };

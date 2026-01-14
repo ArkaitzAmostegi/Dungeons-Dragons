@@ -1,16 +1,38 @@
 services:
+  proxy:
+    image: nginx:alpine
+    container_name: dnd_proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+      - phpmyadmin
+    networks:
+      - dnd_net
+
   app:
     build:
       context: .
       dockerfile: docker/Dockerfile
     container_name: dnd_app
     volumes:
-      - ./src:/var/www/html
+    - ./app:/var/www/html/app
+    - ./resources:/var/www/html/resources
+    - ./routes:/var/www/html/routes
+    - ./config:/var/www/html/config
+    - ./public:/var/www/html/public
+    - ./docker/.env:/var/www/html/.env
+    # Sin exponer 8000:80 al host (lo hace el proxy)
     ports:
-      - "8000:80"
       - "5173:5173"
+    expose:
+      - "80"
     depends_on:
       - db
+    networks:
+      - dnd_net
 
   db:
     image: mysql:8.0
@@ -24,17 +46,25 @@ services:
     volumes:
       - dnd_dbdata:/var/lib/mysql
     ports:
-      - "3307:3306"
+     - "3307:3306"
+    networks:
+      - dnd_net
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: dnd_phpmyadmin
     environment:
       PMA_HOST: db
-    ports:
-      - "8080:80"
+    expose:
+      - "80"
     depends_on:
       - db
+    networks:
+      - dnd_net
 
 volumes:
   dnd_dbdata:
+
+networks:
+  dnd_net:
+    driver: bridge
