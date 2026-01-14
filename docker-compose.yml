@@ -18,12 +18,7 @@ services:
       dockerfile: docker/Dockerfile
     container_name: dnd_app
     volumes:
-    - ./app:/var/www/html/app
-    - ./resources:/var/www/html/resources
-    - ./routes:/var/www/html/routes
-    - ./config:/var/www/html/config
-    - ./public:/var/www/html/public
-    - ./docker/.env:/var/www/html/.env
+    - ./src:/var/www/html
     # Sin exponer 8000:80 al host (lo hace el proxy)
     ports:
       - "5173:5173"
@@ -46,7 +41,7 @@ services:
     volumes:
       - dnd_dbdata:/var/lib/mysql
     ports:
-     - "3307:3306"
+    - "3307:3306"
     networks:
       - dnd_net
 
