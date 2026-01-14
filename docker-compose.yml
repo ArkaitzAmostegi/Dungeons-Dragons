@@ -18,7 +18,12 @@ services:
       dockerfile: docker/Dockerfile
     container_name: dnd_app
     volumes:
-      - ./src:/var/www/html
+    - ./app:/var/www/html/app
+    - ./resources:/var/www/html/resources
+    - ./routes:/var/www/html/routes
+    - ./config:/var/www/html/config
+    - ./public:/var/www/html/public
+    - ./docker/.env:/var/www/html/.env
     # Sin exponer 8000:80 al host (lo hace el proxy)
     ports:
       - "5173:5173"
