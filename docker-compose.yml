@@ -14,12 +14,11 @@ services:
 
   app:
     build:
-      context: .
-      dockerfile: docker/Dockerfile
+      context: ./src
+      dockerfile: ../docker/Dockerfile
     container_name: dnd_app
     volumes:
-    - ./src:/var/www/html
-    # Sin exponer 8000:80 al host (lo hace el proxy)
+      - ./src:/var/www/html
     ports:
       - "5173:5173"
     expose:
@@ -28,7 +27,7 @@ services:
       - db
     networks:
       - dnd_net
-
+      
   db:
     image: mysql:8.0
     container_name: dnd_db

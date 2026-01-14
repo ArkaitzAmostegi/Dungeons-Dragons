@@ -1,39 +1,29 @@
+FROM composer:2 AS composer
+
 FROM php:8.3-apache
 
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    curl \
-    libzip-dev \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
+    git unzip curl libzip-dev libpng-dev libonig-dev libxml2-dev \
     && docker-php-ext-install pdo pdo_mysql zip
 
 # Node.js para Breeze / Vite
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
-# Apache
 RUN a2enmod rewrite
 
 # Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-# Apache config
 COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
 
 WORKDIR /var/www/html
 
-# Copiar tu proyecto al contenedor
+# Copia el proyecto (ahora el contexto ES src)
 COPY . /var/www/html
 
-# Instalar dependencias de Composer
 RUN composer install --no-dev --optimize-autoloader
-
-# Instalar dependencias de Node y compilar assets
 RUN npm install
 RUN npm run build
 
-# Ajustar permisos
 RUN chown -R www-data:www-data /var/www/html
