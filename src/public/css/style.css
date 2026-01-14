@@ -15,15 +15,16 @@ html, body {
     padding: 16px;
 }
 
-/* móvil*/
+/* móvil */
 .welcome-dragon {
-    max-height: 30vh;  
+    max-height: 30vh;
     width: auto;
     max-width: 90vw;
     object-fit: contain;
     display: block;
     border-radius: 8px;
-     /* Glow dorado/fuego alrededor (sin offset) */
+
+    /* Glow dorado/fuego alrededor (sin offset) */
     box-shadow:
         0 0 10px rgba(255, 200, 60, 0.55),
         0 0 24px rgba(255, 160, 20, 0.40),
@@ -33,11 +34,160 @@ html, body {
     filter: saturate(1.05) contrast(1.05);
 }
 
+/* -------------------------------------------------- */
+/* PÁGINA PARTIDAS (Mobile-first)                      */
+/* - Estilos para la pantalla "Mis Partidas"           */
+/* - Lista de campañas del usuario + acciones           */
+/* -------------------------------------------------- */
+
+.page-partidas {
+    /* ocupa pantalla completa (si tienes header, resta su alto) */
+    min-height: calc(100vh - 64px);
+    display: flex;
+    justify-content: center;
+    padding: 24px 12px;     /* móvil: padding más contenido */
+    background: #f6f0ff;
+}
+
+/* Contenedor principal de la tarjeta */
+.card-partidas {
+    width: 100%;
+    max-width: 340px;       /* móvil: similar a la maqueta */
+    background: #fff;
+    border-radius: 18px;
+    padding: 14px 16px 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.12);
+}
+
+/* Barra superior: usuario / espacio */
+.topbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+/* Pastilla con el nombre del usuario */
+.user-pill {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #efe6ff;
+    color: #3b2a64;
+    border: 1px solid #dac8ff;
+}
+
+/* Título centrado */
+.title {
+    text-align: center;
+    color: #6d51b7;
+    font-size: 26px;
+    font-weight: 800;
+    margin: 18px 0 22px;
+}
+
+/* Lista de partidas */
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Fila de una partida */
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Caja con el nombre de la partida (estilo “rectángulo rosa”) */
+.name {
+    min-width: 0;
+    flex: 1;
+    background: #f1c3cc;
+    border: 2px solid #c08a94;
+    border-radius: 0;
+    padding: 6px 10px;
+    font-weight: 700;
+    color: #2b2b2b;
+}
+
+/* Subtexto opcional (modo de juego, etc.) */
+.sub {
+    font-weight: 600;
+    font-size: 11px;
+    opacity: .75;
+    margin-top: 2px;
+}
+
+/* Grupo de iconos (ver/editar/borrar) */
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Botones de icono */
+.icon-btn {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    opacity: .85;
+}
+
+.icon-btn:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+/* SVG dentro del botón */
+.icon {
+    width: 18px;
+    height: 18px;
+    fill: #2b2b2b;
+}
+
+/* Variante para botón de borrar (si quieres marcarlo) */
+.icon-btn.danger .icon {
+    fill: #111;
+}
+
+/* Texto cuando no hay partidas */
+.empty {
+    text-align: center;
+    opacity: .75;
+    margin-top: 10px;
+}
+
+/* -------------------------------------------------- */
+/* RESPONSIVE (Tablet / Desktop)                       */
+/* -------------------------------------------------- */
+
 /* Pantallas medianas (tablet) */
 @media (min-width: 768px) {
     .welcome-dragon {
         max-height: 40vh;
         max-width: 70vw;
+    }
+
+    /* Partidas: un poco más de aire en tablet */
+    .page-partidas {
+        padding: 28px 16px;
+    }
+
+    .card-partidas {
+        max-width: 420px;
+        padding: 18px 20px 22px;
+    }
+
+    .title {
+        font-size: 30px;
     }
 }
 
@@ -46,5 +196,9 @@ html, body {
     .welcome-dragon {
         max-height: 60vh;
         max-width: 65vw;
+    }
+
+    .card-partidas {
+        max-width: 520px;
     }
 }
