@@ -76,10 +76,12 @@ class DndSeeder extends Seeder
 
                 // jugadores extra (evita repetir el owner)
                 $extraCount = rand(2, 5);
-                $extras = $allCharacters
-                    ->where('id', '!=', $ownerChar->id)
-                    ->random(min($extraCount, $allCharacters->count() - 1));
+                $extrasPool = $allCharacters
+                    ->where('user_id', '!=', $user->id)   // no metas personajes del mismo user
+                    ->values();
 
+                $extras = $extrasPool->random(min($extraCount, $extrasPool->count()));
+                
                 foreach ($extras as $character) {
                     $campaign->characters()->attach($character->id, [
                         'user_id' => $character->user_id,
