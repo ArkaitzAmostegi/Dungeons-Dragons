@@ -37,13 +37,22 @@
                         <div id="tab-{{ $campaign->id }}" class="tab-panel">
                             <div class="tab-header">
                                 <h3 class="tab-title">{{ $campaign->title }}</h3>
-                                <p class="tab-mode">
-                                    <strong>Modo:</strong> {{ optional($campaign->juego)->nombre }}
-                                </p>
+                                {{-- Tooltip modo de juego --}}
+                                <div class="sub">
+                                    @if($campaign->juego)
+                                        <strong>Modo:</strong>  
+                                        <span class="js-tooltip" title="{{ $campaign->juego->descripcion }}">
+                                            <span class="badge-role">{{ optional($campaign->juego)->nombre }}</span>
+                                        </span>
+                                    @else
+                                        <span class="ui-tooltip" title="Sin modo de juego">—</span>
+                                    @endif
+                                </div>
                                 @if($campaign->description)
                                     <p class="tab-desc">{{ $campaign->description }}</p>
                                 @endif
                             </div>
+                            
 
                             <div class="tab-section">
                                 <h4>Jugadores y personajes</h4>
@@ -61,9 +70,26 @@
                                         <ul class="member-chars">
                                             @foreach($rows as $m)
                                                 <li>
-                                                    {{ $m->character?->name ?? 'Personaje' }}
-                                                    @if($m->role)
-                                                        <span class="badge-role">{{ $m->role }}</span>
+                                                    @php
+                                                        $c = $m->character;
+                                                        $tooltip = $c
+                                                            ? trim(
+                                                                $c->name
+                                                                . ($c->race?->name ? " | Raza: {$c->race->name}" : "")
+                                                                . " | Nivel: {$c->level}"
+                                                                . ($c->class ? " | Clase: {$c->class}" : "")
+                                                                . ($c->description ? " — {$c->description}" : "")
+                                                            )
+                                                            : "Personaje no disponible";
+                                                    @endphp
+
+                                                    <span class="ui-tooltip" title="{{ $tooltip }}">
+                                                        <span class="badge-role">
+                                                            {{ $c?->name ?? 'Personaje' }}
+                                                        </span>
+                                                    </span>
+                                                    @if($m->role) 
+                                                        <span> - {{ $m->role }}</span>
                                                     @endif
                                                 </li>
                                             @endforeach
@@ -80,11 +106,17 @@
     </div>
 
     {{-- JS: inicializa tabs --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            if (window.jQuery && jQuery.fn && jQuery.fn.tabs) {
-                jQuery("#tabs-partidas").tabs();
-            }
+    @push('scripts')
+        <script>
+        $(function () {
+            $("#tabs-partidas").tabs();
+
+            $(document).tooltip({
+            items: ".ui-tooltip",
+            track: true,
+            position: { my: "left+12 top+12", at: "left bottom" }
+            });
         });
-    </script>
+        </script>
+    @endpush
 </x-app-layout>

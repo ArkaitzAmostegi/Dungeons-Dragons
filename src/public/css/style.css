@@ -265,6 +265,36 @@ html, body {
     background: #f1c3cc;
     border: 1px solid #c08a94;
 }
+/* =========================
+    jQuery UI Tooltip (estilo)
+   ========================= */
+.ui-tooltip {
+    /* caja */
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(18, 18, 22, 0.92);
+    color: #f3f3f6;
+
+    /* tipografía */
+    font-size: 13px;
+    line-height: 1.35;
+    font-weight: 500;
+    letter-spacing: .2px;
+
+    /* sombra */
+    box-shadow: 0 12px 30px rgba(0,0,0,.30);
+
+    /* ancho */
+    max-width: 320px;
+
+    /* suavizado */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* (Opcional) cursor en elementos con tooltip */
+.js-tooltip { cursor: help; }
 
 
 /* -------------------------------------------------- */

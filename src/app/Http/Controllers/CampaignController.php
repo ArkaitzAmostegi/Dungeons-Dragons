@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Campaign;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CampaignController extends Controller
 {
@@ -12,20 +13,21 @@ class CampaignController extends Controller
         $user = $request->user();
 
         // Campañas donde participa el user (por pivot)
-        $campaignIds = \DB::table('campaign_user_character')
+        $campaignIds = DB::table('campaign_user_character')
             ->where('user_id', $user->id)
             ->pluck('campaign_id')
             ->unique();
 
-        $campaigns = \App\Models\Campaign::query()
+        $campaigns = Campaign::query()
             ->whereIn('id', $campaignIds)
             ->with([
                 'juego',
                 'memberships.user',
-                'memberships.character.race', // opcional si quieres mostrar raza
+                'memberships.character.race',
             ])
             ->orderByDesc('created_at')
             ->get();
+            
 
         return view('partidas.index', compact('campaigns'));
     }
