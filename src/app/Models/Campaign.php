@@ -35,7 +35,7 @@ class Campaign extends Model
     //Relación con juego
     public function juego()
     {
-        return $this->belongsTo(Juego::class, 'juego_id');
+        return $this->belongsTo(\App\Models\Juego::class, 'juego_id');
     }
 
 

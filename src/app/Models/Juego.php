@@ -16,6 +16,6 @@ class Juego extends Model
 
     public function campaigns()
     {
-        return $this->hasMany(Campaign::class, 'juego_id');
+        return $this->hasMany(\App\Models\Campaign::class, 'juego_id');
     }
 }

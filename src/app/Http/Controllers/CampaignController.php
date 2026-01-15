@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 
 class CampaignController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $campaigns = $request->user()
+            ->campaigns()
+            ->with('juego')
+            ->orderByDesc('campaigns.created_at')
+            ->get();
+
+        return view('partidas.index', compact('campaigns'));
     }
 
     /**
