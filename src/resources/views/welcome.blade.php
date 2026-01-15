@@ -22,10 +22,14 @@
             </style>
         @endif
     </head>
-    <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+    <body class="bg-white text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
         <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
+            {{-- Imagen de dragón --}}
+        <div class="px-4 pt-6" style="margin-bottom:25px; padding:0px">
+            <img src="{{ asset('images/DandDLogo.png') }}" alt="Dragon" class="welcome-dragon"/>
+        </div>
             @if (Route::has('login'))
-                <nav class="flex items-center justify-end gap-4">
+                <nav class="flex items-center justify-center gap-4">
                     @auth
                         <a
                             href="{{ url('/dashboard') }}"
@@ -53,10 +57,7 @@
             @endif
         </header>
 
-        {{-- Imagen de dragón --}}
-        <div class="px-4 pt-6">
-            <img src="{{ asset('images/dragon1.jpg') }}" alt="Dragon" class="welcome-dragon"/>
-        </div>
+        
 
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
