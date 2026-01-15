@@ -11,12 +11,13 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- CSS propio (public/css/style.css) -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <!-- Vite (Tailwind/Breeze) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- JQuery -->
-     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+    <!-- jQuery UI (CSS) -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+
+    <!-- CSS propio -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 </head>
@@ -43,5 +44,6 @@
     </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
+@stack('scripts')
 </body>
 </html>
