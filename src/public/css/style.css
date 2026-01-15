@@ -1,3 +1,23 @@
+/* Paleta de colores */
+:root {
+  /* Base palette */
+  --color-primary: #5A5881;
+  --color-secondary: #9A9C71;
+  --color-tertiary: #76538B;
+  --color-error: #BA1A1A;
+
+  /* Containers */
+  --color-primary-container: #E3DFFF;
+  --color-secondary-container: #3A3C09;
+  --color-tertiary-container: #F1C8A3;
+  --color-error-container: #FFDAD6;
+
+  /* Inverse */
+  --color-inverse-primary: #C3C0FF;
+}
+
+
+
 /* Mobile-first (por defecto: móvil) */
 html, body {
     height: 100%;
