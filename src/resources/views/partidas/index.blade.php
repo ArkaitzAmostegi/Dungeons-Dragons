@@ -45,7 +45,7 @@
                                             <span class="badge-role">{{ optional($campaign->juego)->nombre }}</span>
                                         </span>
                                     @else
-                                        <span class="ui-tooltip" title="Sin modo de juego">—</span>
+                                        <span class="ji-tooltip" title="Sin modo de juego">—</span>
                                     @endif
                                 </div>
                                 @if($campaign->description)
@@ -83,14 +83,20 @@
                                                             : "Personaje no disponible";
                                                     @endphp
 
-                                                    <span class="ui-tooltip" title="{{ $tooltip }}">
+                                                    <span class="js-tooltip" title="{{ $tooltip }}">
                                                         <span class="badge-role">
                                                             {{ $c?->name ?? 'Personaje' }}
                                                         </span>
                                                     </span>
-                                                    @if($m->role) 
-                                                        <span> - {{ $m->role }}</span>
+                                                    @php
+                                                        // membership = fila de campaign_user_character
+                                                        $role = $m->getAttribute('role') ?? data_get($m, 'attributes.role');
+                                                    @endphp
+
+                                                    @if($role)
+                                                        <span class="char-role"> - {{ $role }}</span>
                                                     @endif
+
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -112,7 +118,7 @@
             $("#tabs-partidas").tabs();
 
             $(document).tooltip({
-            items: ".ui-tooltip",
+            items: ".js-tooltip",
             track: true,
             position: { my: "left+12 top+12", at: "left bottom" }
             });

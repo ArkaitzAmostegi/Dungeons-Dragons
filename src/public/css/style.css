@@ -1,19 +1,19 @@
 /* Paleta de colores */
 :root {
   /* Base palette */
-  --color-primary: #5A5881;
-  --color-secondary: #9A9C71;
-  --color-tertiary: #76538B;
-  --color-error: #BA1A1A;
+    --color-primary: #5A5881;
+    --color-secondary: #9A9C71;
+    --color-tertiary: #76538B;
+    --color-error: #BA1A1A;
 
   /* Containers */
-  --color-primary-container: #E3DFFF;
-  --color-secondary-container: #3A3C09;
-  --color-tertiary-container: #F1C8A3;
-  --color-error-container: #FFDAD6;
+    --color-primary-container: #E3DFFF;
+    --color-secondary-container: #3A3C09;
+    --color-tertiary-container: #F1C8A3;
+    --color-error-container: #FFDAD6;
 
   /* Inverse */
-  --color-inverse-primary: #C3C0FF;
+    --color-inverse-primary: #C3C0FF;
 }
 
 
@@ -173,7 +173,7 @@ html, body {
     fill: #2b2b2b;
 }
 
-/* Variante para botón de borrar (si quieres marcarlo) */
+/* Variante para botón de borrar */
 .icon-btn.danger .icon {
     fill: #111;
 }
@@ -184,6 +184,14 @@ html, body {
     opacity: .75;
     margin-top: 10px;
 }
+
+/* Botón de player */
+.char-role{
+    font-size: 12px;
+    opacity: .85;
+    margin-left: 6px;
+}
+
 /* -------------------------------------------------- */
 /* jQuery UI Tabs - Mis Partidas                      */
 /* -------------------------------------------------- */
