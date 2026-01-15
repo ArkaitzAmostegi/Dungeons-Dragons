@@ -2,7 +2,7 @@
 html, body {
     height: 100%;
     margin: 0;
-    background-color: white;
+    background-color: #5422db;
 }
 
 .welcome-page {
@@ -47,7 +47,7 @@ html, body {
     display: flex;
     justify-content: center;
     padding: 24px 12px;     /* móvil: padding más contenido */
-    background: #f6f0ff;
+    background: #7020e7;
 }
 
 /* Contenedor principal de la tarjeta */
