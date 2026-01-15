@@ -38,5 +38,11 @@ class Campaign extends Model
         return $this->belongsTo(\App\Models\Juego::class, 'juego_id');
     }
 
+    //Relación con campaign-user-character
+    public function memberships()
+    {
+        return $this->hasMany(\App\Models\CampaignUserCharacter::class, 'campaign_id');
+    }
+
 
 }
