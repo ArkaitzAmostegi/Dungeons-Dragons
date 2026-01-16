@@ -39,7 +39,7 @@
                             Mago
                         </div>
                         <div class="personaje" draggable="true" data-id="3" data-descripcion="Ágil y sigiloso, experto en trampas y ataques críticos.">
-                            Pícaro
+                            Picaro
                         </div>
                         <div class="personaje" draggable="true" data-id="4" data-descripcion="Furioso combatiente, muy resistente y poderoso en el ataque físico.">
                             Barbaro
@@ -80,7 +80,7 @@
                 <h2>Modo de juego</h2>
                 <select name="juego_id" id="modoSelect" required>
                     <option value="">Selecciona un modo</option>
-                    <option value="1">Exploración</option>
+                    <option value="1">Exploracion</option>
                     <option value="2">Atraco</option>
                     <option value="3">Escaramuza</option>
                     <option value="4">Asedio</option>

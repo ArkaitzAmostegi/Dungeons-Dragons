@@ -1,3 +1,22 @@
+@font-face {
+    font-family: 'Dragon Hunter';
+    src: url('../fonts/DragonHunter-Regular.woff2') format('woff2'),
+         url('../fonts/DragonHunter-Regular.woff') format('woff'),
+         url('../fonts/DragonHunter-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+body, h2, input, textarea, select, button {
+    font-family: 'Dragon Hunter', sans-serif;
+}
+.card-partidas, 
+.card-partidas * {
+    font-family: 'Dragon Hunter', sans-serif;
+}
+
+
 /* Paleta de colores */
 :root {
   /* Base palette */
