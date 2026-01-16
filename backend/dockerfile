@@ -24,7 +24,8 @@ WORKDIR /var/www/html
 
 # 1) Composer deps (sin copiar todo el proyecto)
 COPY composer.json composer.lock ./
-RUN composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader --no-scripts
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts
+
 
 # 2) NPM deps
 COPY package.json package-lock.json ./
