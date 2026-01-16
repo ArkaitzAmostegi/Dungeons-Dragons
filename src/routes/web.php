@@ -22,6 +22,10 @@ Route::middleware('auth')->group(function () {
 //Ruta para la página de partidas, Home
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/partidas', [CampaignController::class, 'index'])->name('partidas.index');
+    Route::get('/partidas/crear', [CampaignController::class, 'create'])->name('añadirPartidas.index');
+    Route::post('/partidas', [CampaignController::class, 'store'])->name('partidas.store');
 });
+
+
 
 require __DIR__.'/auth.php';
