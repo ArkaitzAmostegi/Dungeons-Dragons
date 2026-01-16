@@ -54,6 +54,136 @@ box-shadow:
     filter: saturate(1.05) contrast(1.05);
 }
 
+/* LOGIN */
+.auth-page{
+    width: 100%;
+    min-height: 100vh;
+    background: var(--color-primary-container);
+}
+
+/* contenedor general (ancho móvil) */
+.auth-shell{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* opcional logo arriba */
+.auth-logo{
+    margin: 10px 0 6px;
+}
+
+/* “tarjeta” exterior (sin blanco de Breeze) */
+.auth-frame{
+    width: 320px;
+    max-width: calc(100% - 48px);
+    border-radius: 18px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* tarjeta interna */
+.auth-card{
+    width: 100%;
+    padding: 28px 24px 22px;
+    border-radius: 18px;
+    background: transparent;
+}
+
+.auth-title{
+    text-align: center;
+    margin: 18px 0 26px;
+    letter-spacing: 1px;
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--color-primary);
+}
+
+.auth-form{ display: grid; gap: 18px; }
+.auth-field{ display: grid; gap: 8px; }
+
+.auth-label{
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.auth-input{
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 12px 14px;
+    border-radius: 999px;
+    background: var(--color-tertiary);
+    color: var(--color-primary-container);
+}
+
+.auth-input::placeholder{
+    color: var(--color-primary-container);
+    opacity: .75;
+}
+
+.auth-error{
+    font-size: 12px;
+    color: var(--color-error);
+}
+
+.auth-remember{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 2px;
+}
+
+.auth-checkbox{
+    width: 14px;
+    height: 14px;
+    accent-color: var(--color-inverse-primary);
+}
+
+.auth-remember-text{
+    font-size: 12px;
+    color: var(--color-primary);
+}
+
+.auth-actions{
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+    margin-top: 6px;
+}
+
+.auth-link{
+    font-size: 12px;
+    text-decoration: none;
+    color: var(--color-primary);
+}
+
+.auth-link:hover{ text-decoration: underline; }
+
+.auth-button{
+    border: none;
+    background: var(--color-inverse-primary);
+    color: var(--color-primary);
+    padding: 8px 26px;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.auth-button:hover{
+    background: var(--color-tertiary);
+    color: var(--color-primary-container);
+}
+
+.auth-logo-img{
+    width: 200px;
+    height: auto;
+    display: block;
+}
+
+
 /* -------------------------------------------------- */
 /* PÁGINA PARTIDAS                                    */
 /* -------------------------------------------------- */
