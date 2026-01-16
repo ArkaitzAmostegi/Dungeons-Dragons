@@ -273,37 +273,41 @@ html, body {
     background: #f1c3cc;
     border: 1px solid #c08a94;
 }
-/* =========================
-    jQuery UI Tooltip (estilo)
-   ========================= */
-.ui-tooltip {
-    /* caja */
-    padding: 10px 12px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,.18);
-    background: rgba(18, 18, 22, 0.92);
-    color: #f3f3f6;
+/* ==========================================
+   Tooltip jQuery UI - Forzar estilo propio
+   ========================================== */
 
-    /* tipografía */
-    font-size: 13px;
-    line-height: 1.35;
-    font-weight: 500;
-    letter-spacing: .2px;
+/* El div real que crea jQuery UI */
+body div.ui-tooltip.ui-widget.ui-widget-content {
+  padding: 10px 12px !important;
+  border-radius: 12px !important;
 
-    /* sombra */
-    box-shadow: 0 12px 30px rgba(0,0,0,.30);
+  background: rgba(18, 18, 22, 0.92) !important;
+  color: #f3f3f6 !important;
 
-    /* ancho */
-    max-width: 320px;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
 
-    /* suavizado */
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 12px 30px rgba(0,0,0,.30) !important;
+
+  font-size: 13px !important;
+  line-height: 1.35 !important;
+  font-weight: 500 !important;
+  letter-spacing: .2px !important;
+
+  max-width: 320px !important;
+
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
 }
 
-/* (Opcional) cursor en elementos con tooltip */
-.js-tooltip { cursor: help; }
+/* Quita el “padding extra”/fondos internos que mete el theme */
+body div.ui-tooltip.ui-widget.ui-widget-content * {
+  background: transparent !important;
+  border: 0 !important;
+}
 
+/* (Opcional) cursor */
+.js-tooltip { cursor: help; }
 
 /* -------------------------------------------------- */
 /* RESPONSIVE (Tablet / Desktop)                       */

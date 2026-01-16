@@ -39,7 +39,7 @@
                                             <span class="badge-role">{{ optional($campaign->juego)->nombre }}</span>
                                         </span>
                                     @else
-                                        <span class="ji-tooltip" title="Sin modo de juego">—</span>
+                                        <span class="js-tooltip" title="Sin modo de juego">—</span>
                                     @endif
                                 </div>
                                 @if($campaign->description)
