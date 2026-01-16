@@ -8,3 +8,9 @@ const modos = {
 modoSelect.addEventListener('change', () => {
     modoDescripcion.textContent = modos[modoSelect.value] || '';
 });
+$(document).ready(function() {
+    $(".class-toggle").click(function() {
+        $(this).next(".characters-list").slideToggle();
+    });
+});
+
