@@ -4,16 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Campaign;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CampaignController extends Controller
 {
     public function index(Request $request)
     {
-        $campaigns = $request->user()
-            ->campaigns()
-            ->with('juego')
-            ->orderByDesc('campaigns.created_at')
+        $user = $request->user();
+
+        // Campañas donde participa el user (por pivot)
+        $campaignIds = DB::table('campaign_user_character')
+            ->where('user_id', $user->id)
+            ->pluck('campaign_id')
+            ->unique();
+
+        $campaigns = Campaign::query()
+            ->whereIn('id', $campaignIds)
+            ->with([
+                'juego',
+                'memberships.user',
+                'memberships.character.race',
+            ])
+            ->orderByDesc('created_at')
             ->get();
+            
 
         return view('partidas.index', compact('campaigns'));
     }
