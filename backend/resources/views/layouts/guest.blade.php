@@ -15,7 +15,6 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
         <!-- jQuery UI (CSS) -->
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
@@ -24,17 +23,25 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
+    <body class="font-sans antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-start pt-6 auth-page">
+        <div class="auth-shell">
+            {{-- Si NO quieres el logo en login, borra este bloque --}}
+            <div class="auth-logo">
                 <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                    <img
+                        src="{{ asset('images/logo-sinfondo.png') }}"
+                        alt="Dungeons & Dragons"
+                        class="auth-logo-img"
+                    />
                 </a>
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <div class="auth-frame">
                 {{ $slot }}
             </div>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>
