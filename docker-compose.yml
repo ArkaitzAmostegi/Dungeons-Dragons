@@ -5,29 +5,41 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
-      - app
-      - phpmyadmin
+      - frontend
+      - backend
     networks:
       - dnd_net
 
-  app:
+  frontend:
     build:
-      context: ./src
-      dockerfile: ../docker/Dockerfile
-    container_name: dnd_app
-    volumes:
-      - ./src:/var/www/html
-    ports:
-      - "5173:5173"
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: dnd_frontend
+    expose:
+      - "80"
+    networks:
+      - dnd_net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: dnd_backend
     expose:
       - "80"
     depends_on:
       - db
+    volumes:
+      - ./backend:/var/www/html
+      # Recomendado para evitar “vendor desaparece” al montar volumen:
+      - backend_vendor:/var/www/html/vendor
+      - backend_node:/var/www/html/node_modules
+      - backend_build:/var/www/html/public/build
     networks:
       - dnd_net
-      
+
   db:
     image: mysql:8.0
     container_name: dnd_db
@@ -40,10 +52,11 @@ services:
     volumes:
       - dnd_dbdata:/var/lib/mysql
     ports:
-    - "3307:3306"
+      - "3307:3306"
     networks:
       - dnd_net
 
+  # Opcional (no es requisito del enunciado)
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: dnd_phpmyadmin
@@ -58,6 +71,9 @@ services:
 
 volumes:
   dnd_dbdata:
+  backend_vendor:
+  backend_node:
+  backend_build:
 
 networks:
   dnd_net:
