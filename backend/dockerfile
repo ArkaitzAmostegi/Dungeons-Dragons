@@ -1,0 +1,48 @@
+FROM composer:2 AS composer
+
+FROM php:8.3-apache
+
+RUN apt-get update && apt-get install -y \
+    git unzip curl \
+    libzip-dev libpng-dev libonig-dev libxml2-dev \
+    libicu-dev \
+    libcurl4-openssl-dev \
+    && docker-php-ext-install \
+        pdo pdo_mysql zip \
+        mbstring xml intl curl
+
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
+
+RUN a2enmod rewrite
+
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
+
+WORKDIR /var/www/html
+
+# 1) Composer deps (sin copiar todo el proyecto)
+COPY composer.json composer.lock ./
+RUN composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader --no-scripts
+
+# 2) NPM deps
+COPY package.json package-lock.json ./
+
+# Fuerza bin-links (symlinks en .bin) para que Vite funcione en Linux
+RUN npm config set bin-links true \
+ && npm config set fund false \
+ && npm config set audit false \
+ && npm ci
+
+# 3) copia el resto del código
+COPY . .
+
+# ahora ya existe artisan
+RUN composer dump-autoload --optimize
+RUN php artisan package:discover --ansi
+
+# 4) Build Vite (sin .bin)
+RUN node ./node_modules/vite/bin/vite.js build
+
+RUN chown -R www-data:www-data /var/www/html

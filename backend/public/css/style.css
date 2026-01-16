@@ -41,12 +41,12 @@ body, h2, input, textarea, select, button {
 html, body {
     height: 100%;
     margin: 0;
-    background-color: #5422db;
+    background-color: var(--color-tertiary);
 }
 
 .welcome-page {
     height: 100vh;
-    overflow: hidden; /* evita scroll */
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -64,42 +64,37 @@ html, body {
     display: block;
     border-radius: 8px;
 
-    /* Glow dorado/fuego alrededor (sin offset) */
-    box-shadow:
-        0 0 10px rgba(255, 200, 60, 0.55),
-        0 0 24px rgba(255, 160, 20, 0.40),
-        0 0 50px rgba(255, 90, 0, 0.25);
+  /* Glow (re-mapeado a paleta; pierde “dorado/fuego”) */
+box-shadow:
+    0 0 10px var(--color-tertiary-container),
+    0 0 24px var(--color-inverse-primary),
+    0 0 50px var(--color-primary-container);
 
-    /* Realza un poco la imagen */
     filter: saturate(1.05) contrast(1.05);
 }
 
 /* -------------------------------------------------- */
-/* PÁGINA PARTIDAS (Mobile-first)                      */
-/* - Estilos para la pantalla "Mis Partidas"           */
-/* - Lista de campañas del usuario + acciones           */
+/* PÁGINA PARTIDAS                                    */
 /* -------------------------------------------------- */
 
 .page-partidas {
-    /* ocupa pantalla completa (si tienes header, resta su alto) */
     min-height: calc(100vh - 64px);
     display: flex;
     justify-content: center;
-    padding: 24px 12px;     /* móvil: padding más contenido */
-    background: #7020e7;
+    padding: 24px 12px;
+    background: var(--color-primary);
 }
 
 /* Contenedor principal de la tarjeta */
 .card-partidas {
     width: 100%;
-    max-width: 340px;       /* móvil: similar a la maqueta */
-    background: #fff;
+    max-width: 340px;
+    background: var(--color-primary-container);
     border-radius: 18px;
     padding: 14px 16px 18px;
-    box-shadow: 0 10px 25px rgba(0,0,0,.12);
+    box-shadow: 0 10px 25px var(--color-secondary-container);
 }
 
-/* Barra superior: usuario / espacio */
 .topbar {
     display: flex;
     justify-content: flex-end;
@@ -112,15 +107,15 @@ html, body {
     font-size: 12px;
     padding: 4px 10px;
     border-radius: 999px;
-    background: #efe6ff;
-    color: #3b2a64;
-    border: 1px solid #dac8ff;
+    background: var(--color-inverse-primary);
+    color: var(--color-secondary-container);
+    border: 1px solid var(--color-primary);
 }
 
 /* Título centrado */
 .title {
     text-align: center;
-    color: #6d51b7;
+    color: var(--color-tertiary);
     font-size: 26px;
     font-weight: 800;
     margin: 18px 0 22px;
@@ -141,19 +136,18 @@ html, body {
     gap: 10px;
 }
 
-/* Caja con el nombre de la partida (estilo “rectángulo rosa”) */
+/* Caja con el nombre de la partida */
 .name {
     min-width: 0;
     flex: 1;
-    background: #f1c3cc;
-    border: 2px solid #c08a94;
+    background: var(--color-tertiary-container);
+    border: 2px solid var(--color-tertiary);
     border-radius: 0;
     padding: 6px 10px;
     font-weight: 700;
-    color: #2b2b2b;
+    color: var(--color-secondary-container);
 }
 
-/* Subtexto opcional (modo de juego, etc.) */
 .sub {
     font-weight: 600;
     font-size: 11px;
@@ -161,13 +155,11 @@ html, body {
     margin-top: 2px;
 }
 
-/* Grupo de iconos (ver/editar/borrar) */
 .actions {
     display: flex;
     gap: 8px;
 }
 
-/* Botones de icono */
 .icon-btn {
     width: 24px;
     height: 24px;
@@ -186,34 +178,30 @@ html, body {
     transform: translateY(-1px);
 }
 
-/* SVG dentro del botón */
 .icon {
     width: 18px;
     height: 18px;
-    fill: #2b2b2b;
+    fill: var(--color-secondary-container);
 }
 
-/* Variante para botón de borrar */
 .icon-btn.danger .icon {
-    fill: #111;
+    fill: var(--color-error);
 }
 
-/* Texto cuando no hay partidas */
 .empty {
     text-align: center;
     opacity: .75;
     margin-top: 10px;
 }
 
-/* Botón de player */
-.char-role{
+.char-role {
     font-size: 12px;
     opacity: .85;
     margin-left: 6px;
 }
 
 /* -------------------------------------------------- */
-/* jQuery UI Tabs - Mis Partidas                      */
+/* jQuery UI Tabs                                     */
 /* -------------------------------------------------- */
 
 .tabs-partidas {
@@ -233,8 +221,8 @@ html, body {
 .tabs-partidas .ui-tabs-nav li {
     list-style: none;
     border: none;
-    background: #efe6ff;
-    border: 1px solid #dac8ff;
+    background: var(--color-inverse-primary);
+    border: 1px solid var(--color-primary);
     border-radius: 999px;
 }
 
@@ -243,18 +231,18 @@ html, body {
     padding: 6px 10px;
     font-weight: 700;
     font-size: 12px;
-    color: #3b2a64;
+    color: var(--color-secondary-container);
     text-decoration: none;
     white-space: nowrap;
 }
 
 .tabs-partidas .ui-tabs-nav li.ui-tabs-active {
-    background: #6d51b7;
-    border-color: #6d51b7;
+    background: var(--color-tertiary);
+    border-color: var(--color-tertiary);
 }
 
 .tabs-partidas .ui-tabs-nav li.ui-tabs-active a {
-    color: #fff;
+    color: var(--color-primary-container);
 }
 
 .tab-panel {
@@ -265,7 +253,7 @@ html, body {
     margin: 0 0 4px 0;
     font-size: 18px;
     font-weight: 800;
-    color: #2b2b2b;
+    color: var(--color-secondary-container);
 }
 
 .tab-mode, .tab-desc {
@@ -275,14 +263,15 @@ html, body {
 }
 
 .member {
-    background: #fff;
-    border: 1px solid #eee;
+    background: var(--color-primary-container);
+    border: 1px solid var(--color-inverse-primary);
     padding: 10px;
     margin-top: 10px;
 }
 
 .member-chars {
     margin: 6px 0 0 18px;
+    padding: 0;
 }
 
 .badge-role {
@@ -290,57 +279,55 @@ html, body {
     font-size: 11px;
     padding: 2px 8px;
     border-radius: 999px;
-    background: #f1c3cc;
-    border: 1px solid #c08a94;
+    background: var(--color-tertiary-container);
+    border: 1px solid var(--color-tertiary);
 }
+
 /* ==========================================
-   Tooltip jQuery UI - Forzar estilo propio
+    Tooltip jQuery UI - Forzar estilo propio
    ========================================== */
 
-/* El div real que crea jQuery UI */
 body div.ui-tooltip.ui-widget.ui-widget-content {
-  padding: 10px 12px !important;
-  border-radius: 12px !important;
+    padding: 10px 12px !important;
+    border-radius: 12px !important;
 
-  background: rgba(18, 18, 22, 0.92) !important;
-  color: #f3f3f6 !important;
+    background: var(--color-secondary-container) !important;
+    color: var(--color-primary-container) !important;
 
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border: 1px solid var(--color-inverse-primary) !important;
 
-  box-shadow: 0 12px 30px rgba(0,0,0,.30) !important;
+    box-shadow: 0 12px 30px var(--color-secondary-container) !important;
 
-  font-size: 13px !important;
-  line-height: 1.35 !important;
-  font-weight: 500 !important;
-  letter-spacing: .2px !important;
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    font-weight: 500 !important;
+    letter-spacing: .2px !important;
 
-  max-width: 320px !important;
+    max-width: 320px !important;
 
-  backdrop-filter: blur(6px) !important;
-  -webkit-backdrop-filter: blur(6px) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
 }
 
-/* Quita el “padding extra”/fondos internos que mete el theme */
 body div.ui-tooltip.ui-widget.ui-widget-content * {
-  background: transparent !important;
-  border: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
 }
 
-/* (Opcional) cursor */
 .js-tooltip { cursor: help; }
 
+
+
 /* -------------------------------------------------- */
-/* RESPONSIVE (Tablet / Desktop)                       */
+/* RESPONSIVE                                         */
 /* -------------------------------------------------- */
 
-/* Pantallas medianas (tablet) */
 @media (min-width: 768px) {
     .welcome-dragon {
         max-height: 40vh;
         max-width: 70vw;
     }
 
-    /* Partidas: un poco más de aire en tablet */
     .page-partidas {
         padding: 28px 16px;
     }
@@ -355,7 +342,6 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
     }
 }
 
-/* Pantallas grandes (desktop) */
 @media (min-width: 1024px) {
     .welcome-dragon {
         max-height: 60vh;
@@ -365,5 +351,6 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
     .card-partidas {
         max-width: 520px;
     }
+
 }
 
