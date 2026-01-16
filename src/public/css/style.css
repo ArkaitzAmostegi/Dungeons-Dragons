@@ -1,3 +1,23 @@
+/* Paleta de colores */
+:root {
+  /* Base palette */
+  --color-primary: #5A5881;
+  --color-secondary: #9A9C71;
+  --color-tertiary: #76538B;
+  --color-error: #BA1A1A;
+
+  /* Containers */
+  --color-primary-container: #E3DFFF;
+  --color-secondary-container: #3A3C09;
+  --color-tertiary-container: #F1C8A3;
+  --color-error-container: #FFDAD6;
+
+  /* Inverse */
+  --color-inverse-primary: #C3C0FF;
+}
+
+
+
 /* Mobile-first (por defecto: móvil) */
 html, body {
     height: 100%;
@@ -165,6 +185,118 @@ html, body {
     opacity: .75;
     margin-top: 10px;
 }
+/* -------------------------------------------------- */
+/* jQuery UI Tabs - Mis Partidas                      */
+/* -------------------------------------------------- */
+
+.tabs-partidas {
+    margin-top: 10px;
+}
+
+.tabs-partidas .ui-tabs-nav {
+    padding: 0;
+    margin: 0 0 10px 0;
+    background: transparent;
+    border: none;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+}
+
+.tabs-partidas .ui-tabs-nav li {
+    list-style: none;
+    border: none;
+    background: #efe6ff;
+    border: 1px solid #dac8ff;
+    border-radius: 999px;
+}
+
+.tabs-partidas .ui-tabs-nav li a {
+    display: block;
+    padding: 6px 10px;
+    font-weight: 700;
+    font-size: 12px;
+    color: #3b2a64;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.tabs-partidas .ui-tabs-nav li.ui-tabs-active {
+    background: #6d51b7;
+    border-color: #6d51b7;
+}
+
+.tabs-partidas .ui-tabs-nav li.ui-tabs-active a {
+    color: #fff;
+}
+
+.tab-panel {
+    padding: 10px 0;
+}
+
+.tab-title {
+    margin: 0 0 4px 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: #2b2b2b;
+}
+
+.tab-mode, .tab-desc {
+    margin: 0 0 6px 0;
+    font-size: 13px;
+    opacity: .85;
+}
+
+.member {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.member-chars {
+    margin: 6px 0 0 18px;
+}
+
+.badge-role {
+    margin-left: 6px;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #f1c3cc;
+    border: 1px solid #c08a94;
+}
+/* =========================
+    jQuery UI Tooltip (estilo)
+   ========================= */
+.ui-tooltip {
+    /* caja */
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(18, 18, 22, 0.92);
+    color: #f3f3f6;
+
+    /* tipografía */
+    font-size: 13px;
+    line-height: 1.35;
+    font-weight: 500;
+    letter-spacing: .2px;
+
+    /* sombra */
+    box-shadow: 0 12px 30px rgba(0,0,0,.30);
+
+    /* ancho */
+    max-width: 320px;
+
+    /* suavizado */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* (Opcional) cursor en elementos con tooltip */
+.js-tooltip { cursor: help; }
+
 
 /* -------------------------------------------------- */
 /* RESPONSIVE (Tablet / Desktop)                       */
