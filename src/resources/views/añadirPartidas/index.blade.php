@@ -4,124 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Crear partida</title>
-    <style>
-        /* ===== MOBILE FIRST ===== */
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            padding: 15px;
-        }
-
-        h2 {
-            margin-bottom: 8px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        input[type="text"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            /* mejor para móvil */
-            box-sizing: border-box;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 90px;
-        }
-
-        .personajes-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .lista,
-        .dropzone {
-            width: 100%;
-            min-height: 160px;
-            padding: 10px;
-            border-radius: 6px;
-        }
-
-        .lista {
-            background: #fff;
-            border: 1px solid #ccc;
-        }
-
-        .dropzone {
-            background: #e0e0e0;
-            border: 2px dashed #999;
-            text-align: center;
-        }
-
-        .personaje {
-            padding: 10px;
-            margin-bottom: 8px;
-            background: #d9edf7;
-            border-radius: 4px;
-            cursor: grab;
-            font-size: 15px;
-        }
-
-        .dropzone.over {
-            border-color: #333;
-        }
-
-        .descripcion {
-            margin-top: 8px;
-            font-style: italic;
-            font-size: 14px;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        /* ===== TABLET / DESKTOP ===== */
-        @media (min-width: 768px) {
-            body {
-                padding: 30px;
-            }
-
-            .personajes-container {
-                flex-direction: row;
-                gap: 30px;
-            }
-
-            .lista,
-            .dropzone {
-                width: 250px;
-                min-height: 200px;
-            }
-
-            button {
-                width: auto;
-            }
-
-            /* CONTENEDOR DESKTOP */
-            .page {
-                max-width: 520px;
-                margin: 0 auto;
-            }
-
-            /* DESKTOP MÁS GRANDE */
-            @media (min-width: 1024px) {
-                .page {
-                    max-width: 600px;
-                }
-            }
-
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/anadirPartidas.css') }}">
 </head>
 
 <body>
@@ -129,7 +12,7 @@
 
 
         <form method="POST" action="/partidas">
-             @csrf
+            @csrf
 
             <!-- Nombre -->
             <div class="form-group">
@@ -139,7 +22,7 @@
 
             <!-- Descripción -->
             <div class="form-group">
-                <h2>Descripción</h2>
+                <h2>Descripcion</h2>
                 <textarea name="descripcion" placeholder="Describe la partida..."></textarea>
             </div>
 
@@ -149,22 +32,37 @@
 
                 <div class="personajes-container">
                     <div class="lista">
-                        <div class="personaje" draggable="true" data-id="1" data-descripcion="Experto en combate cuerpo a cuerpo. Alta resistencia.">
+                        <div class="personaje" draggable="true" data-id="1" data-descripcion="Luchador resistente, especialista en combate cuerpo a cuerpo.">
                             Guerrero
                         </div>
-                        <div class="personaje" draggable="true" data-id="2" data-descripcion="Especialista en hechizos y daño mágico.">
+                        <div class="personaje" draggable="true" data-id="2" data-descripcion="Maestro de la magia, inflige daño a distancia con hechizos.">
                             Mago
                         </div>
-                        <div class="personaje" draggable="true" data-id="3" data-descripcion="Sigilo, trampas y ataques críticos.">
+                        <div class="personaje" draggable="true" data-id="3" data-descripcion="Ágil y sigiloso, experto en trampas y ataques críticos.">
                             Pícaro
                         </div>
-                        <div class="personaje" draggable="true" data-id="4" data-descripcion="Apoyo, curación y magia divina.">
-                            Clérigo
+                        <div class="personaje" draggable="true" data-id="4" data-descripcion="Furioso combatiente, muy resistente y poderoso en el ataque físico.">
+                            Barbaro
+                        </div>
+                        <div class="personaje" draggable="true" data-id="5" data-descripcion="Conecta con la naturaleza, capaz de curar y usar magia elemental.">
+                            Druida
+                        </div>
+                        <div class="personaje" draggable="true" data-id="6" data-descripcion="Utiliza hechizos para causar daño a distancia o alterar la realidad.">
+                            Hechicero
+                        </div>
+                        <div class="personaje" draggable="true" data-id="7" data-descripcion="Especialista en artes marciales, combina agilidad y fuerza física.">
+                            Monje
+                        </div>
+                        <div class="personaje" draggable="true" data-id="8" data-descripcion="Explorador del bosque, experto en arquería y supervivencia.">
+                            Guardabosques
+                        </div>
+                        <div class="personaje" draggable="true" data-id="9" data-descripcion="Usuario de magia oscura, mezcla hechizos de daño y maldiciones.">
+                            Brujo
                         </div>
                     </div>
 
                     <div class="dropzone" id="dropzone">
-                        Arrastra aquí los personajes
+                        Arrastra aqui los personajes (Max: 5)
                     </div>
                     @error('personajes')
                     <p style="color:red; font-size:14px;">{{ $message }}</p>
@@ -182,10 +80,11 @@
                 <h2>Modo de juego</h2>
                 <select name="juego_id" id="modoSelect" required>
                     <option value="">Selecciona un modo</option>
-                    <option value="1">Rol clásico</option>
-                    <option value="2">One-shot</option>
-                    <option value="3">Campaña larga</option>
-                    <option value="4">Hardcore</option>
+                    <option value="1">Exploración</option>
+                    <option value="2">Atraco</option>
+                    <option value="3">Escaramuza</option>
+                    <option value="4">Asedio</option>
+                    <option value="5">Rescate</option>
                 </select>
 
                 <p id="modoDescripcion" class="descripcion"></p>
@@ -228,6 +127,10 @@
 
                 const id = e.dataTransfer.getData('id');
                 const text = e.dataTransfer.getData('text');
+                if (seleccionados.length >= 5) {
+                    alert("Solo puedes seleccionar un máximo de 5 personajes.");
+                    return;
+                }
 
                 if (!seleccionados.includes(id)) {
                     seleccionados.push(id);
@@ -235,7 +138,14 @@
                     const div = document.createElement('div');
                     div.textContent = text;
                     div.className = 'personaje';
-                    div.style.cursor = 'default';
+                    div.style.cursor = 'pointer';
+
+                    // Al hacer clic en el personaje de la dropzone, se elimina
+                    div.addEventListener('click', () => {
+                        dropzone.removeChild(div);
+                        seleccionados = seleccionados.filter(sid => sid !== id);
+                        input.value = seleccionados.join(',');
+                    });
 
                     dropzone.appendChild(div);
                     input.value = seleccionados.join(',');
@@ -246,10 +156,11 @@
             const modoDescripcion = document.getElementById('modoDescripcion');
 
             const modos = {
-                rol: 'Partida tradicional centrada en narrativa e interpretación.',
-                'one-shot': 'Historia corta que se completa en una sola sesión.',
-                campaña: 'Aventura larga con progresión de personajes.',
-                hardcore: 'Alta dificultad, decisiones permanentes y consecuencias reales.'
+                1: 'Descubrir zonas, resolver peligros y avanzar por territorio desconocido.',
+                2: 'Planificación, infiltración y escape con botín u objetivo.',
+                3: 'Combate rápido y táctico contra enemigos o facciones rivales.',
+                4: 'Defender o conquistar una fortaleza durante varias fases.',
+                5: 'Recuperar un rehén/artefacto antes de que se agote el tiempo.'
             };
 
             modoSelect.addEventListener('change', () => {

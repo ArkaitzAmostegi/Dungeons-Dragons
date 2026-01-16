@@ -1,16 +1,6 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Mis Partidas
-        </h2>
-    </x-slot>
-
     <div class="page-partidas">
         <div class="card-partidas">
-
-            <div class="topbar">
-                <div class="user-pill">{{ Auth::user()->name }}</div>
-            </div>
 
             <h1 class="title">Mis Partidas</h1>
 
@@ -45,7 +35,7 @@
                                             <span class="badge-role">{{ optional($campaign->juego)->nombre }}</span>
                                         </span>
                                     @else
-                                        <span class="ui-tooltip" title="Sin modo de juego">—</span>
+                                        <span class="js-tooltip" title="Sin modo de juego">—</span>
                                     @endif
                                 </div>
                                 @if($campaign->description)
@@ -83,14 +73,20 @@
                                                             : "Personaje no disponible";
                                                     @endphp
 
-                                                    <span class="ui-tooltip" title="{{ $tooltip }}">
+                                                    <span class="js-tooltip" title="{{ $tooltip }}">
                                                         <span class="badge-role">
                                                             {{ $c?->name ?? 'Personaje' }}
                                                         </span>
                                                     </span>
-                                                    @if($m->role) 
-                                                        <span> - {{ $m->role }}</span>
+                                                    @php
+                                                        // membership = fila de campaign_user_character
+                                                        $role = $m->getAttribute('role') ?? data_get($m, 'attributes.role');
+                                                    @endphp
+
+                                                    @if($role)
+                                                        <span class="char-role"> - {{ $role }}</span>
                                                     @endif
+
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -112,7 +108,7 @@
             $("#tabs-partidas").tabs();
 
             $(document).tooltip({
-            items: ".ui-tooltip",
+            items: ".js-tooltip",
             track: true,
             position: { my: "left+12 top+12", at: "left bottom" }
             });
