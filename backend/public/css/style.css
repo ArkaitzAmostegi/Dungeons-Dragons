@@ -54,7 +54,9 @@ box-shadow:
     filter: saturate(1.05) contrast(1.05);
 }
 
-/* LOGIN */
+/* -----------------------
+            LOGIN         
+--------------------------- */
 .auth-page{
     width: 100%;
     min-height: 100vh;
@@ -181,6 +183,19 @@ box-shadow:
     width: 200px;
     height: auto;
     display: block;
+}
+
+/*---------------------------------
+            Página register
+----------------------------------- */
+/* Register: link centrado debajo del botón */
+.auth-link-center{
+    text-align: center;
+}
+
+/* En register suele haber más campos: compacta un poco */
+.auth-form{
+    gap: 14px; /* antes 18px */
 }
 
 
@@ -462,4 +477,32 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
     .card-partidas {
         max-width: 520px;
     }
+}
+
+/* Forzar fondo lila en inputs de auth (gana a bg-white de Tailwind) */
+.auth-card .auth-input{
+    background-color: var(--color-tertiary) !important;
+    color: var(--color-primary-container) !important;
+
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+
+    border-radius: 999px !important;
+    padding: 12px 14px !important;
+}
+
+/* Focus sin halo */
+.auth-card .auth-input:focus{
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Chrome autofill (si el navegador rellena email/pass y lo deja blanco/amarillo) */
+.auth-card .auth-input:-webkit-autofill,
+.auth-card .auth-input:-webkit-autofill:hover,
+.auth-card .auth-input:-webkit-autofill:focus{
+    -webkit-text-fill-color: var(--color-primary-container) !important;
+    box-shadow: 0 0 0px 1000px var(--color-tertiary) inset !important;
+    transition: background-color 9999s ease-out 0s;
 }
