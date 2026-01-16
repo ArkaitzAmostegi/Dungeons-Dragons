@@ -12,6 +12,7 @@ class Campaign extends Model
     protected $fillable = [
         'title',
         'description',
+        'modo',
         'status',
         'juego_id',
     ];
