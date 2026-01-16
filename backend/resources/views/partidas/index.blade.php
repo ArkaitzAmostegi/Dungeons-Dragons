@@ -2,10 +2,6 @@
     <div class="page-partidas">
         <div class="card-partidas">
 
-            <div class="topbar">
-                <div class="user-pill">{{ Auth::user()->name }}</div>
-            </div>
-
             <h1 class="title">Mis Partidas</h1>
 
             @if($campaigns->isEmpty())
@@ -63,34 +59,50 @@
 
                                         <ul class="member-chars">
                                             @foreach($rows as $m)
-                                                <li>
-                                                    @php
-                                                        $c = $m->character;
-                                                        $tooltip = $c
-                                                            ? trim(
-                                                                $c->name
-                                                                . ($c->race?->name ? " | Raza: {$c->race->name}" : "")
-                                                                . " | Nivel: {$c->level}"
-                                                                . ($c->class ? " | Clase: {$c->class}" : "")
-                                                                . ($c->description ? " — {$c->description}" : "")
-                                                            )
-                                                            : "Personaje no disponible";
-                                                    @endphp
+                                                @php
+                                                    $c = $m->character;
+                                                    $tooltip = $c
+                                                        ? trim(
+                                                            $c->name
+                                                            . ($c->race?->name ? " | Raza: {$c->race->name}" : "")
+                                                            . " | Nivel: {$c->level}"
+                                                            . ($c->class ? " | Clase: {$c->class}" : "")
+                                                            . ($c->description ? " — {$c->description}" : "")
+                                                        )
+                                                        : "Personaje no disponible";
+                                                @endphp
 
-                                                    <span class="js-tooltip" title="{{ $tooltip }}">
-                                                        <span class="badge-role">
-                                                            {{ $c?->name ?? 'Personaje' }}
+                                                <li class="char-row">
+                                                    <div class="char-left">
+                                                        <span class="js-tooltip" title="{{ $tooltip }}">
+                                                            <span class="badge-role">
+                                                                {{ $c?->name ?? 'Personaje' }}
+                                                            </span>
                                                         </span>
-                                                    </span>
-                                                    @php
-                                                        // membership = fila de campaign_user_character
-                                                        $role = $m->getAttribute('role') ?? data_get($m, 'attributes.role');
-                                                    @endphp
 
-                                                    @if($role)
-                                                        <span class="char-role"> - {{ $role }}</span>
-                                                    @endif
+                                                        @php
+                                                            $role = $m->getAttribute('role') ?? data_get($m, 'attributes.role');
+                                                        @endphp
 
+                                                        @if($role)
+                                                            <span class="char-role"> - {{ $role }}</span>
+                                                        @endif
+                                                    </div>
+
+                                                    {{-- Acciones editar y borrar --}}
+                                                    <div class="char-actions">
+                                                        <a class="icon-btn" href="#" title="Editar">
+                                                            <svg viewBox="0 0 24 24" class="icon">
+                                                                <path d="M3 17.25V21h3.75L17.8 9.95l-3.75-3.75L3 17.25Zm18-11.5a1 1 0 0 0 0-1.4l-1.85-1.85a1 1 0 0 0-1.4 0l-1.45 1.45 3.75 3.75L21 5.75Z"/>
+                                                            </svg>
+                                                        </a>
+
+                                                        <button class="icon-btn danger" type="button" title="Borrar">
+                                                            <svg viewBox="0 0 24 24" class="icon">
+                                                                <path d="M6 7h12l-1 14H7L6 7Zm3-3h6l1 2H8l1-2Zm-4 2h14v2H5V6Z"/>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
                                                 </li>
                                             @endforeach
                                         </ul>
