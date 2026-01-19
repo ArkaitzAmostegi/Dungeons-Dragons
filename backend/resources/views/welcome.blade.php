@@ -31,36 +31,29 @@
 
         <!-- Rewies -- API -->
         <section class="reviews">
-            <h2>Reseñas</h2>
-            <div id="reviews" class="reviews-grid"></div>
+            <div id="review-slot" class="review-card"></div>
         </section>
 
+
             @if (Route::has('login'))
-                <nav class="flex items-center justify-center gap-4">
+                <nav class="welcome-auth">
                     @auth
-                        <a
-                            href="{{ url('/dashboard') }}"
-                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal"
-                        >
+                        <a href="{{ url('/dashboard') }}" class="btn-auth btn-auth--primary">
                             Dashboard
                         </a>
                     @else
-                        <a
-                            href="{{ route('login') }}"
-                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal"
-                        >
+                        <a href="{{ route('login') }}" class="btn-auth btn-auth--primary">
                             Log in
                         </a>
 
                         @if (Route::has('register'))
-                            <a
-                                href="{{ route('register') }}"
-                                class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
+                            <a href="{{ route('register') }}" class="btn-auth btn-auth--primary">
                                 Register
                             </a>
                         @endif
                     @endauth
                 </nav>
+
             @endif
         </header>
 
@@ -70,39 +63,58 @@
             <div class="h-14.5 hidden lg:block"></div>
         @endif
 
-        <!-- Para el API -->
+        <!-- Para el API de las reseñas-->
         <script>
             document.addEventListener('DOMContentLoaded', async () => {
-            const box = document.getElementById('reviews');
-            box.innerHTML = '<p>Cargando reseñas...</p>';
+            const slot = document.getElementById('review-slot');
+            slot.innerHTML = '<p class="reviews-status">Cargando reseñas...</p>';
 
             try {
-                const res = await fetch('/api/reviews', { headers: { 'Accept':'application/json' }});
+                const res = await fetch('/api/reviews', { headers: { 'Accept': 'application/json' }});
                 if (!res.ok) throw new Error('HTTP ' + res.status);
-                const reviews = await res.json();
 
-                if (!reviews.length) {
-                box.innerHTML = '<p>No hay reseñas todavía.</p>';
+                const reviews = await res.json();
+                if (!Array.isArray(reviews) || reviews.length === 0) {
+                slot.innerHTML = '<p class="reviews-status">No hay reseñas todavía.</p>';
                 return;
                 }
 
-                box.innerHTML = reviews.map(r => `
-                <article class="review-card">
-                    <h3>${escapeHtml(r.title ?? '')}</h3>
-                    <p class="review-desc">${escapeHtml(r.descripcion ?? '')}</p>
-                    <p class="review-author">— ${escapeHtml(r.nombre ?? '')}</p>
-                </article>
-                `).join('');
+                let i = 0;
+                render(reviews[i]);
+
+                setInterval(() => {
+                i = (i + 1) % reviews.length;
+                slot.classList.remove('is-visible'); // pequeña animación
+                requestAnimationFrame(() => {
+                    render(reviews[i]);
+                    slot.classList.add('is-visible');
+                });
+                }, 5000);
+
+                function render(r) {
+                slot.innerHTML = `
+                    <div class="review-head">
+                    <div class="review-rating" aria-label="rating">${'★'.repeat(r.rating ?? 0)}</div>
+                    <div class="review-title">${escapeHtml(r.title ?? '')}</div>
+                    </div>
+                    <div class="review-desc">${escapeHtml(r.descripcion ?? '')}</div>
+                    <div class="review-author">— ${escapeHtml(r.nombre ?? '')}</div>
+                `;
+                }
+
             } catch (e) {
-                box.innerHTML = '<p>Error cargando reseñas.</p>';
                 console.error(e);
+                slot.innerHTML = '<p class="reviews-status">Error cargando reseñas.</p>';
             }
 
             function escapeHtml(s){
-                return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+                return String(s).replace(/[&<>"']/g, c => ({
+                '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+                }[c]));
             }
             });
         </script>
+
 
     </body>
 </html>
