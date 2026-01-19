@@ -39,7 +39,7 @@ class CampaignController extends Controller
     public function create()
     {
 
-        return view('añadirPartidas.index');
+        return view('partidas.create');
     }
 
     /**
