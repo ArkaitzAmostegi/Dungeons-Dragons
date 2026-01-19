@@ -345,6 +345,12 @@ box-shadow:
     margin-left: 6px;
 }
 
+.char-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 /* -------------------------------------------------- */
 /* jQuery UI Tabs                                     */
 /* -------------------------------------------------- */
@@ -496,8 +502,25 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
     .card-partidas {
         max-width: 520px;
     }
+  /* Más ancho y menos margen lateral */
+  .page-partidas{
+    padding: 24px 32px;
+    align-items: flex-start;
+  }
 
+  /* La tarjeta ocupa casi toda la pantalla */
+  .card-partidas{
+    max-width: min(1200px, 94vw);
+    width: 94vw;
+    padding: 24px 28px 28px;
+  }
+
+  /* Opcional: el contenido interno se ve mejor en ancho grande */
+  .member{
+    padding: 14px;
+  }
 }
+
 
 /* Forzar fondo lila en inputs de auth (gana a bg-white de Tailwind) */
 .auth-card .auth-input{
