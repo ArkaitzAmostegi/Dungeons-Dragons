@@ -1,8 +1,13 @@
 @font-face {
     font-family: 'Dragon Hunter';
     src: url('/fonts/DragonHunter-Regular.woff2') format('woff2'),
+<<<<<<< HEAD
         url('/fonts/DragonHunter-Regular.woff') format('woff'),
         url('/fonts/DragonHunter-Regular.otf') format('opentype');
+=======
+         url('/fonts/DragonHunter-Regular.woff') format('woff'),
+         url('/fonts/DragonHunter-Regular.otf') format('opentype');
+>>>>>>> origin/Last
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -141,4 +146,65 @@ button {
         }
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+        /* Flex para que lista de clases y dropzone estén lado a lado */
+        .personajes-flex {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .clases-lista {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .dropzone-container {
+            flex: 1;
+        }
+
+        .dropzone {
+            min-height: 300px;
+            border: 2px dashed #aaa;
+            border-radius: 8px;
+            padding: 10px;
+            background: #f5f5f5;
+        }
+
+        .class-group {
+            margin-bottom: 10px;
+        }
+
+        .class-toggle {
+            width: 100%;
+            padding: 6px 10px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #eee;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .characters-list {
+            list-style: none;
+            padding-left: 10px;
+            margin-top: 5px;
+        }
+
+        .characters-list li.personaje {
+            padding: 4px 6px;
+            margin-bottom: 4px;
+            background: #ddd;
+            border-radius: 4px;
+            cursor: grab;
+        }
+
+        .dropzone .personaje {
+            background: #bbb;
+            margin: 5px 0;
+        }
+>>>>>>> origin/Last
