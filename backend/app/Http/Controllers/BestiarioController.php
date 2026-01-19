@@ -2,22 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+
 
 class BestiarioController extends Controller
 {
+    
     public function index()
     {
-        // Llamada a la API de ejemplo: Acid Arrow
-        $response = Http::get('https://www.dnd5eapi.co/api/2014/spells/acid-arrow/');
-        
-        if ($response->successful()) {
-            $spell = $response->json(); // obtiene los datos en array
-        } else {
-            $spell = null;
-        }
+        $response = Http::get('https://www.dnd5eapi.co/api/2014/monsters');
 
-        return view('bestiario.index', compact('spell'));
+        $monsters = $response->successful()
+            ? $response->json()['results']
+            : [];
+
+        return view('bestiario.index', compact('monsters'));
     }
+    public function show(string $monster)
+{
+    $response = Http::get("https://www.dnd5eapi.co/api/2014/monsters/{$monster}");
+
+    $monsterData = $response->successful()
+        ? $response->json()
+        : null;
+
+    return view('bestiario.show', compact('monsterData'));
+}
+
+    
 }

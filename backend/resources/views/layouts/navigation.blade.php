@@ -22,7 +22,7 @@
                         {{ __('Bestiario') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('historial.index')" :active="request()->routeIs('historial.index')">
+                    <x-nav-link :href="route('partidas.show')" :active="request()->routeIs('partidas.show')">
                         {{ __('Historial') }}
                     </x-nav-link>
                 </div>
@@ -80,7 +80,7 @@
                     {{ __('Bestiario') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('historial.index')" :active="request()->routeIs('historial.index')">
+                <x-responsive-nav-link :href="route('partidas.show')" :active="request()->routeIs('partidas.show')">
                     {{ __('Historial') }}
                 </x-responsive-nav-link>
             </div>

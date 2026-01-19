@@ -30,6 +30,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('/bestiario', [BestiarioController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('bestiario.index');
+Route::get('/bestiario/{monster}', [BestiarioController::class, 'show'])
+    ->name('bestiario.show')
+    ->middleware(['auth', 'verified']);
+
+
+Route::get('/historial', [CampaignController::class, 'historial'])
+     ->middleware(['auth', 'verified'])
+     ->name('partidas.show');
 
 
 
