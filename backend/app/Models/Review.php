@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
 {
-    //
+    use HasFactory;
+    protected $fillable = ['nombre','title','descripcion','rating','is_public'];
 }

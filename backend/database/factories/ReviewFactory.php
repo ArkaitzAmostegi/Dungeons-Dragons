@@ -1,23 +1,20 @@
 <?php
 
-namespace Database\Factories;
-
+use App\Models\Review;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Review>
- */
 class ReviewFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Review::class;
+
     public function definition(): array
     {
         return [
-            //
+            'nombre' => $this->faker->name(),
+            'title' => $this->faker->sentence(3),
+            'descripcion' => $this->faker->paragraph(),
+            'rating' => $this->faker->numberBetween(3, 5),
+            'is_public' => true,
         ];
     }
 }

@@ -22,12 +22,19 @@
             </style>
         @endif
     </head>
-    <body class="bg-black text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+    <body class="welcome-page">
         <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
             {{-- Imagen de dragón --}}
         <div class="px-4 pt-6" style="margin-bottom:25px; padding:0px; background-color:#34303B; width:fit-content">
             <img src="{{ asset('images/DandDLogo.png') }}" alt="Dragon" class="welcome-dragon"/>
         </div>
+
+        <!-- Rewies -- API -->
+        <section class="reviews">
+            <h2>Reseñas</h2>
+            <div id="reviews" class="reviews-grid"></div>
+        </section>
+
             @if (Route::has('login'))
                 <nav class="flex items-center justify-center gap-4">
                     @auth
@@ -62,5 +69,40 @@
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
         @endif
+
+        <!-- Para el API -->
+        <script>
+            document.addEventListener('DOMContentLoaded', async () => {
+            const box = document.getElementById('reviews');
+            box.innerHTML = '<p>Cargando reseñas...</p>';
+
+            try {
+                const res = await fetch('/api/reviews', { headers: { 'Accept':'application/json' }});
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const reviews = await res.json();
+
+                if (!reviews.length) {
+                box.innerHTML = '<p>No hay reseñas todavía.</p>';
+                return;
+                }
+
+                box.innerHTML = reviews.map(r => `
+                <article class="review-card">
+                    <h3>${escapeHtml(r.title ?? '')}</h3>
+                    <p class="review-desc">${escapeHtml(r.descripcion ?? '')}</p>
+                    <p class="review-author">— ${escapeHtml(r.nombre ?? '')}</p>
+                </article>
+                `).join('');
+            } catch (e) {
+                box.innerHTML = '<p>Error cargando reseñas.</p>';
+                console.error(e);
+            }
+
+            function escapeHtml(s){
+                return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+            }
+            });
+        </script>
+
     </body>
 </html>
