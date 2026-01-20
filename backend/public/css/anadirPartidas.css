@@ -1,17 +1,4 @@
-@font-face {
-    font-family: 'Dragon Hunter';
-    src: url('/fonts/DragonHunter-Regular.woff2') format('woff2'),
-<<<<<<< HEAD
-        url('/fonts/DragonHunter-Regular.woff') format('woff'),
-        url('/fonts/DragonHunter-Regular.otf') format('opentype');
-=======
-         url('/fonts/DragonHunter-Regular.woff') format('woff'),
-         url('/fonts/DragonHunter-Regular.otf') format('opentype');
->>>>>>> origin/Last
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
+
 
 body, h2, input, textarea, select, button {
     font-family: 'Dragon Hunter', sans-serif;
@@ -146,9 +133,6 @@ button {
         }
     }
 
-<<<<<<< HEAD
-}
-=======
 }
         /* Flex para que lista de clases y dropzone estén lado a lado */
         .personajes-flex {
@@ -207,4 +191,3 @@ button {
             background: #bbb;
             margin: 5px 0;
         }
->>>>>>> origin/Last
