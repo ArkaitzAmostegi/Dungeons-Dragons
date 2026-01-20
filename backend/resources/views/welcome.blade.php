@@ -23,11 +23,11 @@
         @endif
     </head>
     <body class="welcome-page">
-       <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden mx-auto">
-    {{-- Imagen de dragón centrada --}}
-    <div class="px-4 pt-6 mx-auto mb-6" style="padding:0px; background-color:#34303B; width:fit-content;">
-        <img src="{{ asset('images/DandDLogo.png') }}" alt="Dragon" class="welcome-dragon"/>
-    </div>
+        <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
+            {{-- Imagen de dragón --}}
+        <div class="px-4 pt-6" style="margin-bottom:25px; padding:0px; background-color:#34303B; width:fit-content">
+            <img src="{{ asset('images/DandDLogo.png') }}" alt="Dragon" class="welcome-dragon"/>
+        </div>
 
         <!-- Rewies -- API -->
         <section class="reviews">

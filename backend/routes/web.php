@@ -25,6 +25,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/partidas', [CampaignController::class, 'index'])->name('partidas.index');
     Route::get('/partidas/crear', [CampaignController::class, 'create'])->name('partidas.create');
     Route::post('/partidas', [CampaignController::class, 'store'])->name('partidas.store');
+    
+    Route::get('/partidas/{campaign}/edit', [CampaignController::class, 'edit'])->name('partidas.edit');
+    Route::put('/partidas/{campaign}', [CampaignController::class, 'update'])->name('partidas.update');
+    Route::delete('/partidas/{campaign}', [CampaignController::class, 'destroy'])->name('partidas.destroy');
 });
 
 Route::get('/bestiario', [BestiarioController::class, 'index'])
@@ -38,8 +42,7 @@ Route::get('/bestiario/{monster}', [BestiarioController::class, 'show'])
 Route::get('/historial', [CampaignController::class, 'historial'])
      ->middleware(['auth', 'verified'])
      ->name('partidas.show');
-
-
+   
 
 
 require __DIR__ . '/auth.php';

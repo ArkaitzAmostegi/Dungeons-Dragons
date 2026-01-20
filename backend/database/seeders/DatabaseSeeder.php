@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
                 RaceSeeder::class,
                 JuegoSeeder::class,
                 DndSeeder::class,
+                ReviewSeeder::class,
             ]);
         }
 }
