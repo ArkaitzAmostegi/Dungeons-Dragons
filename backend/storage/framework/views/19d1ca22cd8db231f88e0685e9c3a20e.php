@@ -39,7 +39,7 @@
                 <nav class="welcome-auth">
                     <?php if(auth()->guard()->check()): ?>
                         <a href="<?php echo e(url('/dashboard')); ?>" class="btn-auth btn-auth--primary">
-                            Dashboard
+                            Mis Partidas
                         </a>
                     <?php else: ?>
                         <a href="<?php echo e(route('login')); ?>" class="btn-auth btn-auth--primary">

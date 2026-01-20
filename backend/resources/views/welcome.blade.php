@@ -39,7 +39,7 @@
                 <nav class="welcome-auth">
                     @auth
                         <a href="{{ url('/dashboard') }}" class="btn-auth btn-auth--primary">
-                            Dashboard
+                            Mis Partidas
                         </a>
                     @else
                         <a href="{{ route('login') }}" class="btn-auth btn-auth--primary">

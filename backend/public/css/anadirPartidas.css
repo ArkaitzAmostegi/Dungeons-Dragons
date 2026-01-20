@@ -1,23 +1,5 @@
 
 /* ===== MOBILE FIRST ===== */
-body {
-    font-family: 'Dragon Hunter', sans-serif;
-    background: #D0BCFF;
-    padding: 15px;
-    color: #4F378B;
-}
-
-body {
-    font-family: 'Dragon Hunter', sans-serif;
-    background: #D0BCFF;
-    padding: 15px;
-    color: #4F378B;
-}
-
-h2, input, textarea, select, button {
-    font-family: 'Dragon Hunter', sans-serif;
-}
-
 
 h2 {
     margin-bottom: 8px;
@@ -95,9 +77,6 @@ button {
 
 /* ===== TABLET / DESKTOP ===== */
 @media (min-width: 768px) {
-    body {
-        padding: 30px;
-    }
 
     .personajes-container {
         flex-direction: row;
@@ -185,3 +164,56 @@ button {
             background: #bbb;
             margin: 5px 0;
         }
+.personajes-flex {
+    display: flex;
+    gap: 20px;           /* Espacio entre la lista y el dropzone */
+    flex-wrap: wrap;      /* Para que en pantallas pequeñas se apilen */
+    justify-content: space-between;
+}
+
+.clases-lista {
+    flex: 1 1 45%;        /* Ocupa ~45% del ancho, flexible */
+    min-width: 250px;     /* Evita que se encoja demasiado */
+}
+
+.dropzone-container {
+    flex: 1 1 45%;        /* Ocupa ~45% del ancho */
+    min-width: 250px;
+}
+
+.dropzone {
+    border: 2px dashed #6d51b7;   /* Igual que tus tarjetas/botones */
+    border-radius: 8px;
+    padding: 10px;
+    min-height: 150px;
+    background: #f9f9f9;
+}
+#botonCrear {
+    padding: 10px 18px;
+    background: #6d51b7;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 6px 16px rgba(109, 81, 183, 0.35);
+}
+
+#botonCrear:hover {
+    background: #5b43a3;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(109, 81, 183, 0.45);
+}
+
+#botonCrear:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(109, 81, 183, 0.3);
+}
+
+#botonCrear:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(109, 81, 183, 0.35);
+}
+

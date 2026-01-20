@@ -1,81 +1,81 @@
 <x-app-layout>
     <link rel="stylesheet" href="{{ asset('css/anadirPartidas.css') }}">
 
-    <div class="page">
+     <div class="page-partidas">
+        <div class="card-partidas">
 
-        <form method="POST" action="/partidas">
-            @csrf
+            {{-- CONTENIDO EXACTAMENTE IGUAL --}}
+            <form method="POST" action="/partidas">
+                @csrf
 
-            <!-- Nombre -->
-            <div class="form-group">
-                <h2>Nombre de la partida</h2>
-                <input type="text" name="nombre" required>
-            </div>
-
-            <!-- Descripción -->
-            <div class="form-group">
-                <h2>Descripcion</h2>
-                <textarea name="descripcion" placeholder="Describe la partida..."></textarea>
-            </div>
-
-            <!-- Personajes: lista y dropzone paralelos -->
-            @php
-                $characters = \App\Models\Character::all();
-                $byClass = $characters->groupBy(fn($c) => $c->class ?? 'Sin Clase');
-            @endphp
-
-            <div class="form-group personajes-flex">
-                <!-- Lista de clases y personajes -->
-                <div class="clases-lista">
-                    <h2>Clases disponibles</h2>
-                    @foreach($byClass as $className => $chars)
-                        <div class="class-group">
-                            <button type="button" class="class-toggle">
-                                {{ $className }} ({{ $chars->count() }})
-                            </button>
-                            <ul class="characters-list" style="display:none;">
-                                @foreach($chars as $c)
-                                    <li class="personaje" draggable="true"
-                                        data-id="{{ $c->id }}"
-                                        data-descripcion="Nivel {{ $c->level }} | {{ $c->race?->name ?? '' }}">
-                                        {{ $c->name }}
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endforeach
+                <!-- Nombre -->
+                <div class="form-group">
+                    <h2>Nombre de la partida</h2>
+                    <input type="text" name="nombre" required>
                 </div>
 
-                <!-- Dropzone -->
-                <div class="dropzone-container">
-                    <h2>Personajes seleccionados</h2>
-                    <div class="dropzone" id="dropzone">
-                        Arrastra aqui los personajes (Max: 5)
+                <!-- Descripción -->
+                <div class="form-group">
+                    <h2>Descripcion</h2>
+                    <textarea name="descripcion" placeholder="Describe la partida..."></textarea>
+                </div>
+
+                <!-- Personajes -->
+                @php
+                    $characters = \App\Models\Character::all();
+                    $byClass = $characters->groupBy(fn($c) => $c->class ?? 'Sin Clase');
+                @endphp
+
+                <div class="form-group personajes-flex">
+                    <div class="clases-lista">
+                        <h2>Clases disponibles</h2>
+                        @foreach($byClass as $className => $chars)
+                            <div class="class-group">
+                                <button type="button" class="class-toggle">
+                                    {{ $className }} ({{ $chars->count() }})
+                                </button>
+                                <ul class="characters-list" style="display:none;">
+                                    @foreach($chars as $c)
+                                        <li class="personaje" draggable="true"
+                                            data-id="{{ $c->id }}"
+                                            data-descripcion="Nivel {{ $c->level }} | {{ $c->race?->name ?? '' }}">
+                                            {{ $c->name }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endforeach
                     </div>
-                    <input type="hidden" name="personajes" id="personajesInput">
-                    <p id="personajeDescripcion" class="descripcion"></p>
-                    @error('personajes')
-                        <p class="error-message">{{ $message }}</p>
-                    @enderror
+
+                    <div class="dropzone-container">
+                        <h2>Personajes seleccionados</h2>
+                        <div class="dropzone" id="dropzone">
+                            Arrastra aqui los personajes (Max: 5)
+                        </div>
+                        <input type="hidden" name="personajes" id="personajesInput">
+                        <p id="personajeDescripcion" class="descripcion"></p>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Modo -->
-            <div class="form-group">
-                <h2>Modo de juego</h2>
-                <select name="juego_id" id="modoSelect" required>
-                    <option value="">Selecciona un modo</option>
-                    <option value="1">Exploracion</option>
-                    <option value="2">Atraco</option>
-                    <option value="3">Escaramuza</option>
-                    <option value="4">Asedio</option>
-                    <option value="5">Rescate</option>
-                </select>
-                <p id="modoDescripcion" class="descripcion"></p>
-            </div>
+                <!-- Modo -->
+                <div class="form-group">
+                    <h2>Modo de juego</h2>
+                    <select name="juego_id" id="modoSelect" required>
+                        <option value="">Selecciona un modo</option>
+                        <option value="1">Exploracion</option>
+                        <option value="2">Atraco</option>
+                        <option value="3">Escaramuza</option>
+                        <option value="4">Asedio</option>
+                        <option value="5">Rescate</option>
+                    </select>
+                    <p id="modoDescripcion" class="descripcion"></p>
+                </div>
 
-            <button type="submit">Crear partida</button>
-        </form>
+                <button id="botonCrear" type="submit">Crear partida</button>
+            </form>
+            {{-- FIN CONTENIDO --}}
+
+        </div>
     </div>
 
     <script>

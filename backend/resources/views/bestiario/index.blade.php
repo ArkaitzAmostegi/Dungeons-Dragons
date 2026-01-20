@@ -7,7 +7,7 @@
                class="w-full p-2 mb-4 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
 
         <!-- Índice de letras -->
-        <div class="flex flex-wrap gap-2 mb-4">
+       <div class="flex gap-2 mb-4 overflow-x-auto whitespace-nowrap pb-2">
             <button class="letter-btn px-2 py-1 bg-gray-200 rounded hover:bg-gray-300" data-letter="all">Todos</button>
             @foreach(range('A', 'Z') as $letter)
                 <button class="letter-btn px-2 py-1 bg-gray-200 rounded hover:bg-gray-300" data-letter="{{ $letter }}">{{ $letter }}</button>
