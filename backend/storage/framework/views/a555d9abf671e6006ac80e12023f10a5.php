@@ -32,7 +32,7 @@
                             </li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
-
+                    
                     <?php $__currentLoopData = $campaigns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $campaign): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <?php
                             $byUser = $campaign->memberships->groupBy('user_id');
@@ -40,12 +40,30 @@
 
                         <div id="tab-<?php echo e($campaign->id); ?>" class="tab-panel">
                             <div class="tab-header">
-                                <h3 class="tab-title"><?php echo e($campaign->title); ?></h3>
+                                <div class="titulo">
+                                    <h3 class="tab-title">Título partida: <?php echo e($campaign->title); ?></h3>
+                                     
+                                    <div class="acciones">
+                                        <div class="char-actions">
+                                            <a class="icon-btn" href="#" title="Editar">
+                                                <svg viewBox="0 0 24 24" class="icon">
+                                                    <path d="M3 17.25V21h3.75L17.8 9.95l-3.75-3.75L3 17.25Zm18-11.5a1 1 0 0 0 0-1.4l-1.85-1.85a1 1 0 0 0-1.4 0l-1.45 1.45 3.75 3.75L21 5.75Z"/>
+                                                </svg>
+                                            </a>
+
+                                            <button class="icon-btn danger" type="button" title="Borrar">
+                                                <svg viewBox="0 0 24 24" class="icon">
+                                                    <path d="M6 7h12l-1 14H7L6 7Zm3-3h6l1 2H8l1-2Zm-4 2h14v2H5V6Z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="sub">
                                     <?php if($campaign->juego): ?>
-                                        <strong>Modo:</strong>
+                                        <strong>Modo de juego:</strong>
                                         <span class="js-tooltip" title="<?php echo e($campaign->juego->descripcion); ?>">
-                                            <span class="badge-role"><?php echo e($campaign->juego->nombre); ?></span>
+                                            <span class="badge-rol"><?php echo e($campaign->juego->nombre); ?></span>
                                         </span>
                                     <?php else: ?>
                                         <span class="js-tooltip" title="Sin modo de juego">—</span>
@@ -63,7 +81,7 @@
                                     <?php $u = $rows->first()->user; ?>
                                     <div class="member">
                                         <div class="member-user">
-                                            <strong><?php echo e($u?->name ?? 'Usuario'); ?></strong>
+                                            <span class="sub">Jugador: <span class="tab-title"><?php echo e($u?->name ?? 'Usuario'); ?></span></span>
                                         </div>
                                         <ul class="member-chars">
                                             <?php $__currentLoopData = $rows; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $m): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -83,9 +101,10 @@
                                                 <li class="char-row">
                                                     <div class="char-left">
                                                         <span class="js-tooltip" title="<?php echo e($tooltip); ?>">
-                                                            <span class="badge-role">
-                                                                <?php echo e($c?->name ?? 'Personaje'); ?>
-
+                                                            <span class="sub"> Personaje - 
+                                                                <span class="badge-role">
+                                                                    <?php echo e($c?->name ?? 'Personaje'); ?> 
+                                                                </span>
                                                             </span>
                                                         </span>
 
@@ -93,45 +112,7 @@
                                                             $role = $m->getAttribute('role') ?? data_get($m, 'attributes.role');
                                                         ?>
 
-                                                        <?php if($role): ?>
-                                                            <span class="char-role"> - <?php echo e($role); ?></span>
-                                                        <?php endif; ?>
                                                     </div>
-
-                                                    
-                                                    <div class="char-actions">
-                                                        <a class="icon-btn" href="#" title="Editar">
-                                                            <svg viewBox="0 0 24 24" class="icon">
-                                                                <path d="M3 17.25V21h3.75L17.8 9.95l-3.75-3.75L3 17.25Zm18-11.5a1 1 0 0 0 0-1.4l-1.85-1.85a1 1 0 0 0-1.4 0l-1.45 1.45 3.75 3.75L21 5.75Z"/>
-                                                            </svg>
-                                                        </a>
-
-                                                        <button class="icon-btn danger" type="button" title="Borrar">
-                                                            <svg viewBox="0 0 24 24" class="icon">
-                                                                <path d="M6 7h12l-1 14H7L6 7Zm3-3h6l1 2H8l1-2Zm-4 2h14v2H5V6Z"/>
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-                                                <?php
-                                                    $c = $m->character;
-                                                    $tooltip = $c
-                                                        ? trim(
-                                                            $c->name
-                                                            . ($c->race?->name ? " | Raza: {$c->race->name}" : "")
-                                                            . " | Nivel: {$c->level}"
-                                                            . ($c->class ? " | Clase: {$c->class}" : "")
-                                                            . ($c->description ? " — {$c->description}" : "")
-                                                        )
-                                                        : "Personaje no disponible";
-                                                    $role = $m->getAttribute('role') ?? data_get($m, 'attributes.role');
-                                                ?>
-                                                <li>
-                                                    <span class="js-tooltip" title="<?php echo e($tooltip); ?>">
-                                                        <span class="badge-role"><?php echo e($c?->name ?? 'Personaje'); ?></span>
-                                                    </span>
-                                                    <?php if($role): ?>
-                                                        <span class="char-role"> - <?php echo e($role); ?></span>
-                                                    <?php endif; ?>
                                                 </li>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </ul>

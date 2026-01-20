@@ -448,10 +448,9 @@ box-shadow:
     margin-left: 6px;
 }
 
-.char-row{
+.titulo{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
 }
 
 /* -------------------------------------------------- */
@@ -535,6 +534,15 @@ box-shadow:
     border-radius: 999px;
     background: var(--color-tertiary-container);
     border: 1px solid var(--color-tertiary);
+}
+.badge-rol {
+    margin-left: 6px;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    color: black;
+    background: var(--color-tertiary);
+    border: 1px solid black;
 }
 
 /* ==========================================
