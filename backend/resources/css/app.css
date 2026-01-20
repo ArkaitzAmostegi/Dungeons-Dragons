@@ -1,28 +1,5 @@
-/* 1️⃣ Definir la fuente */
-@font-face {
-  font-family: 'Dragon Hunter';
-  src: url('/fonts/DragonHunter-Regular.woff2') format('woff2'),
-       url('/fonts/DragonHunter-Regular.woff') format('woff'),
-       url('/fonts/DragonHunter-Regular.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
 
 /* 2️⃣ Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* 3️⃣ Aplicar la fuente globalmente usando la capa base de Tailwind */
-@layer base {
-  body {
-    font-family: 'Dragon Hunter', sans-serif;
-  }
-
-  /* Opcional: también forzar que todos los elementos dentro de .card-partidas usen la fuente */
-  .card-partidas, 
-  .card-partidas * {
-    font-family: 'Dragon Hunter', sans-serif;
-  }
-}

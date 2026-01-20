@@ -22,38 +22,38 @@
             </style>
         <?php endif; ?>
     </head>
-    <body class="bg-black text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
-            
-        <div class="px-4 pt-6" style="margin-bottom:25px; padding:0px; background-color:#34303B; width:fit-content">
-            <img src="<?php echo e(asset('images/DandDLogo.png')); ?>" alt="Dragon" class="welcome-dragon"/>
-        </div>
+    <body class="welcome-page">
+       <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden mx-auto">
+    
+    <div class="px-4 pt-6 mx-auto mb-6" style="padding:0px; background-color:#34303B; width:fit-content;">
+        <img src="<?php echo e(asset('images/DandDLogo.png')); ?>" alt="Dragon" class="welcome-dragon"/>
+    </div>
+
+        <!-- Rewies -- API -->
+        <section class="reviews">
+            <div id="review-slot" class="review-card"></div>
+        </section>
+
+
             <?php if(Route::has('login')): ?>
-                <nav class="flex items-center justify-center gap-4">
+                <nav class="welcome-auth">
                     <?php if(auth()->guard()->check()): ?>
-                        <a
-                            href="<?php echo e(url('/dashboard')); ?>"
-                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal"
-                        >
+                        <a href="<?php echo e(url('/dashboard')); ?>" class="btn-auth btn-auth--primary">
                             Dashboard
                         </a>
                     <?php else: ?>
-                        <a
-                            href="<?php echo e(route('login')); ?>"
-                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal"
-                        >
+                        <a href="<?php echo e(route('login')); ?>" class="btn-auth btn-auth--primary">
                             Log in
                         </a>
 
                         <?php if(Route::has('register')): ?>
-                            <a
-                                href="<?php echo e(route('register')); ?>"
-                                class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
+                            <a href="<?php echo e(route('register')); ?>" class="btn-auth btn-auth--primary">
                                 Register
                             </a>
                         <?php endif; ?>
                     <?php endif; ?>
                 </nav>
+
             <?php endif; ?>
         </header>
 
@@ -62,6 +62,59 @@
         <?php if(Route::has('login')): ?>
             <div class="h-14.5 hidden lg:block"></div>
         <?php endif; ?>
+
+        <!-- Para el API de las reseñas-->
+        <script>
+            document.addEventListener('DOMContentLoaded', async () => {
+            const slot = document.getElementById('review-slot');
+            slot.innerHTML = '<p class="reviews-status">Cargando reseñas...</p>';
+
+            try {
+                const res = await fetch('/api/reviews', { headers: { 'Accept': 'application/json' }});
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+
+                const reviews = await res.json();
+                if (!Array.isArray(reviews) || reviews.length === 0) {
+                slot.innerHTML = '<p class="reviews-status">No hay reseñas todavía.</p>';
+                return;
+                }
+
+                let i = 0;
+                render(reviews[i]);
+
+                setInterval(() => {
+                i = (i + 1) % reviews.length;
+                slot.classList.remove('is-visible'); // pequeña animación
+                requestAnimationFrame(() => {
+                    render(reviews[i]);
+                    slot.classList.add('is-visible');
+                });
+                }, 5000);
+
+                function render(r) {
+                slot.innerHTML = `
+                    <div class="review-head">
+                    <div class="review-rating" aria-label="rating">${'★'.repeat(r.rating ?? 0)}</div>
+                    <div class="review-title">${escapeHtml(r.title ?? '')}</div>
+                    </div>
+                    <div class="review-desc">${escapeHtml(r.descripcion ?? '')}</div>
+                    <div class="review-author">— ${escapeHtml(r.nombre ?? '')}</div>
+                `;
+                }
+
+            } catch (e) {
+                console.error(e);
+                slot.innerHTML = '<p class="reviews-status">Error cargando reseñas.</p>';
+            }
+
+            function escapeHtml(s){
+                return String(s).replace(/[&<>"']/g, c => ({
+                '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+                }[c]));
+            }
+            });
+        </script>
+
+
     </body>
-</html>
-<?php /**PATH /var/www/html/resources/views/welcome.blade.php ENDPATH**/ ?>
+</html><?php /**PATH /var/www/html/resources/views/welcome.blade.php ENDPATH**/ ?>

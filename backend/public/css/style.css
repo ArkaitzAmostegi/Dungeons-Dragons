@@ -1,11 +1,9 @@
-
-
 body, h2, input, textarea, select, button {
-    font-family: 'Dragon Hunter', sans-serif;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 .card-partidas, 
 .card-partidas * {
-    font-family: 'Dragon Hunter', sans-serif;
+    font-family:  system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 
@@ -27,9 +25,10 @@ body, h2, input, textarea, select, button {
     --color-inverse-primary: #C3C0FF;
 }
 
-
-
-/* Mobile-first (por defecto: móvil) */
+/*-----------------------
+        WELCOME
+-----------------------*/
+/* Mobile-first  */
 html, body {
     height: 100%;
     margin: 0;
@@ -47,9 +46,8 @@ html, body {
     padding: 16px;
 }
 
-/* móvil */
 .welcome-dragon {
-    max-height: 30vh;
+    max-height: 25vh;
     width: auto;
     max-width: 90vw;
     object-fit: contain;
@@ -64,6 +62,119 @@ box-shadow:
 
     filter: saturate(1.05) contrast(1.05);
 }
+
+/* Separación entre reseñas y botones */
+.welcome-auth{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px; /* separa de reseñas */
+    padding: 0 12px;
+}
+
+/* Botones welcome */
+.btn-auth{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 18px;
+    border-radius: 9px;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: .5px;
+    text-decoration: none;
+
+    border: 1px solid var(--color-inverse-primary);
+    transition: transform .15s ease, opacity .15s ease;
+}
+
+.btn-auth:hover{
+    transform: translateY(-1px);
+    opacity: 1;
+    background-color: var(--color-secondary);
+}
+
+/* Botón principal: mucho contraste */
+.btn-auth--primary{
+    background: var(--color-secondary-container);
+    color: var(--color-primary-container);
+    border-color: var(--color-secondary-container);
+}
+
+
+/* --------------------
+    REVIEWS (mobile-first)
+--------------------- */
+
+.reviews{
+    width: 100%;
+    padding: 0 12px;
+    margin: 14px 0 0;
+}
+
+.reviews-title{
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: var(--color-primary-container);
+    text-align: left;
+}
+
+.review-card{
+    width: 100%;
+    border-radius: 18px;
+    padding: 12px 14px;
+    background: var(--color-primary-container);
+    border: 1px solid var(--color-inverse-primary);
+    box-shadow: 0 10px 25px var(--color-secondary-container);
+
+    opacity: .85;
+    transform: translateY(6px);
+    transition: opacity .25s ease, transform .25s ease;
+}
+
+.review-card.is-visible{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.review-head{
+    display: grid;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.review-rating{
+    color: var(--color-tertiary);
+    font-size: 13px;
+}
+
+.review-title{
+    color: var(--color-secondary-container);
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.review-desc{
+    color: var(--color-secondary-container);
+    opacity: .85;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.review-author{
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--color-primary);
+}
+
+.reviews-status{
+    color: var(--color-primary);
+    opacity: .85;
+    font-size: 12px;
+}
+
 
 /* -----------------------
             LOGIN         
@@ -337,6 +448,12 @@ box-shadow:
     margin-left: 6px;
 }
 
+.char-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 /* -------------------------------------------------- */
 /* jQuery UI Tabs                                     */
 /* -------------------------------------------------- */
@@ -477,6 +594,24 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
     .title {
         font-size: 30px;
     }
+    /*Reviews*/
+    .reviews{
+    max-width: 520px;
+    margin: 16px auto 0;
+    padding: 0 16px;
+    }
+
+    .reviews-title{
+        font-size: 20px;
+    }
+
+    .review-card{
+        padding: 14px 16px;
+    }
+
+    .review-title{
+        font-size: 16px;
+    }
 }
 
 @media (min-width: 1024px) {
@@ -488,8 +623,42 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
     .card-partidas {
         max-width: 520px;
     }
+  /* Más ancho y menos margen lateral */
+    .page-partidas{
+        padding: 24px 32px;
+        align-items: flex-start;
+    }
 
+    /* La tarjeta ocupa casi toda la pantalla */
+    .card-partidas{
+        max-width: min(1200px, 94vw);
+        width: 94vw;
+        padding: 24px 28px 28px;
+    }
+
+    /* Opcional: el contenido interno se ve mejor en ancho grande */
+    .member{
+        padding: 14px;
+    }
+
+    /*Reviews*/
+    .reviews{
+        max-width: 680px;
+    }
+
+    .review-card{
+        padding: 16px 18px;
+    }
+
+    .review-title{
+        font-size: 18px;
+    }
+
+    .review-desc{
+        font-size: 14px;
+    }
 }
+
 
 /* Forzar fondo lila en inputs de auth (gana a bg-white de Tailwind) */
 .auth-card .auth-input{
