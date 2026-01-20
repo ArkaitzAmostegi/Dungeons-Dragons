@@ -578,6 +578,61 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
 
 .js-tooltip { cursor: help; }
 
+/* Formulario editar partida */
+.form-edit {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 14px 18px;
+  align-items: center;
+}
+
+.form-edit label {
+  justify-self: end;
+  font-weight: 600;
+}
+
+.form-edit input,
+.form-edit textarea,
+.form-edit select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,.18);
+  background: #fff;
+}
+
+/* textarea más cómoda */
+.form-edit textarea { min-height: 90px; resize: vertical; }
+
+/* Acciones al final */
+.form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* Botones tipo "cartucho" */
+.btn-pill {
+  border: 0;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  background: #6d51b7;
+  color: #fff;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-pill--ghost {
+  background: transparent;
+  color: #6d51b7;
+  border: 2px solid #6d51b7;
+}
 
 
 /* -------------------------------------------------- */
