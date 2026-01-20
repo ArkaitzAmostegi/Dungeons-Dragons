@@ -30,31 +30,41 @@
 
                         <div id="tab-{{ $campaign->id }}" class="tab-panel">
                             <div class="tab-header">
-                                <div class="titulo">
-                                    <h3 class="tab-title">Título partida: {{ $campaign->title }}  -  </h3>
-                                    {{-- Acciones editar y borrar --}} 
-                                    <div class="acciones">
-                                        <div class="char-actions">
-                                            <a class="icon-btn" href="{{ route('partidas.edit', $campaign) }}" title="Editar">
-                                                <svg viewBox="0 0 24 24" class="icon">
-                                                    <path d="M3 17.25V21h3.75L17.8 9.95l-3.75-3.75L3 17.25Zm18-11.5a1 1 0 0 0 0-1.4l-1.85-1.85a1 1 0 0 0-1.4 0l-1.45 1.45 3.75 3.75L21 5.75Z"/>
+                                <div class="actions-title">
+                                    <h3 class="tab-title">Partida: {{ $campaign->title }}</h3>
+                                    <div class="char-actions">
+                                        {{-- FINALIZAR --}}
+                                        <form action="{{ route('partidas.finalizar', $campaign) }}" method="POST"
+                                            onsubmit="return confirm('¿Marcar esta partida como finalizada? Se moverá al historial.');">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button class="icon-btn success" type="submit" title="Finalizar">
+                                                <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
+                                                    <path d="M10 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H10v-2h9V5h-9V3z"/>
+                                                    <path d="M10 12l-3-3v2H3v2h4v2l3-3z"/>
                                                 </svg>
-                                            </a>
-
-                                            <form action="{{ route('partidas.destroy', $campaign) }}" method="POST"
-                                                onsubmit="return confirm('¿Seguro que quieres borrar esta partida?');">
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <button class="icon-btn danger" type="submit" title="Borrar">
-                                                    <svg viewBox="0 0 24 24" class="icon">
-                                                        <path d="M6 7h12l-1 14H7L6 7Zm3-3h6l1 2H8l1-2Zm-4 2h14v2H5V6Z"/>
-                                                    </svg>
-                                                </button>
-                                            </form>
-                                        </div>
+                                            </button>
+                                        </form>
+                                        {{-- EDITAR --}}
+                                        <a class="icon-btn" href="{{ route('partidas.edit', $campaign) }}" title="Editar">
+                                            <svg viewBox="0 0 24 24" class="icon">
+                                                <path d="M3 17.25V21h3.75L17.8 9.95l-3.75-3.75L3 17.25Zm18-11.5a1 1 0 0 0 0-1.4l-1.85-1.85a1 1 0 0 0-1.4 0l-1.45 1.45 3.75 3.75L21 5.75Z"/>
+                                            </svg>
+                                        </a>
+                                        {{-- BORRAR --}}
+                                        <form action="{{ route('partidas.destroy', $campaign) }}" method="POST"
+                                            onsubmit="return confirm('¿Seguro que quieres borrar esta partida?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="icon-btn danger" type="submit" title="Borrar">
+                                                <svg viewBox="0 0 24 24" class="icon">
+                                                    <path d="M6 7h12l-1 14H7L6 7Zm3-3h6l1 2H8l1-2Zm-4 2h14v2H5V6Z"/>
+                                                </svg>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
+
                                 <div class="sub">
                                     @if($campaign->juego)
                                         <strong>Modo de juego:</strong>

@@ -22,6 +22,7 @@ class CampaignController extends Controller
 
         $campaigns = Campaign::query()
             ->whereIn('id', $campaignIds)
+            ->where('status', '!=', 'finished')
             ->with([
                 'juego',
                 'memberships.user',
@@ -38,6 +39,19 @@ class CampaignController extends Controller
     private function userIsInCampaign(int $userId, Campaign $campaign): bool
     {
         return $campaign->memberships()->where('user_id', $userId)->exists();
+    }
+
+    // método finalizar() que cambia status y redirige a historial
+    public function finalizar(Request $request, Campaign $campaign)
+    {
+        if (!$this->userIsInCampaign($request->user()->id, $campaign)) {
+            abort(403);
+        }
+
+        $campaign->update(['status' => 'finished']);
+
+        return redirect()->route('partidas.show')
+            ->with('success', 'Partida marcada como finalizada');
     }
 
     /**

@@ -19,7 +19,7 @@
                         </p>
 
                         <p class="text-sm text-gray-500">
-                            Juego: {{ $campaign->juego->name ?? 'N/A' }}
+                            Juego: {{ $campaign->juego->nombre ?? 'N/A' }}
                         </p>
 
                         <p class="text-sm text-gray-500">

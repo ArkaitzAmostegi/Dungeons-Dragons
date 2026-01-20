@@ -30,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/partidas/{campaign}/edit', [CampaignController::class, 'edit'])->name('partidas.edit');
     Route::put('/partidas/{campaign}', [CampaignController::class, 'update'])->name('partidas.update');
     Route::delete('/partidas/{campaign}', [CampaignController::class, 'destroy'])->name('partidas.destroy');
+    Route::patch('/partidas/{campaign}/finalizar', [CampaignController::class, 'finalizar'])->name('partidas.finalizar');
 });
 
 Route::get('/bestiario', [BestiarioController::class, 'index'])
@@ -41,9 +42,9 @@ Route::get('/bestiario/{monster}', [BestiarioController::class, 'show'])
 
 
 Route::get('/historial', [CampaignController::class, 'historial'])
-     ->middleware(['auth', 'verified'])
-     ->name('partidas.show');
-   
+    ->middleware(['auth', 'verified'])
+    ->name('partidas.show');
+
 
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 
