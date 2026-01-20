@@ -320,6 +320,33 @@ box-shadow:
     gap: 14px; /* antes 18px */
 }
 
+/*------------------------------
+        PROFILE
+------------------------------*/
+.profile-sections{
+    display: grid;
+    gap: 18px;
+}
+
+.profile-card{
+    background: rgba(255,255,255,.75);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.12);
+}
+
+.profile-card.danger{
+    border: 1px solid rgba(186, 26, 26, .35);
+}
+
+.profile-title{
+    margin: 0 0 12px 0;
+    font-size: 20px;
+    font-weight: 800;
+    color: #5A5881;
+}
+
+
 
 /* -------------------------------------------------- */
 /* PÁGINA PARTIDAS                                    */
@@ -400,7 +427,7 @@ box-shadow:
     font-weight: 600;
     font-size: 11px;
     opacity: .75;
-    margin-top: 2px;
+    margin: 5px 0px;
 }
 
 .actions {

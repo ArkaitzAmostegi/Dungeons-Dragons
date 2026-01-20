@@ -141,7 +141,7 @@
                 </div>
             <?php endif; ?>
 
-            <div style="margin:10px;">
+            <div style="margin:20px 10px;">
                 <a href="<?php echo e(route('partidas.create')); ?>" class="btn-new-partida"
                     style="padding:8px 16px; background:#6d51b7; color:white; border-radius:8px; text-decoration:none; font-weight:600; margin-top:10px">
                     Nueva Partida
