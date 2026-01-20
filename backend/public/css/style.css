@@ -745,3 +745,37 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
     box-shadow: 0 0 0px 1000px var(--color-tertiary) inset !important;
     transition: background-color 9999s ease-out 0s;
 }
+
+/* Forzar el contenedor del slot a ocupar todo el ancho */
+        .py-12 > .max-w-7xl {
+            max-width: 100% !important;
+            padding: 0 !important;
+        }
+
+        /* Tarjetas cuadradas */
+        .monster-card {
+            aspect-ratio: 1 / 1 !important;
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        /* Mejorar índice de letras con colores de tus otras páginas */
+        .letter-btn {
+            background-color: #6d51b7;
+            color: #fff;
+            font-weight: 600;
+        }
+        .letter-btn:hover {
+            background-color: #5b43a3;
+        }
+        /* Tarjetas más pequeñas y cuadradas */
+.monster-card {
+    aspect-ratio: 5 / 3 !important;
+    border-radius: 12px !important;
+    padding: 1rem !important;
+    background-color: #f5f5f5 !important;
+    border: 2px solid #6d51b7 !important;
+    max-width: 200px; /* tamaño máximo de cada tarjeta */
+    width: 100%;       /* ocupa todo el espacio de su columna */
+    margin: 0 auto;    /* centrar dentro de la celda */
+}

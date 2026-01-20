@@ -1,4 +1,7 @@
 <x-app-layout>
+        @push('styles')
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @endpush
     <div class="max-w-6xl mx-auto p-6">
         <h1 class="text-2xl font-bold mb-4">Bestiario</h1>
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\BestiarioController;
+use App\Http\Controllers\AboutController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,6 +44,9 @@ Route::get('/historial', [CampaignController::class, 'historial'])
      ->middleware(['auth', 'verified'])
      ->name('partidas.show');
    
+
+Route::get('/about', [AboutController::class, 'index'])->name('about.index');
+
 
 
 require __DIR__ . '/auth.php';

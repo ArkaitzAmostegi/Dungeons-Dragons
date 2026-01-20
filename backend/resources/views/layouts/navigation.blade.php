@@ -25,6 +25,9 @@
                     <x-nav-link :href="route('partidas.show')" :active="request()->routeIs('partidas.show')">
                         {{ __('Historial') }}
                     </x-nav-link>
+                     <x-nav-link :href="route('about.index')" :active="request()->routeIs('about.index')">
+                        {{ __('About') }}
+                    </x-nav-link>
                 </div>
             </div>
 
