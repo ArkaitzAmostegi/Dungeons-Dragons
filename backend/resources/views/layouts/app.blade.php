@@ -45,5 +45,12 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
 @stack('scripts')
+  {{-- Footer --}}
+    @include('layouts.footer')  {{-- crea un archivo layouts/footer.blade.php con el contenido del footer --}}
+
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
+@stack('scripts')
 </body>
 </html>
