@@ -817,3 +817,6 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
     width: 100%;       /* ocupa todo el espacio de su columna */
     margin: 0 auto;    /* centrar dentro de la celda */
 }
+#monsterGrid {
+  grid-template-columns: repeat(4, 1fr);
+}
