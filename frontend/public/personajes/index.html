@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personajes</title>
+  <link rel="stylesheet" href="personajes.css">
+</head>
+<body>
+
+  <header class="nav">
+    <a class="nav__brand" href="/partidas">
+      <img class="nav__logo" src="/images/DandDLogo.png" alt="D&D">
+    </a>
+
+    <nav class="nav__links">
+      <a href="/partidas">Mis Partidas</a>
+      <a class="is-active" href="/personajes/">Personajes</a>
+      <a href="/bestario/">Bestiario</a>
+      <a href="/historial/">Historial</a>
+      <a href="/about/">About</a>
+    </nav>
+
+    <div class="nav__auth">
+      <a class="nav__btn" href="/login">Login</a>
+      <a class="nav__btn nav__btn--primary" href="/register">Register</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <h1 class="page__title">Personajes</h1>
+
+    <section class="controls">
+      <input id="q" type="search" placeholder="Buscar personaje..." />
+    </section>
+
+    <section id="grid" class="grid"></section>
+    <p id="status" class="status"></p>
+  </main>
+
+  <script src="personajes.js" defer></script>
+</body>
+</html>

@@ -19,6 +19,8 @@ services:
     container_name: dnd_frontend
     expose:
       - "80"
+    volumes:
+      - ./frontend/public:/usr/share/nginx/html:ro
     networks:
       - dnd_net
 
