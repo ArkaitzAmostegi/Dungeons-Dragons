@@ -8,7 +8,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="<?php echo e(route('welcome')); ?>">
-                        <img src="<?php echo e(asset('images/Logo.png')); ?>" class="h-16 w-auto rounded-md" alt="Logo">
+                        <img src="<?php echo e(asset('images/Logo.png')); ?>" class="h-16 w-auto rounded-md" alt="LogoDragon">
                     </a>
                 </div>
 

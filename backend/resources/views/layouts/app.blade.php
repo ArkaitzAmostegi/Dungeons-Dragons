@@ -19,31 +19,33 @@
 
     <!-- CSS propio -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
+<body class="font-sans antialiased flex flex-col min-h-screen">
+    
+    {{-- Navigation --}}
+    @include('layouts.navigation')
 
-        {{-- Navigation (si lo quieres, descomenta) --}}
-        @include('layouts.navigation')
+    <!-- Page Heading -->
+    @isset($header)
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                {{ $header }}
+            </div>
+        </header>
+    @endisset
 
-        <!-- Page Heading -->
-        @isset($header)
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endisset
+    <!-- Page Content -->
+    <main class="flex-1">
+        {{ $slot }}
+    </main>
 
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
-    </div>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
-@stack('scripts')
+    {{-- Footer --}}
+    @include('layouts.footer')
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
+    @stack('scripts')
 </body>
 </html>

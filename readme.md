@@ -152,7 +152,7 @@ En la página principal se consumen reseñas desde una API interna:
 
 **Jokin Berridi**
 📍 Irun, Euskal Herria
-📧 [ikdgg@plaiaundi.net](mailto:ikdgg@plaiaundi.net)
+📧 [ikdgg@plaiaundi.net](mailto:jokinberridi@hotmail.com)
 
 
 **Arkaitz Amostegi**
