@@ -799,12 +799,13 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
 
         /* Mejorar índice de letras con colores de tus otras páginas */
         .letter-btn {
-            background-color: #6d51b7;
-            color: #fff;
+            background-color: #fff;
+            color: #5A5881;
             font-weight: 600;
         }
         .letter-btn:hover {
-            background-color: #5b43a3;
+            background-color: #5A5881;
+            color:#fff;
         }
         /* Tarjetas más pequeñas y cuadradas */
 .monster-card {
@@ -819,4 +820,9 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
 }
 #monsterGrid {
   grid-template-columns: repeat(4, 1fr);
+}
+.monster-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    background-color: #e8e0f8; /* ligero cambio de color */
 }

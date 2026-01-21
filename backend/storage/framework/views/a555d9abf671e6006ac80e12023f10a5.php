@@ -91,7 +91,7 @@
                             </div>
 
                             <div class="tab-section">
-                                <h4>Jugadores y personajes</h4>
+                                <h4 style="font-weight: bold;">Jugadores y personajes</h4>
 
                                 <?php $__currentLoopData = $byUser; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $userId => $rows): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <?php $u = $rows->first()->user; ?>

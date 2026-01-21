@@ -81,7 +81,7 @@
                             </div>
 
                             <div class="tab-section">
-                                <h4>Jugadores y personajes</h4>
+                                <h4 style="font-weight: bold;">Jugadores y personajes</h4>
 
                                 @foreach($byUser as $userId => $rows)
                                     @php $u = $rows->first()->user; @endphp
