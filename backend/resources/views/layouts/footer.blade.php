@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
         
         {{-- Texto de copyright --}}
-        <p class="text-sm mb-4 md:mb-0">&copy; {{ date('Y') }} {{ config('app.name', 'D&D') }}. Todos los derechos reservados.</p>
+        <p class="text-sm mb-4 md:mb-0">&copy; {{ date('Y') }} D&D. Todos los derechos reservados.</p>
         
         {{-- Enlaces de interés --}}
         <div class="flex flex-row gap-4">
