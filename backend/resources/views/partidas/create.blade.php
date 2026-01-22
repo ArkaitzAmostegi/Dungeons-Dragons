@@ -11,13 +11,13 @@
                 <!-- Nombre -->
                 <div class="form-group">
                     <h2>Nombre de la partida</h2>
-                    <input type="text" name="nombre" required>
+                    <input type="text" name="nombre" required aria-label="nombrePartida">
                 </div>
 
                 <!-- Descripción -->
                 <div class="form-group">
                     <h2>Descripcion</h2>
-                    <textarea name="descripcion" placeholder="Describe la partida..."></textarea>
+                    <textarea name="descripcion" placeholder="Describe la partida..." aria-label="Descripcion"></textarea>
                 </div>
 
                 <!-- Personajes -->
@@ -60,7 +60,7 @@
                 <!-- Modo -->
                 <div class="form-group">
                     <h2>Modo de juego</h2>
-                    <select name="juego_id" id="modoSelect" required>
+                    <select name="juego_id" id="modoSelect" required aria-label="seleccionaModo">
                         <option value="">Selecciona un modo</option>
                         <option value="1">Exploracion</option>
                         <option value="2">Atraco</option>
