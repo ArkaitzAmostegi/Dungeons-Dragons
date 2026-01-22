@@ -41,7 +41,7 @@
                         <div id="tab-<?php echo e($campaign->id); ?>" class="tab-panel">
                             <div class="tab-header">
                                 <div class="actions-title">
-                                    <h3 class="tab-title">Partida: <?php echo e($campaign->title); ?></h3>
+                                    <h3 class="tab-title"><?php echo e($campaign->title); ?></h3>
                                     <div class="char-actions">
                                         
                                         <form action="<?php echo e(route('partidas.finalizar', $campaign)); ?>" method="POST"
@@ -79,7 +79,7 @@
                                     <?php if($campaign->juego): ?>
                                         <strong>Modo de juego:</strong>
                                         <span class="js-tooltip" title="<?php echo e($campaign->juego->descripcion); ?>">
-                                            <span class="badge-rol"><?php echo e($campaign->juego->nombre); ?></span>
+                                            <span class="badge-rol" style="color:white;"><?php echo e($campaign->juego->nombre); ?></span>
                                         </span>
                                     <?php else: ?>
                                         <span class="js-tooltip" title="Sin modo de juego">—</span>
@@ -97,7 +97,7 @@
                                     <?php $u = $rows->first()->user; ?>
                                     <div class="member">
                                         <div class="member-user">
-                                            <span class="sub">Jugador: <span class="tab-title"><?php echo e($u?->name ?? 'Usuario'); ?></span></span>
+                                            <span class="sub"><span class="tab-title"><?php echo e($u?->name ?? 'Usuario'); ?></span></span>
                                         </div>
                                         <ul class="member-chars">
                                             <?php $__currentLoopData = $rows; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $m): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -160,6 +160,9 @@
                 track: true,
                 position: { my: "left+12 top+12", at: "left bottom" }
             });
+              $("#tabs-partidas").on("tabsactivate", function () {
+            document.getElementById('page-loader')?.classList.add('hidden');
+        });
         });
     </script>
     <?php $__env->stopPush(); ?>
