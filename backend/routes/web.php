@@ -48,6 +48,22 @@ Route::get('/historial', [CampaignController::class, 'historial'])
 
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 
+//Rutas para la API del frontend, para que el user() funcione en la API
+Route::get('/me', function () {
+    if (!auth()->check()) return response()->json(['authenticated' => false]);
+
+    return response()->json([
+        'authenticated' => true,
+        'name' => auth()->user()->name,
+        'email' => auth()->user()->email,
+    ]);
+});
+
+Route::get('/me-public', function () {
+    return ['authenticated' => false];
+});
+
+
 
 
 require __DIR__ . '/auth.php';

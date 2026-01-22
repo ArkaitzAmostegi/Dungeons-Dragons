@@ -18,9 +18,10 @@
                         {{ __('Mis Partidas') }}
                     </x-nav-link>
                     {{-- Hay que poner el istado de personajes un html al frontend --}}
-                    <x-nav-link>
-                        <p>Personajes</p>
+                    <x-nav-link href="/personajes/" :active="request()->is('personajes*')">
+                        {{ __('Personajes') }}
                     </x-nav-link>
+
                     <x-nav-link :href="route('bestiario.index')" :active="request()->routeIs('bestiario.index')">
                         {{ __('Bestiario') }}
                     </x-nav-link>
