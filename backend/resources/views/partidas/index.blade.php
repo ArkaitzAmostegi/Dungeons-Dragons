@@ -31,7 +31,7 @@
                         <div id="tab-{{ $campaign->id }}" class="tab-panel">
                             <div class="tab-header">
                                 <div class="actions-title">
-                                    <h3 class="tab-title">Partida: {{ $campaign->title }}</h3>
+                                    <h3 class="tab-title">{{ $campaign->title }}</h3>
                                     <div class="char-actions">
                                         {{-- FINALIZAR --}}
                                         <form action="{{ route('partidas.finalizar', $campaign) }}" method="POST"
@@ -87,7 +87,7 @@
                                     @php $u = $rows->first()->user; @endphp
                                     <div class="member">
                                         <div class="member-user">
-                                            <span class="sub">Jugador: <span class="tab-title">{{ $u?->name ?? 'Usuario' }}</span></span>
+                                            <span class="sub"><span class="tab-title">{{ $u?->name ?? 'Usuario' }}</span></span>
                                         </div>
                                         <ul class="member-chars">
                                             @foreach($rows as $m)
