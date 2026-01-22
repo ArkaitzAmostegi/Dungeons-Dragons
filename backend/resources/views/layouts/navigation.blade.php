@@ -17,7 +17,7 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Mis Partidas') }}
                     </x-nav-link>
-                    {{-- Hay que poner el istado de personajes un html al frontend --}}
+                    
                     <x-nav-link href="/personajes/" :active="request()->is('personajes*')">
                         {{ __('Personajes') }}
                     </x-nav-link>
@@ -86,6 +86,10 @@
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Mis Partidas') }}
                 </x-responsive-nav-link>
+
+                <x-responsive-nav-link href="/personajes/" :active="request()->is('personajes*')">
+                        {{ __('Personajes') }}
+                    </x-responsive-nav-link>
 
                 <x-responsive-nav-link :href="route('bestiario.index')" :active="request()->routeIs('bestiario.index')">
                     {{ __('Bestiario') }}
