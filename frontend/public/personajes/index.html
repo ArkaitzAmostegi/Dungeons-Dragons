@@ -4,25 +4,54 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Personajes</title>
-  <link rel="stylesheet" href="personajes.css">
+  <link rel="stylesheet" href="./personajes.css">
 </head>
 <body>
 
   <header class="nav">
     <a class="nav__brand" href="/partidas">
-      <img class="nav__logo" src="/images/DandDLogo.png" alt="D&D">
+      <img class="nav__logo" src="../images/Logo.png" alt="D&D">
     </a>
 
+    <!-- Botón hamburguesa (móvil) -->
+    <button class="nav__toggle" id="navToggle" type="button"
+      aria-label="Abrir menú" aria-controls="drawer" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <!-- Links inline (tablet/desktop) -->
     <nav class="nav__links">
       <a href="/partidas">Mis Partidas</a>
       <a class="is-active" href="/personajes/">Personajes</a>
-      <a href="/bestiario">Bestiario</a>
+      <a href="/bestiario/">Bestiario</a>
       <a href="/historial/">Historial</a>
       <a href="/about/">About</a>
     </nav>
 
     <div class="nav__auth" id="navAuth"></div>
   </header>
+
+  <!-- Drawer móvil -->
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer__backdrop" id="drawerBackdrop"></div>
+
+    <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Menú">
+      <div class="drawer__top">
+        <div class="drawer__title">Menú</div>
+        <button class="drawer__close" id="drawerClose" type="button" aria-label="Cerrar menú">✕</button>
+      </div>
+
+      <nav class="drawer__nav">
+        <a href="/partidas">Mis Partidas</a>
+        <a class="is-active" href="/personajes/">Personajes</a>
+        <a href="/bestiario/">Bestiario</a>
+        <a href="/historial/">Historial</a>
+        <a href="/about/">About</a>
+      </nav>
+
+      <div class="drawer__footer" id="drawerAuth"></div>
+    </div>
+  </aside>
 
   <main class="page">
     <h1 class="page__title">Personajes</h1>
@@ -35,7 +64,21 @@
     <p id="status" class="status"></p>
   </main>
 
-  <script src="personajes.js" defer></script>
-  <script src="autenticacion.js" defer></script>
+  <div class="separador"></div>
+  <footer class="footer">
+    <div class="footer__inner">
+      <p class="footer__copy">© 2026 D&D. Todos los derechos reservados.</p>
+
+      <nav class="footer__links">
+        <a href="#">Política de privacidad</a>
+        <a href="#">Términos de uso</a>
+        <a href="#">Contacto</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="./personajes.js" defer></script>
+  <script src="./autenticacion.js" defer></script>
+  <script src="./drawer.js" defer></script>
 </body>
 </html>
