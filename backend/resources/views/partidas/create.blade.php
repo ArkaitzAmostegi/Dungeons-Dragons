@@ -36,24 +36,25 @@
                             </button>
                             <ul class="characters-list" style="display:none;">
                                 @foreach($chars as $c)
-    @php
-        $bonusesText = '';
-        if (!empty($c->race?->bonuses) && is_array($c->race->bonuses)) {
-            $bonusesText = collect($c->race->bonuses)
-                ->map(fn($v, $k) => "$k: $v")
-                ->implode(', ');
-        }
-    @endphp
+                                @php
+                                $bonusesText = '';
+                                if (!empty($c->race?->bonuses) && is_array($c->race->bonuses)) {
+                                $bonusesText = collect($c->race->bonuses)
+                                ->map(fn($v, $k) => "$k: $v")
+                                ->implode(', ');
+                                }
+                                @endphp
 
-    <li class="personaje" draggable="true"
-    data-id="{{ $c->id }}"
-    data-descripcion="Nivel {{ $c->level }} | {{ $c->race?->name ?? '' }}"
-    data-bonuses="{{ $bonusesText }}"
-    data-race="{{ $c->race?->name ?? '' }}">
-    {{ $c->name }}
-</li>
+                                <li class="personaje" draggable="true"
+                                    data-id="{{ $c->id }}"
+                                    data-info="Nivel {{ $c->level }} | {{ $c->race?->name ?? '' }}"
+                                    data-bonuses="{{ e(collect($c->race->bonuses ?? [])->map(fn($v, $k) => "$k=$v")->implode(',')) }}"
+                                    data-race="{{ $c->race?->name ?? '' }}">
+                                    {{ $c->name ?? 'Sin nombre' }}
+                                </li>
 
-@endforeach
+
+                                @endforeach
 
                             </ul>
                         </div>
@@ -61,13 +62,30 @@
                     </div>
 
                     <div class="dropzone-container">
-                        <h2>Personajes seleccionados</h2>
-                        <div class="dropzone" id="dropzone">
-                            Arrastra aqui los personajes (Max: 5)
+                        <div class="dropzone-wrapper">
+                            <h2>Personajes seleccionados
+                                <button type="button" id="btnGlosario" class="btn-bonuses">Bonuses</button>
+                            </h2>
+                            <div class="dropzone" id="dropzone">
+                                Arrastra aqui los personajes (Max: 5)
+                            </div>
+                            <input type="hidden" name="personajes" id="personajesInput">
+                            <p id="personajeDescripcion" class="descripcion"></p>
                         </div>
-                        <input type="hidden" name="personajes" id="personajesInput">
-                        <p id="personajeDescripcion" class="descripcion"></p>
+
                     </div>
+
+                    <!-- Ventana modal oculta -->
+                    <div id="modalGlosario" class="modal-glosario">
+                        <div class="modal-content">
+                            <h3>Glosario de Bonuses</h3>
+                            <ul id="modalLista">
+                                <!-- JS rellena aquí -->
+                            </ul>
+                            <button id="cerrarModal">Cerrar</button>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Modo -->
@@ -92,104 +110,154 @@
     </div>
 
     <script>
-        const dropzone = document.getElementById('dropzone');
-        const input = document.getElementById('personajesInput');
-        const personajeDescripcion = document.getElementById('personajeDescripcion');
-        let seleccionados = [];
+        document.addEventListener('DOMContentLoaded', () => {
 
-        // Toggle de clases
-        document.querySelectorAll('.class-toggle').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const ul = btn.nextElementSibling;
-                ul.style.display = ul.style.display === 'none' ? 'block' : 'none';
-            });
+    const dropzone = document.getElementById('dropzone');
+    const input = document.getElementById('personajesInput');
+    const personajeDescripcion = document.getElementById('personajeDescripcion');
+    let seleccionados = [];
+
+    document.querySelectorAll('.class-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+            // nextElementSibling puede ser un nodo de texto, buscamos el siguiente UL
+            let ul = btn.nextElementSibling;
+            while(ul && ul.tagName !== 'UL') {
+                ul = ul.nextElementSibling;
+            }
+            if (!ul) return;
+            ul.style.display = ul.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+
+    document.querySelectorAll('.characters-list .personaje').forEach(p => {
+        p.addEventListener('dragstart', e => {
+            e.dataTransfer.setData('id', p.dataset.id);
+            e.dataTransfer.setData('text', p.textContent);
+            e.dataTransfer.setData('info', p.dataset.info);
+            e.dataTransfer.setData('bonuses', p.dataset.bonuses);
+        });
+    });
+
+    dropzone.addEventListener('dragover', e => e.preventDefault());
+    dropzone.addEventListener('drop', e => {
+        e.preventDefault();
+
+        const id = e.dataTransfer.getData('id');
+        const text = e.dataTransfer.getData('text');
+        const info = e.dataTransfer.getData('info');
+
+        if (seleccionados.includes(id)) return;
+        if (seleccionados.length >= 5) {
+            alert("Maximo 5 personajes");
+            return;
+        }
+
+        seleccionados.push(id);
+
+        const div = document.createElement('div');
+        div.className = 'personaje';
+        div.dataset.id = id;
+
+        div.innerHTML = `<strong>${text}</strong><br>${info}`;
+
+        div.addEventListener('click', () => {
+            dropzone.removeChild(div);
+            seleccionados = seleccionados.filter(sid => sid !== id);
+            input.value = seleccionados.join(',');
+            actualizarDescripcion();
         });
 
-        // Drag & Drop
-        document.querySelectorAll('.characters-list .personaje').forEach(p => {
-            p.addEventListener('dragstart', e => {
-                e.dataTransfer.setData('id', p.dataset.id);
-                e.dataTransfer.setData('text', p.textContent);
-                e.dataTransfer.setData('descripcion', p.dataset.descripcion);
-                e.dataTransfer.setData('bonuses', p.dataset.bonuses);
-            });
-        });
-
-        dropzone.addEventListener('dragover', e => e.preventDefault());
-        dropzone.addEventListener('drop', e => {
-    e.preventDefault();
-    const id = e.dataTransfer.getData('id');
-    const text = e.dataTransfer.getData('text');
-    const desc = e.dataTransfer.getData('descripcion');
-    const bonuses = e.dataTransfer.getData('bonuses');
-    const race = e.dataTransfer.getData('race') || ''; // opcional si quieres mostrar la raza
-
-    if (seleccionados.includes(id)) return;
-    if (seleccionados.length >= 5) {
-        alert("Maximo 5 personajes");
-        return;
-    }
-
-    seleccionados.push(id);
-
-    // Crear div del personaje dentro de dropzone
-    const div = document.createElement('div');
-    div.className = 'personaje';
-    div.dataset.id = id;
-    div.dataset.descripcion = desc;
-    div.dataset.bonuses = bonuses;
-
-    // Mostrar solo nombre + descripción (sin bonuses)
-    div.innerHTML = `<strong>${text}</strong><br>${desc}`;
-
-    // Click para eliminar personaje
-    div.addEventListener('click', () => {
-        dropzone.removeChild(div);
-        seleccionados = seleccionados.filter(sid => sid !== id);
+        dropzone.appendChild(div);
         input.value = seleccionados.join(',');
+
         actualizarDescripcion();
     });
 
-    dropzone.appendChild(div);
-    input.value = seleccionados.join(',');
+    function actualizarDescripcion() {
+        const textos = seleccionados.map(id => {
+            const li = document.querySelector(`.characters-list .personaje[data-id='${id}']`);
+            if (!li) return '';
+            const race = li.dataset.race.toLowerCase();
+            const bonuses = li.dataset.bonuses;
+            return `Bonus de ${race}:${bonuses}`;
+        });
+        personajeDescripcion.innerHTML = textos.join('<br>');
+    }
 
-    actualizarDescripcion();
+    // Modal Bonuses
+    const btnGlosario = document.getElementById('btnGlosario');
+    const modalGlosario = document.getElementById('modalGlosario');
+    const modalLista = document.getElementById('modalLista');
+    const cerrarModal = document.getElementById('cerrarModal');
+
+    btnGlosario.addEventListener('click', () => {
+        modalLista.innerHTML = Object.entries({
+            str: "Fuerza. Aumenta el daño físico y la capacidad de carga.",
+            dex: "Destreza. Mejora los atributos de habilidad, velocidad y evasión.",
+            con: "Constitución. Incrementa los puntos de vida y resistencia.",
+            int: "Inteligencia. Mejora la magia y el conocimiento.",
+            wis: "Sabiduría. Aumenta la percepción y la resistencia a hechizos.",
+            cha: "Carisma. Influye en interacción social y liderazgo."
+        }).map(([clave, desc]) => `<li><strong>${clave}:</strong> ${desc}</li>`).join('');
+        modalGlosario.style.display = 'flex';
+    });
+
+    cerrarModal.addEventListener('click', () => modalGlosario.style.display = 'none');
+    modalGlosario.addEventListener('click', e => { if(e.target === modalGlosario) modalGlosario.style.display='none'; });
+
+    // Modo de juego
+    const modoSelect = document.getElementById('modoSelect');
+    const modoDescripcion = document.getElementById('modoDescripcion');
+    const modos = {
+        1: 'Descubrir zonas, resolver peligros y avanzar por territorio desconocido.',
+        2: 'Planificación, infiltración y escape con botin u objetivo.',
+        3: 'Combate rapido y tactico contra enemigos o facciones rivales.',
+        4: 'Defender o conquistar una fortaleza durante varias fases.',
+        5: 'Recuperar un rehen/artefacto antes de que se agote el tiempo.'
+    };
+    modoSelect.addEventListener('change', () => {
+        modoDescripcion.textContent = modos[modoSelect.value] || '';
+    });
+
 });
 
-// Función para actualizar la descripción acumulada
-function actualizarDescripcion() {
-    const bonusesPorRaza = new Map(); // clave = raza, valor = bonus
-    Array.from(dropzone.children).forEach(div => {
-        const raceName = div.dataset.race || div.dataset.descripcion.split('|')[1]?.trim() || 'Raza';
-        const bonuses = div.dataset.bonuses;
-        if (bonuses && !bonusesPorRaza.has(raceName)) {
-            bonusesPorRaza.set(raceName, bonuses);
-        }
-    });
-
-    const textos = Array.from(bonusesPorRaza.entries()).map(([race, bonuses]) => {
-        return `Bonus de ${race}: ${bonuses}`;
-    });
-
-    personajeDescripcion.innerHTML = textos.join('<br>');
-}
-
-
-
-
-        // Modo de juego
-        const modoSelect = document.getElementById('modoSelect');
-        const modoDescripcion = document.getElementById('modoDescripcion');
-        const modos = {
-            1: 'Descubrir zonas, resolver peligros y avanzar por territorio desconocido.',
-            2: 'Planificación, infiltración y escape con botin u objetivo.',
-            3: 'Combate rapido y tactico contra enemigos o facciones rivales.',
-            4: 'Defender o conquistar una fortaleza durante varias fases.',
-            5: 'Recuperar un rehen/artefacto antes de que se agote el tiempo.'
-        };
-        modoSelect.addEventListener('change', () => {
-            modoDescripcion.textContent = modos[modoSelect.value] || '';
-        });
     </script>
+
+
+    <style>
+        /* Modal CSS */
+        .modal-glosario {
+            display: none;
+            /* oculto por defecto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .modal-content {
+            background-color: #111;
+            color: #eee;
+            padding: 1.5rem;
+            border-radius: 10px;
+            max-width: 320px;
+            width: 90%;
+        }
+
+        .modal-content button {
+            margin-top: 10px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            background-color: var(--color-secondary-container);
+            color: var(--color-primary-container);
+        }
+    </style>
 
 </x-app-layout>
