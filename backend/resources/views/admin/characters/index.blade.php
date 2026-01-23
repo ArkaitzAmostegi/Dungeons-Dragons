@@ -1,0 +1,82 @@
+<x-admin-layout>
+    <div class="max-w-7xl mx-auto py-10 px-4">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800 text-center">Personajes</h1>
+
+        <div class="mb-6 text-center">
+        </div>
+
+        @if($characters->isEmpty())
+            <p class="text-center text-gray-600">No hay personajes registrados.</p>
+        @else
+            <div class="bg-white rounded-xl shadow overflow-hidden">
+                <table class="w-full table-auto border-collapse text-center">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th class="px-6 py-3 text-gray-700 uppercase text-sm font-medium">ID</th>
+                            <th class="px-6 py-3 text-gray-700 uppercase text-sm font-medium">Nombre</th>
+                            <th class="px-6 py-3 text-gray-700 uppercase text-sm font-medium">Clase</th>
+                            <th class="px-6 py-3 text-gray-700 uppercase text-sm font-medium">Nivel</th>
+                            <th class="px-6 py-3 text-gray-700 uppercase text-sm font-medium">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach($characters as $character)
+                            <tr class="hover:bg-gray-50 transition-colors duration-150">
+                                <td class="px-6 py-4 text-gray-800">{{ $character->id }}</td>
+                                <td class="px-6 py-4 text-gray-800">{{ $character->name }}</td>
+                                <td class="px-6 py-4 text-gray-800">{{ $character->class }}</td>
+                                <td class="px-6 py-4 text-gray-800">{{ $character->level }}</td>
+                                <td class="px-6 py-4 flex justify-center gap-2">
+                                    <form action="{{ route('admin.characters.destroy', $character) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar este personaje?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="action-btn delete-btn">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+    </div>
+
+    <style>
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            color: white;
+            font-weight: 500;
+            transition: background-color 0.2s, transform 0.1s;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #f59e0b; /* amarillo */
+        }
+        .edit-btn:hover {
+            background-color: #d97706;
+        }
+
+        .delete-btn {
+            background-color: #e3342f; /* rojo */
+        }
+        .delete-btn:hover {
+            background-color: #cc1f1a;
+        }
+        .delete-btn:active {
+            background-color: #a71d15;
+            transform: scale(0.97);
+        }
+
+        .success-message {
+            background-color: #d1fae5;
+            color: #065f46;
+            padding: 0.75rem 1rem;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            border: 1px solid #10b981;
+            text-align: center;
+        }
+    </style>
+</x-admin-layout>

@@ -830,8 +830,8 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 0 rgba(34,197,94, 0.7);
+  background-color: var(--latido-color, #22c55e); /* color dinámico */
+  box-shadow: 0 0 0 0 var(--latido-color-shadow, rgba(34,197,94, 0.7));
   animation: respirar 2.5s ease-in-out infinite;
   margin-right: 6px;
 }
@@ -839,14 +839,34 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
 @keyframes respirar {
   0% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(34,197,94, 0.7);
+    box-shadow: 0 0 0 0 var(--latido-color-shadow, rgba(34,197,94,0.7));
   }
   50% {
     transform: scale(1.4);
-    box-shadow: 0 0 0 6px rgba(34,197,94, 0);
+    box-shadow: 0 0 0 6px rgba(34,197,94,0);
   }
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(34,197,94, 0);
+    box-shadow: 0 0 0 0 rgba(34,197,94,0);
   }
+}
+
+/* Modal */
+.modal-glosario {
+    display: none; /* importante: oculto por defecto */
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background-color: #111;
+    color: #eee;
+    padding: 1.5rem;
+    border-radius: 10px;
+    max-width: 320px;
+    width: 90%;
 }

@@ -19,26 +19,38 @@ class DndSeeder extends Seeder
         if (Race::count() === 0) {
             $this->call(RaceSeeder::class);
         }
-
-        // 2) Crear usuarios predefinidos
+        // 2) Crear usuarios predefinidos con role
         $usersData = [
-            ['name' => 'Alice', 'email' => 'alice@example.com', 'password' => 'password'],
-            ['name' => 'Bob', 'email' => 'bob@example.com', 'password' => 'password'],
-            ['name' => 'Charlie', 'email' => 'charlie@example.com', 'password' => 'password'],
-            ['name' => 'Diana', 'email' => 'diana@example.com', 'password' => 'password'],
-            ['name' => 'Ethan', 'email' => 'ethan@example.com', 'password' => 'password'],
+            ['name' => 'Alice', 'email' => 'alice@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
+            ['name' => 'Bob', 'email' => 'bob@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
+            ['name' => 'Charlie', 'email' => 'charlie@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
+            ['name' => 'Diana', 'email' => 'diana@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
+            ['name' => 'Ethan', 'email' => 'ethan@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
+
+            // Admins
+            ['name' => 'Jokin', 'email' => 'jokin@gmail.com', 'password' => 'admin', 'role' => User::ROLE_ADMIN],
+            ['name' => 'Arkaitz', 'email' => 'arkaitz@gmail.com', 'password' => 'admin', 'role' => User::ROLE_ADMIN],
+            ['name' => 'Admin', 'email' => 'admin@admin.com', 'password' => 'admin', 'role' => User::ROLE_ADMIN],
         ];
 
         $users = collect();
 
         foreach ($usersData as $u) {
-            $user = User::create([
-                'name' => $u['name'],
-                'email' => $u['email'],
-                'password' => Hash::make($u['password']),
-            ]);
+            $user = User::updateOrCreate(
+                ['email' => $u['email']],
+                [
+                    'name' => $u['name'],
+                    'password' => Hash::make($u['password']),
+                    'role' => $u['role'],
+                ]
+            );
 
-            Profile::factory()->create(['user_id' => $user->id]);
+            // Profile
+            Profile::updateOrCreate(
+                ['user_id' => $user->id],
+                ['user_id' => $user->id]
+            );
+
             $users->push($user);
         }
 
@@ -84,78 +96,78 @@ class DndSeeder extends Seeder
 
             $allCharacters->push($character);
         }
-
-        // 4) Crear campañas (2 por usuario)
-        // 4) Crear campañas (2 por usuario)
+        // 4) Crear campañas
         $juegoIds = Juego::pluck('id');
 
-       $campaignsData = [
-    'La Sombra de la Montaña' => 'Un peligro antiguo se oculta entre las cumbres de la montaña.',
-    'El Ojo del Dragón' => 'Los dragones vigilan un tesoro que pocos se atreven a buscar.',
-    'Los Bosques de Elaria' => 'Bosques encantados llenos de criaturas y misterios.',
-    'El Reino Perdido de Tharok' => 'Ruinas de un reino olvidado con secretos por descubrir.',
-    'La Maldición de los Elfos Oscuros' => 'Una maldición amenaza a los bosques y a sus habitantes.',
-    'El Despertar de los Titanes' => 'Criaturas gigantes resurgen y ponen en peligro el mundo.',
-    'La Torre de la Magia Antigua' => 'Una torre antigua custodia hechizos olvidados.',
-    'Los Túneles del Submundo' => 'Misteriosos túneles bajo la tierra esconden secretos y peligros.',
-    'La Guerra de los Reinos' => 'Conflictos entre reinos que pueden cambiar la historia.',
-    'El Laberinto del Guardián' => 'Un laberinto lleno de trampas y enigmas.',
-    'Las Ruinas de Arkanis' => 'Ruinas llenas de artefactos mágicos y fantasmas del pasado.',
-    'El Valle de las Bestias' => 'Criaturas salvajes dominan un valle oculto.',
-    'El Legado del Paladín' => 'Héroes deben continuar la misión de un legendario paladín.',
-    'El Trono de Hielo' => 'Un reino helado gobernado por fuerzas misteriosas.',
-    'Los Secretos de la Cripta' => 'Criptas antiguas guardan secretos y tesoros olvidados.',
-    'La Profecía del Dragón' => 'Una profecía predice la llegada de un dragón poderoso.',
-    'El Mar de las Sombras' => 'Un océano peligroso donde lo desconocido acecha.',
-    'La Fortaleza del Fénix' => 'Una fortaleza que renace de sus cenizas una y otra vez.',
-    'El Asedio de Blackspire' => 'Una ciudad sitiada por enemigos implacables.',
-    'El Camino de los Héroes' => 'Héroes deben recorrer un camino lleno de pruebas y desafíos.',
-    
-    // 5 nuevas campañas
-    'El Bosque de los Susurros' => 'Árboles milenarios guardan secretos que solo los valientes descubrirán.',
-    'La Ciudad Sumergida' => 'Antigua ciudad bajo el agua, repleta de tesoros y peligros.',
-    'El Templo de los Elementos' => 'Un templo perdido donde los elementos se combinan para proteger un gran secreto.',
-    'La Cripta de los Eternos' => 'Descubre los secretos de los antiguos guardianes de la cripta.',
-    'El Horizonte de Fuego' => 'Volcanes activos amenazan un valle mientras héroes luchan por sobrevivir.',
-];
+        $campaignsData = [
+            'La Sombra de la Montaña' => 'Un peligro antiguo se oculta entre las cumbres de la montaña.',
+            'El Ojo del Dragón' => 'Los dragones vigilan un tesoro que pocos se atreven a buscar.',
+            'Los Bosques de Elaria' => 'Bosques encantados llenos de criaturas y misterios.',
+            'El Reino Perdido de Tharok' => 'Ruinas de un reino olvidado con secretos por descubrir.',
+            'La Maldición de los Elfos Oscuros' => 'Una maldición amenaza a los bosques y a sus habitantes.',
+            'El Despertar de los Titanes' => 'Criaturas gigantes resurgen y ponen en peligro el mundo.',
+            'La Torre de la Magia Antigua' => 'Una torre antigua custodia hechizos olvidados.',
+            'Los Túneles del Submundo' => 'Misteriosos túneles bajo la tierra esconden secretos y peligros.',
+            'La Guerra de los Reinos' => 'Conflictos entre reinos que pueden cambiar la historia.',
+            'El Laberinto del Guardián' => 'Un laberinto lleno de trampas y enigmas.',
+            'Las Ruinas de Arkanis' => 'Ruinas llenas de artefactos mágicos y fantasmas del pasado.',
+            'El Valle de las Bestias' => 'Criaturas salvajes dominan un valle oculto.',
+            'El Legado del Paladín' => 'Héroes deben continuar la misión de un legendario paladín.',
+            'El Trono de Hielo' => 'Un reino helado gobernado por fuerzas misteriosas.',
+            'Los Secretos de la Cripta' => 'Criptas antiguas guardan secretos y tesoros olvidados.',
+            'La Profecía del Dragón' => 'Una profecía predice la llegada de un dragón poderoso.',
+            'El Mar de las Sombras' => 'Un océano peligroso donde lo desconocido acecha.',
+            'La Fortaleza del Fénix' => 'Una fortaleza que renace de sus cenizas una y otra vez.',
+            'El Asedio de Blackspire' => 'Una ciudad sitiada por enemigos implacables.',
+            'El Camino de los Héroes' => 'Héroes deben recorrer un camino lleno de pruebas y desafíos.',
+            'El Bosque de los Susurros' => 'Árboles milenarios guardan secretos que solo los valientes descubrirán.',
+            'La Ciudad Sumergida' => 'Antigua ciudad bajo el agua, repleta de tesoros y peligros.',
+            'El Templo de los Elementos' => 'Un templo perdido donde los elementos se combinan para proteger un gran secreto.',
+            'La Cripta de los Eternos' => 'Descubre los secretos de los antiguos guardianes de la cripta.',
+            'El Horizonte de Fuego' => 'Volcanes activos amenazan un valle mientras héroes luchan por sobrevivir.',
+        ];
 
+        foreach ($users as $user) {
+            $myChars = $allCharacters->where('user_id', $user->id)->values();
+            if ($myChars->isEmpty()) continue;
 
-foreach ($users as $user) {
-    $myChars = $allCharacters->where('user_id', $user->id)->values();
-    if ($myChars->isEmpty()) continue;
+            $userCampaigns = $campaignsData; // copia para cada usuario
+            $numCampaigns = min(5, count($userCampaigns));
 
-    for ($i = 0; $i < 5; $i++) { // 2 campañas por usuario
-        $keys = array_keys($campaignsData);
-        $key = array_rand($keys);
-        $title = $keys[$key];
-        $description = $campaignsData[$title];
-        unset($campaignsData[$title]); // evita repetir
+            for ($i = 0; $i < $numCampaigns; $i++) {
+                $keys = array_keys($userCampaigns);
+                $key = array_rand($keys);
+                $title = $keys[$key];
+                $description = $userCampaigns[$title];
+                unset($userCampaigns[$title]); // elimina solo de la copia
 
-        $campaign = Campaign::factory()->create([
-            'juego_id' => fn() => $juegoIds->random(),
-            'title' => $title,
-            'description' => $description,
-        ]);
+                $campaign = Campaign::factory()->create([
+                    'juego_id' => fn() => $juegoIds->random(),
+                    'title' => $title,
+                    'description' => $description,
+                ]);
 
-        // Owner
-        $ownerChar = $myChars->random();
-        $campaign->characters()->attach($ownerChar->id, [
-            'user_id' => $user->id,
-            'role' => 'owner',
-        ]);
+                // Owner
+                $ownerChar = $myChars->random();
+                $campaign->characters()->attach($ownerChar->id, [
+                    'user_id' => $user->id,
+                    'role' => 'owner',
+                ]);
 
-        // Jugadores extra
-        $extraCount = rand(2, 5);
-        $extrasPool = $allCharacters->where('user_id', '!=', $user->id)->values();
-        $extras = $extrasPool->random(min($extraCount, $extrasPool->count()));
+                // Jugadores extra
+                $extraCount = rand(2, 5);
+                $extrasPool = $allCharacters->where('user_id', '!=', $user->id)->values();
+                $extras = $extrasPool->random(min($extraCount, $extrasPool->count()));
 
-        foreach ($extras as $character) {
-            $campaign->characters()->attach($character->id, [
-                'user_id' => $character->user_id,
-                'role' => 'player',
-            ]);
+                foreach ($extras as $character) {
+                    $campaign->characters()->attach($character->id, [
+                        'user_id' => $character->user_id,
+                        'role' => 'player',
+                    ]);
+                }
+            }
         }
     }
 }
-    }
-}
+
+

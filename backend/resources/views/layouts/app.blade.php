@@ -115,6 +115,7 @@
                     }, 200); // Delay para que se vea la animación
                 });
             });
+            
         });
     </script>
 
