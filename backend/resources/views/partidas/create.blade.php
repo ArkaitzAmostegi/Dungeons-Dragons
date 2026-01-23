@@ -112,115 +112,127 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-    const dropzone = document.getElementById('dropzone');
-    const input = document.getElementById('personajesInput');
-    const personajeDescripcion = document.getElementById('personajeDescripcion');
-    let seleccionados = [];
+            const dropzone = document.getElementById('dropzone');
+            const input = document.getElementById('personajesInput');
+            const personajeDescripcion = document.getElementById('personajeDescripcion');
+            let seleccionados = [];
 
-    document.querySelectorAll('.class-toggle').forEach(btn => {
-        btn.addEventListener('click', () => {
-            // nextElementSibling puede ser un nodo de texto, buscamos el siguiente UL
-            let ul = btn.nextElementSibling;
-            while(ul && ul.tagName !== 'UL') {
-                ul = ul.nextElementSibling;
+            document.querySelectorAll('.class-toggle').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // nextElementSibling puede ser un nodo de texto, buscamos el siguiente UL
+                    let ul = btn.nextElementSibling;
+                    while (ul && ul.tagName !== 'UL') {
+                        ul = ul.nextElementSibling;
+                    }
+                    if (!ul) return;
+                    ul.style.display = ul.style.display === 'none' ? 'block' : 'none';
+                });
+            });
+
+            document.querySelectorAll('.characters-list .personaje').forEach(p => {
+                p.addEventListener('dragstart', e => {
+                    e.dataTransfer.setData('id', p.dataset.id);
+                    e.dataTransfer.setData('text', p.textContent);
+                    e.dataTransfer.setData('info', p.dataset.info);
+                    e.dataTransfer.setData('bonuses', p.dataset.bonuses);
+                });
+            });
+
+            dropzone.addEventListener('dragover', e => e.preventDefault());
+            dropzone.addEventListener('drop', e => {
+                e.preventDefault();
+
+                const id = e.dataTransfer.getData('id');
+                const text = e.dataTransfer.getData('text');
+                const info = e.dataTransfer.getData('info');
+
+                if (seleccionados.includes(id)) return;
+                if (seleccionados.length >= 5) {
+                    alert("Maximo 5 personajes");
+                    return;
+                }
+
+                seleccionados.push(id);
+
+                const div = document.createElement('div');
+                div.className = 'personaje';
+                div.dataset.id = id;
+
+                div.innerHTML = `<strong>${text}</strong><br>${info}`;
+
+                div.addEventListener('click', () => {
+                    dropzone.removeChild(div);
+                    seleccionados = seleccionados.filter(sid => sid !== id);
+                    input.value = seleccionados.join(',');
+                    actualizarDescripcion();
+                });
+
+                dropzone.appendChild(div);
+                input.value = seleccionados.join(',');
+
+                actualizarDescripcion();
+            });
+
+            function actualizarDescripcion() {
+                const bonusesPorRaza = {};
+
+                seleccionados.forEach(id => {
+                    const li = document.querySelector(`.characters-list .personaje[data-id='${id}']`);
+                    if (!li) return;
+                    const race = li.dataset.race.toLowerCase();
+                    const bonuses = li.dataset.bonuses; // dex=2,str=1 etc
+                    // solo guardamos la primera ocurrencia de cada raza
+                    if (!bonusesPorRaza[race]) {
+                        bonusesPorRaza[race] = bonuses;
+                    }
+                });
+
+                // convertir a texto
+                const textos = Object.entries(bonusesPorRaza)
+                    .map(([race, bonuses]) => `Bonus de ${race}:${bonuses}`);
+
+                personajeDescripcion.innerHTML = textos.join('<br>');
             }
-            if (!ul) return;
-            ul.style.display = ul.style.display === 'none' ? 'block' : 'none';
+
+
+            // Modal Bonuses
+            const btnGlosario = document.getElementById('btnGlosario');
+            const modalGlosario = document.getElementById('modalGlosario');
+            const modalLista = document.getElementById('modalLista');
+            const cerrarModal = document.getElementById('cerrarModal');
+
+            btnGlosario.addEventListener('click', () => {
+                modalLista.innerHTML = Object.entries({
+                    str: "Fuerza. Aumenta el daño físico y la capacidad de carga.",
+                    dex: "Destreza. Mejora los atributos de habilidad, velocidad y evasión.",
+                    con: "Constitución. Incrementa los puntos de vida y resistencia.",
+                    int: "Inteligencia. Mejora la magia y el conocimiento.",
+                    wis: "Sabiduría. Aumenta la percepción y la resistencia a hechizos.",
+                    cha: "Carisma. Influye en interacción social y liderazgo."
+                }).map(([clave, desc]) => `<li><strong>${clave}:</strong> ${desc}</li>`).join('');
+                modalGlosario.style.display = 'flex';
+            });
+
+            cerrarModal.addEventListener('click', () => modalGlosario.style.display = 'none');
+            modalGlosario.addEventListener('click', e => {
+                if (e.target === modalGlosario) modalGlosario.style.display = 'none';
+            });
+
+            // Modo de juego
+            const modoSelect = document.getElementById('modoSelect');
+            const modoDescripcion = document.getElementById('modoDescripcion');
+            const modos = {
+                1: 'Descubrir zonas, resolver peligros y avanzar por territorio desconocido.',
+                2: 'Planificación, infiltración y escape con botin u objetivo.',
+                3: 'Combate rapido y tactico contra enemigos o facciones rivales.',
+                4: 'Defender o conquistar una fortaleza durante varias fases.',
+                5: 'Recuperar un rehen/artefacto antes de que se agote el tiempo.'
+            };
+            modoSelect.addEventListener('change', () => {
+                modoDescripcion.textContent = modos[modoSelect.value] || '';
+            });
+
         });
-    });
-
-    document.querySelectorAll('.characters-list .personaje').forEach(p => {
-        p.addEventListener('dragstart', e => {
-            e.dataTransfer.setData('id', p.dataset.id);
-            e.dataTransfer.setData('text', p.textContent);
-            e.dataTransfer.setData('info', p.dataset.info);
-            e.dataTransfer.setData('bonuses', p.dataset.bonuses);
-        });
-    });
-
-    dropzone.addEventListener('dragover', e => e.preventDefault());
-    dropzone.addEventListener('drop', e => {
-        e.preventDefault();
-
-        const id = e.dataTransfer.getData('id');
-        const text = e.dataTransfer.getData('text');
-        const info = e.dataTransfer.getData('info');
-
-        if (seleccionados.includes(id)) return;
-        if (seleccionados.length >= 5) {
-            alert("Maximo 5 personajes");
-            return;
-        }
-
-        seleccionados.push(id);
-
-        const div = document.createElement('div');
-        div.className = 'personaje';
-        div.dataset.id = id;
-
-        div.innerHTML = `<strong>${text}</strong><br>${info}`;
-
-        div.addEventListener('click', () => {
-            dropzone.removeChild(div);
-            seleccionados = seleccionados.filter(sid => sid !== id);
-            input.value = seleccionados.join(',');
-            actualizarDescripcion();
-        });
-
-        dropzone.appendChild(div);
-        input.value = seleccionados.join(',');
-
-        actualizarDescripcion();
-    });
-
-    function actualizarDescripcion() {
-        const textos = seleccionados.map(id => {
-            const li = document.querySelector(`.characters-list .personaje[data-id='${id}']`);
-            if (!li) return '';
-            const race = li.dataset.race.toLowerCase();
-            const bonuses = li.dataset.bonuses;
-            return `Bonus de ${race}:${bonuses}`;
-        });
-        personajeDescripcion.innerHTML = textos.join('<br>');
-    }
-
-    // Modal Bonuses
-    const btnGlosario = document.getElementById('btnGlosario');
-    const modalGlosario = document.getElementById('modalGlosario');
-    const modalLista = document.getElementById('modalLista');
-    const cerrarModal = document.getElementById('cerrarModal');
-
-    btnGlosario.addEventListener('click', () => {
-        modalLista.innerHTML = Object.entries({
-            str: "Fuerza. Aumenta el daño físico y la capacidad de carga.",
-            dex: "Destreza. Mejora los atributos de habilidad, velocidad y evasión.",
-            con: "Constitución. Incrementa los puntos de vida y resistencia.",
-            int: "Inteligencia. Mejora la magia y el conocimiento.",
-            wis: "Sabiduría. Aumenta la percepción y la resistencia a hechizos.",
-            cha: "Carisma. Influye en interacción social y liderazgo."
-        }).map(([clave, desc]) => `<li><strong>${clave}:</strong> ${desc}</li>`).join('');
-        modalGlosario.style.display = 'flex';
-    });
-
-    cerrarModal.addEventListener('click', () => modalGlosario.style.display = 'none');
-    modalGlosario.addEventListener('click', e => { if(e.target === modalGlosario) modalGlosario.style.display='none'; });
-
-    // Modo de juego
-    const modoSelect = document.getElementById('modoSelect');
-    const modoDescripcion = document.getElementById('modoDescripcion');
-    const modos = {
-        1: 'Descubrir zonas, resolver peligros y avanzar por territorio desconocido.',
-        2: 'Planificación, infiltración y escape con botin u objetivo.',
-        3: 'Combate rapido y tactico contra enemigos o facciones rivales.',
-        4: 'Defender o conquistar una fortaleza durante varias fases.',
-        5: 'Recuperar un rehen/artefacto antes de que se agote el tiempo.'
-    };
-    modoSelect.addEventListener('change', () => {
-        modoDescripcion.textContent = modos[modoSelect.value] || '';
-    });
-
-});
-
     </script>
 
 
@@ -258,6 +270,29 @@
             background-color: var(--color-secondary-container);
             color: var(--color-primary-container);
         }
+        /* Botón Bonuses */
+.btn-bonuses {
+    background-color: #4f46e5; /* azul-violeta */
+    color: #ffffff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    margin-left: 10px;
+}
+
+.btn-bonuses:hover {
+    background-color: #6366f1; /* más claro al pasar el ratón */
+    transform: scale(1.05);
+}
+
+.btn-bonuses:active {
+    background-color: #4338ca; /* más oscuro al clickar */
+    transform: scale(0.97);
+}
+
     </style>
 
 </x-app-layout>
