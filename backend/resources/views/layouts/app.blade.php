@@ -96,6 +96,9 @@
             window.addEventListener('load', () => {
                 if (loader) loader.classList.add('hidden');
             });
+            window.addEventListener('pageshow', () => {
+      loader.classList.add('hidden');
+    });
 
             // Mostrar loader al hacer clic en cualquier enlace interno
             document.querySelectorAll('a[href]').forEach(link => {
