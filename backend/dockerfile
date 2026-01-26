@@ -39,6 +39,10 @@ RUN npm config set bin-links true \
 # 3) copia el resto del código
 COPY . .
 
+RUN mkdir -p bootstrap/cache storage \
+ && chown -R www-data:www-data bootstrap/cache storage \
+ && chmod -R 775 bootstrap/cache storage
+
 # ahora ya existe artisan
 RUN composer dump-autoload --optimize
 RUN php artisan package:discover --ansi

@@ -82,4 +82,22 @@ Route::get('/bestiario/{monster}', [BestiarioController::class, 'show'])
 // About
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 
+//Rutas para la API del frontend, para que el user() funcione en la API
+Route::get('/me', function () {
+    if (!Auth::check()) return response()->json(['authenticated' => false]);
+
+    return response()->json([
+        'authenticated' => true,
+        'name' => Auth::user()->name,
+        'email' => Auth::user()->email,
+    ]);
+});
+
+Route::get('/me-public', function () {
+    return ['authenticated' => false];
+});
+
+
+
+
 require __DIR__ . '/auth.php';

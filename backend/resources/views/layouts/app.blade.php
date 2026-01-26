@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,7 +26,7 @@
         #page-loader {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -39,7 +40,7 @@
         }
 
         .spinner {
-            border: 4px solid rgba(255,255,255,0.3);
+            border: 4px solid rgba(255, 255, 255, 0.3);
             border-top: 4px solid white;
             border-radius: 50%;
             width: 40px;
@@ -49,8 +50,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -68,11 +74,11 @@
 
     <!-- Page Heading -->
     @isset($header)
-        <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                {{ $header }}
-            </div>
-        </header>
+    <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            {{ $header }}
+        </div>
+    </header>
     @endisset
 
     <!-- Page Content -->
@@ -97,8 +103,8 @@
                 if (loader) loader.classList.add('hidden');
             });
             window.addEventListener('pageshow', () => {
-      loader.classList.add('hidden');
-    });
+                loader.classList.add('hidden');
+            });
 
             // Mostrar loader al hacer clic en cualquier enlace interno
             document.querySelectorAll('a[href]').forEach(link => {
@@ -118,10 +124,11 @@
                     }, 200); // Delay para que se vea la animación
                 });
             });
-            
+
         });
     </script>
 
     @stack('scripts')
 </body>
+
 </html>

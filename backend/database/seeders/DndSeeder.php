@@ -19,7 +19,6 @@ class DndSeeder extends Seeder
         if (Race::count() === 0) {
             $this->call(RaceSeeder::class);
         }
-
         // 2) Crear usuarios predefinidos con role
         $usersData = [
             ['name' => 'Alice', 'email' => 'alice@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
@@ -97,7 +96,6 @@ class DndSeeder extends Seeder
 
             $allCharacters->push($character);
         }
-
         // 4) Crear campañas
         $juegoIds = Juego::pluck('id');
 
@@ -171,3 +169,5 @@ class DndSeeder extends Seeder
         }
     }
 }
+
+

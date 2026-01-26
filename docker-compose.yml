@@ -2,7 +2,7 @@ services:
   proxy:
     image: nginx:alpine
     container_name: dnd_proxy
-    restart: unless-stopped
+    restart: always
     ports:
       - "80:80"
     volumes:
@@ -18,9 +18,11 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: dnd_frontend
-    restart: unless-stopped
+    restart: always
     expose:
       - "80"
+    volumes:
+      - ./frontend/public:/usr/share/nginx/html:ro
     networks:
       - dnd_net
 
@@ -29,7 +31,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: dnd_backend
-    restart: unless-stopped
+    restart: always
     expose:
       - "80"
     depends_on:
@@ -59,7 +61,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: dnd_phpmyadmin
-    restart: unless-stopped
+    restart: always
     environment:
       PMA_HOST: db
     expose:
