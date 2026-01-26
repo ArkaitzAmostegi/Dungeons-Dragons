@@ -51,9 +51,7 @@ services:
       MYSQL_PASSWORD: dndpass
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - /Dragons/docker/db:/var/lib/mysql
-      - /Dragons/backups/db:/backups
-
+      - dnd_dbdata:/var/lib/mysql
     ports:
       - "3307:3306"
     networks:
