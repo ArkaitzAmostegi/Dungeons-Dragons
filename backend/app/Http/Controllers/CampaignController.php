@@ -118,19 +118,27 @@ class CampaignController extends Controller
     /**
      * Mostrar todas las campañas terminadas (historial)
      */
-    public function historial()
-    {
-        $finishedCampaigns = Campaign::where('status', 'finished')
-            ->with([
-                'juego',
-                'memberships.user',
-                'memberships.character.race',
-            ])
-            ->orderByDesc('created_at')
-            ->get();
+    public function historial(Request $request)
+{
+    $user = $request->user();
 
-        return view('partidas.show', compact('finishedCampaigns'));
-    }
+    $campaignIds = DB::table('campaign_user_character')
+        ->where('user_id', $user->id)
+        ->pluck('campaign_id')
+        ->unique();
+
+    $finishedCampaigns = Campaign::whereIn('id', $campaignIds)
+        ->where('status', 'finished')
+        ->with([
+            'juego',
+            'memberships.user',
+            'memberships.character.race',
+        ])
+        ->orderByDesc('created_at')
+        ->get();
+
+    return view('partidas.show', compact('finishedCampaigns'));
+}
 
     /**
      * Devuelve una vista con el formulario
