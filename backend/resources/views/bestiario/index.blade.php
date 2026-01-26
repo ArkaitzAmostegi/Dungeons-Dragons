@@ -1,4 +1,4 @@
-<x-app-layout style="width: 100%; padding: 0;">
+<x-app-layout>
         @push('styles')
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @endpush

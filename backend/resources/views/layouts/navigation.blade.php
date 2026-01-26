@@ -121,6 +121,10 @@
                 <x-responsive-nav-link :href="route('partidas.show')" :active="request()->routeIs('partidas.show')">
                     {{ __('Historial') }}
                 </x-responsive-nav-link>
+                 <x-responsive-nav-link :href="route('about.index')" :active="request()->routeIs('about.index')">
+                    {{ __('About') }}
+                </x-responsive-nav-link>
+
             </div>
 
             <!-- Responsive Settings Options -->
