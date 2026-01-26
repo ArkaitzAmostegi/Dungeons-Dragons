@@ -27,6 +27,7 @@
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">Mis Partidas</x-nav-link>
+                    <x-nav-link href="/personajes/" :active="request()->is('personajes*')">Personajes</x-nav-link>
                     <x-nav-link :href="route('bestiario.index')" :active="request()->routeIs('bestiario.index')">Bestiario</x-nav-link>
                     <x-nav-link :href="route('partidas.show')" :active="request()->routeIs('partidas.show')">Historial</x-nav-link>
                     <x-nav-link :href="route('about.index')" :active="request()->routeIs('about.index')">About</x-nav-link>
@@ -110,8 +111,8 @@
                 </x-responsive-nav-link>
 
                 <x-responsive-nav-link href="/personajes/" :active="request()->is('personajes*')">
-                        {{ __('Personajes') }}
-                    </x-responsive-nav-link>
+                    {{ __('Personajes') }}
+                </x-responsive-nav-link>
 
                 <x-responsive-nav-link :href="route('bestiario.index')" :active="request()->routeIs('bestiario.index')">
                     {{ __('Bestiario') }}
