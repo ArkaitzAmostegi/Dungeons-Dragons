@@ -6,7 +6,10 @@
 
     <div class="page-partidas">
         <div class="card-partidas">
-
+        <div class="d20-box">
+    <button id="rollD20" class="btn-d20">🎲 Tirar d20</button>
+    <div id="d20" class="d20-face">20</div>
+</div>
             <h1 class="title">Mis Partidas</h1>
 
             @if($campaigns->isEmpty())
@@ -143,6 +146,20 @@
 
     @push('scripts')
     <script>
+        document.getElementById('rollD20')?.addEventListener('click', () => {
+    const dice = document.getElementById('d20');
+
+    dice.classList.remove('d20-rolling');
+    void dice.offsetWidth; // reinicia animación
+    dice.classList.add('d20-rolling');
+
+    let rolls = 10;
+    const interval = setInterval(() => {
+        dice.textContent = Math.floor(Math.random() * 20) + 1;
+        rolls--;
+        if (rolls === 0) clearInterval(interval);
+    }, 80);
+});
         $(function() {
             $("#tabs-partidas").tabs();
             $(document).tooltip({

@@ -9,8 +9,11 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+
+    // Definir roles como constantes
+    const ROLE_ADMIN = 'admin';
+    const ROLE_USER = 'user';
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role', // añadir role aquí
     ];
 
     /**
@@ -46,24 +50,21 @@ class User extends Authenticatable
         ];
     }
 
-    //Relaciones con tablas profile y character
+    // Relaciones
     public function profile()
     {
         return $this->hasOne(Profile::class);
     }
 
-    //Relación con characters
     public function characters()
     {
         return $this->hasMany(Character::class);
     }
 
-    //Relación con campaings
     public function campaigns()
     {
         return $this->belongsToMany(Campaign::class, 'campaign_user_character')
             ->withPivot('character_id')
             ->withTimestamps();
     }
-
 }
