@@ -9,6 +9,8 @@ class ReviewSeeder extends Seeder
 {
     public function run(): void
     {
+
+        // Reseñas manuales
         $reviews = [
             [
                 'nombre' => 'Ana M.',
@@ -85,6 +87,10 @@ class ReviewSeeder extends Seeder
         foreach ($reviews as $review) {
             Review::create($review);
         }
+
+
+        // Crear 5 reseñas adicionales con factory
+        Review::factory()->count(5)->create();
     }
 }
 
