@@ -6,9 +6,9 @@
         
         {{-- Enlaces de interés --}}
         <div class="flex flex-row gap-4">
-            <a href="#" class="hover:text-white text-sm">Política de privacidad</a>
-            <a href="#" class="hover:text-white text-sm">Términos de uso</a>
-            <a href="#" class="hover:text-white text-sm">Contacto</a>
+            <a href="{{ route('legal.politicaPrivacidad') }}" class="hover:text-white text-sm">Política de privacidad</a>
+            <a href="{{ route('legal.terminosUso') }}" class="hover:text-white text-sm">Términos de uso</a>
+            <a href="{{ route('legal.contacto') }}" class="hover:text-white text-sm">Contacto</a>
         </div>
     </div>
 </footer>

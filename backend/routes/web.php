@@ -7,6 +7,7 @@ use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\BestiarioController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LegalController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -96,6 +97,14 @@ Route::get('/me', function () {
 Route::get('/me-public', function () {
     return ['authenticated' => false];
 });
+
+
+
+Route::get('/politica-privacidad', [LegalController::class, 'politicaPrivacidad'])->name('legal.politicaPrivacidad');
+Route::get('/terminos-uso', [LegalController::class, 'terminosUso'])->name('legal.terminosUso');
+Route::get('/contacto', [LegalController::class, 'contacto'])->name('legal.contacto');
+Route::post('/contacto/enviar', [LegalController::class, 'enviarContacto'])->name('legal.contacto.enviar');
+
 
 
 
