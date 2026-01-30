@@ -99,8 +99,9 @@ Route::get('/me-public', function () {
 });
 
 
-
+//Rutas footer
 Route::get('/politica-privacidad', [LegalController::class, 'politicaPrivacidad'])->name('legal.politicaPrivacidad');
+Route::view('/accesibilidad', 'legal.accesibilidad')->name('legal.accesibilidad');
 Route::get('/terminos-uso', [LegalController::class, 'terminosUso'])->name('legal.terminosUso');
 Route::get('/contacto', [LegalController::class, 'contacto'])->name('legal.contacto');
 Route::post('/contacto/enviar', [LegalController::class, 'enviarContacto'])->name('legal.contacto.enviar');

@@ -31,6 +31,10 @@ class LegalController extends Controller
         return view('legal.contacto');
     }
 
+    public function accesibilidad()
+    {
+        return view('legal.accesibilidad');
+    }
     /**
      * Procesar el envío del formulario de Contacto.
      */
