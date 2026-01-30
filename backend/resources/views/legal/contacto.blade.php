@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :title="'Contacto'">
     <div class="page-partidas" style="align-items: flex-start; padding: 40px 16px;">
         <div class="card-partidas" style="padding: 32px; max-width: 600px; margin: 0 auto; background: var(--color-primary-container); border-radius: 12px;">
             <header>

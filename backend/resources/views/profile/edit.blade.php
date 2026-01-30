@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :title="'Editar Perfil'">
 
     @push('styles')
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">

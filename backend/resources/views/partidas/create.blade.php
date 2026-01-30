@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :title="'Crear Partida'">
     <link rel="stylesheet" href="{{ asset('css/anadirPartidas.css') }}">
 
     <div class="page-partidas">

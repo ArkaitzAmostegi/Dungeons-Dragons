@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :title="'Historial'">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-6">
         <h1 class="text-3xl font-bold text-white mb-6">
             Partidas Terminadas

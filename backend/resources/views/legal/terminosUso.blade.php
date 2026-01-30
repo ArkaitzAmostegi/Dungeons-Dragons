@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :title="'Terminos de Uso'">
     <div class="page-partidas" style="align-items: flex-start; padding: 40px 16px;">
         <div class="card-partidas" style="padding: 24px 28px; background: var(--color-primary-container);">
             <header>

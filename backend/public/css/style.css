@@ -916,3 +916,22 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
   }
 }
 
+.skip-link {
+    position: absolute;
+    top: -40px;      /* fuera de la vista */
+    left: 0;
+    background: #000;
+    color: #fff;
+    padding: 8px;
+    z-index: 1000;
+    text-decoration: none;
+}
+.skip-link:focus {
+    top: 10px;       /* aparece cuando el usuario tabula */
+    left: 10px;
+}
+button:focus, a:focus {
+    outline: 3px solid #76538B; 
+    outline-offset: 3px;
+    box-shadow: 0 0 0 3px rgba(118, 83, 139, 0.5);
+}

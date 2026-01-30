@@ -1,3 +1,4 @@
+@props(['title'])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -6,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'D&D') }}</title>
+    <title>{{ $title ?? config('app.name', 'D&D') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -50,13 +51,8 @@
         }
 
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -74,15 +70,15 @@
 
     <!-- Page Heading -->
     @isset($header)
-    <header class="bg-white shadow">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            {{ $header }}
-        </div>
-    </header>
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                {{ $header }}
+            </div>
+        </header>
     @endisset
 
     <!-- Page Content -->
-    <main class="flex-1">
+    <main id="main-content" class="flex-1" tabindex="-1">
         {{ $slot }}
     </main>
 
@@ -93,7 +89,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
 
-    <!-- Loader JS -->
+    <!-- Loader JS corregido -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const loader = document.getElementById('page-loader');
@@ -106,12 +102,14 @@
                 loader.classList.add('hidden');
             });
 
-            // Mostrar loader al hacer clic en cualquier enlace interno
+            // Mostrar loader al hacer clic en cualquier enlace interno, excluyendo hash (#)
             document.querySelectorAll('a[href]').forEach(link => {
                 link.addEventListener('click', e => {
+                    const href = link.getAttribute('href');
+
                     if (
                         link.target === '_blank' ||
-                        link.href.startsWith('#') ||
+                        href.startsWith('#') || // <- EXCLUYE skip-links y anclas
                         e.ctrlKey || e.metaKey ||
                         link.closest('form')
                     ) return;
@@ -124,7 +122,6 @@
                     }, 200); // Delay para que se vea la animación
                 });
             });
-
         });
     </script>
 

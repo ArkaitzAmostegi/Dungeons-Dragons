@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :title="'Bestia'">
     <div class="max-w-4xl mx-auto p-6 text-white">
         @if($monster)
             <div class="flex flex-col md:flex-row gap-6">

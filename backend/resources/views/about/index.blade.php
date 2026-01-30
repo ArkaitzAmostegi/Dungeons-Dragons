@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :title="'Acerca de'">
      @push('styles')
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @endpush

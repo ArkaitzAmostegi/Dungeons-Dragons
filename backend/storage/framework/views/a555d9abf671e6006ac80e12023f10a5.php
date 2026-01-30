@@ -1,3 +1,4 @@
+
 <?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54 = $attributes; } ?>
 <?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -7,12 +8,11 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\App\View\Components\AppLayout::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes([]); ?>
+<?php $component->withAttributes(['title' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute('Mis Partidas')]); ?>
 
     <?php $__env->startPush('styles'); ?>
     <link rel="stylesheet" href="<?php echo e(asset('css/style.css')); ?>">
     <?php $__env->stopPush(); ?>
-
     <div class="page-partidas">
         <div class="card-partidas">
         <div class="d20-box">
@@ -51,7 +51,7 @@
                                             onsubmit="return confirm('¿Marcar esta partida como finalizada? Se moverá al historial.');">
                                             <?php echo csrf_field(); ?>
                                             <?php echo method_field('PATCH'); ?>
-                                            <button class="icon-btn success" type="submit" title="Finalizar">
+                                            <button class="icon-btn success" type="submit" title="Finalizar" aria-label="Finalizar">
                                                 <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
                                                     <path d="M10 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H10v-2h9V5h-9V3z"/>
                                                     <path d="M10 12l-3-3v2H3v2h4v2l3-3z"/>
@@ -59,7 +59,7 @@
                                             </button>
                                         </form>
                                         
-                                        <a class="icon-btn" href="<?php echo e(route('partidas.edit', $campaign)); ?>" title="Editar">
+                                        <a class="icon-btn" href="<?php echo e(route('partidas.edit', $campaign)); ?>" title="Editar" aria-label="Editar">
                                             <svg viewBox="0 0 24 24" class="icon">
                                                 <path d="M3 17.25V21h3.75L17.8 9.95l-3.75-3.75L3 17.25Zm18-11.5a1 1 0 0 0 0-1.4l-1.85-1.85a1 1 0 0 0-1.4 0l-1.45 1.45 3.75 3.75L21 5.75Z"/>
                                             </svg>
@@ -69,7 +69,7 @@
                                             onsubmit="return confirm('¿Seguro que quieres borrar esta partida?');">
                                             <?php echo csrf_field(); ?>
                                             <?php echo method_field('DELETE'); ?>
-                                            <button class="icon-btn danger" type="submit" title="Borrar">
+                                            <button class="icon-btn danger" type="submit" title="Borrar" aria-label="Borrar">
                                                 <svg viewBox="0 0 24 24" class="icon">
                                                     <path d="M6 7h12l-1 14H7L6 7Zm3-3h6l1 2H8l1-2Zm-4 2h14v2H5V6Z"/>
                                                 </svg>

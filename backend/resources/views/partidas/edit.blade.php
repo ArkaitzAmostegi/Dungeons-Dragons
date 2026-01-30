@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :title="'Editar Partida'">
     <div class="page-partidas">
         <div class="card-partidas">
             <h1 class="title">Editar Partida</h1>
