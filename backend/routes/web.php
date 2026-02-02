@@ -21,22 +21,22 @@ Route::get('/dashboard', function () {
     }
 
     return redirect()->route('partidas.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'admin'])->name('dashboard');
 
 // Dashboard admin
 Route::get('/admin', [AdminController::class, 'index'])
     ->name('admin.index')
-    ->middleware(['auth', 'verified']);
+    ->middleware(['auth', 'verified', 'admin']);
 
     // Admin campaigns
-Route::prefix('admin/campaigns')->middleware(['auth', 'verified'])->group(function () {
+Route::prefix('admin/campaigns')->middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/', [AdminController::class, 'campaigns'])->name('admin.campaigns'); // Lista campañas
     Route::get('/create', [AdminController::class, 'createCampaign'])->name('admin.campaigns.create'); // Crear campaña
     Route::delete('/{campaign}', [AdminController::class, 'destroyCampaign'])->name('admin.campaigns.destroy'); // Eliminar
 });
 
 // Admin characters
-Route::prefix('admin/characters')->middleware(['auth', 'verified'])->group(function () {
+Route::prefix('admin/characters')->middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/', [AdminController::class, 'characters'])->name('admin.characters'); // Lista personajes
     Route::get('/create', [AdminController::class, 'createCharacter'])->name('admin.characters.create'); // Crear personaje
     Route::post('/', [AdminController::class, 'storeCharacter'])->name('admin.characters.store'); // Guardar personaje
@@ -46,7 +46,7 @@ Route::prefix('admin/characters')->middleware(['auth', 'verified'])->group(funct
 
 
 // Usuarios (admin)
-Route::prefix('admin/users')->middleware(['auth', 'verified'])->group(function () {
+Route::prefix('admin/users')->middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/', [AdminController::class, 'users'])->name('admin.users');                // Lista usuarios
     Route::get('/create', [AdminController::class, 'createUser'])->name('admin.users.create'); // Form crear usuario
     Route::post('/', [AdminController::class, 'storeUser'])->name('admin.users.store');       // Guardar usuario
@@ -99,12 +99,14 @@ Route::get('/me-public', function () {
 });
 
 
-//Rutas footer
-Route::get('/politica-privacidad', [LegalController::class, 'politicaPrivacidad'])->name('legal.politicaPrivacidad');
-Route::view('/accesibilidad', 'legal.accesibilidad')->name('legal.accesibilidad');
-Route::get('/terminos-uso', [LegalController::class, 'terminosUso'])->name('legal.terminosUso');
-Route::get('/contacto', [LegalController::class, 'contacto'])->name('legal.contacto');
-Route::post('/contacto/enviar', [LegalController::class, 'enviarContacto'])->name('legal.contacto.enviar');
+// Rutas footer con middleware
+Route::middleware(['auth'])->group(function () {
+    Route::get('/politica-privacidad', [LegalController::class, 'politicaPrivacidad'])->name('legal.politicaPrivacidad');
+    Route::view('/accesibilidad', 'legal.accesibilidad')->name('legal.accesibilidad');
+    Route::get('/terminos-uso', [LegalController::class, 'terminosUso'])->name('legal.terminosUso');
+    Route::get('/contacto', [LegalController::class, 'contacto'])->name('legal.contacto');
+    Route::post('/contacto/enviar', [LegalController::class, 'enviarContacto'])->name('legal.contacto.enviar');
+});
 
 
 
