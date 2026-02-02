@@ -36,4 +36,3 @@ class RaceSeeder extends Seeder
         }
     }
 }
-```
