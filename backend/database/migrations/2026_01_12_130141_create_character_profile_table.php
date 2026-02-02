@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Crea la tabla pivot character_profile para relacionar perfiles y personajes (N:N).
+     * Incluye un campo "role" para indicar el tipo de relación (owner/guest/dm, etc.).
      */
     public function up(): void
     {
@@ -16,18 +17,19 @@ return new class extends Migration
             $table->foreignId('profile_id')->constrained()->cascadeOnDelete();
             $table->foreignId('character_id')->constrained()->cascadeOnDelete();
 
-            $table->string('role')->default('owner'); // owner | guest | dm (si quieres)
+            $table->string('role')->default('owner');
             $table->timestamps();
 
             $table->unique(['profile_id', 'character_id']);
         });
     }
-    
+
     /**
-     * Reverse the migrations.
+     * Elimina la tabla character_profile.
      */
     public function down(): void
     {
         Schema::dropIfExists('character_profile');
     }
 };
+``

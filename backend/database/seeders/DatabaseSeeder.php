@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -11,15 +10,15 @@ class DatabaseSeeder extends Seeder
     use WithoutModelEvents;
 
     /**
-     * Seed the application's database.
+     * Seeder principal: ejecuta los seeders del proyecto en orden.
      */
     public function run(): void
-        {
-            $this->call([
-                RaceSeeder::class,
-                JuegoSeeder::class,
-                DndSeeder::class,
-                ReviewSeeder::class,
-            ]);
-        }
+    {
+        $this->call([
+            RaceSeeder::class,   // Crea razas base
+            JuegoSeeder::class,  // Crea modos/juegos disponibles
+            DndSeeder::class,    // Carga datos principales del proyecto (campañas/personajes/relaciones)
+            ReviewSeeder::class, // Crea reseñas para la landing
+        ]);
+    }
 }

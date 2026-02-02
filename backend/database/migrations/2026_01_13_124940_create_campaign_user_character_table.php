@@ -1,3 +1,4 @@
+```php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -7,7 +8,10 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Crea la tabla pivot campaign_user_character para gestionar la participación en campañas:
+     * - relaciona campaign, user y character (triple relación)
+     * - guarda el rol dentro de la campaña (player, dm, etc.)
+     * - evita duplicados con una clave única compuesta
      */
     public function up(): void
     {
@@ -17,6 +21,7 @@ return new class extends Migration
             $table->foreignId('campaign_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('character_id')->constrained()->cascadeOnDelete();
+
             $table->string('role')->default('player');
             $table->timestamps();
 
@@ -24,9 +29,12 @@ return new class extends Migration
         });
     }
 
+    /**
+     * Elimina la tabla pivot campaign_user_character.
+     */
     public function down(): void
     {
         Schema::dropIfExists('campaign_user_character');
     }
-
 };
+```

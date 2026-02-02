@@ -1,3 +1,4 @@
+```php
 <?php
 
 namespace App\Models;
@@ -9,6 +10,9 @@ class Profile extends Model
 {
     use HasFactory;
 
+    /**
+     * Campos permitidos para asignación masiva (create(), update(), fill()).
+     */
     protected $fillable = [
         'user_id',
         'nickname',
@@ -16,9 +20,12 @@ class Profile extends Model
         'avatar',
     ];
 
+    /**
+     * Usuario propietario del perfil (FK: user_id).
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
 }
+```

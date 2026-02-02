@@ -1,3 +1,4 @@
+```php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -7,7 +8,9 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Crea las tablas para el sistema de caché en base de datos:
+     * - cache: almacena claves/valores y su expiración
+     * - cache_locks: bloqueos para evitar condiciones de carrera (locks)
      */
     public function up(): void
     {
@@ -25,7 +28,7 @@ return new class extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Elimina las tablas creadas en up().
      */
     public function down(): void
     {
@@ -33,3 +36,4 @@ return new class extends Migration
         Schema::dropIfExists('cache_locks');
     }
 };
+```

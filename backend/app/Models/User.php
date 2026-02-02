@@ -11,12 +11,12 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    // Definir roles como constantes
+    // Roles disponibles en la app
     const ROLE_ADMIN = 'admin';
-    const ROLE_USER = 'user';
+    const ROLE_USER  = 'user';
 
     /**
-     * The attributes that are mass assignable.
+     * Campos permitidos para asignación masiva (create(), update(), fill()).
      *
      * @var list<string>
      */
@@ -24,11 +24,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', // añadir role aquí
+        'role',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Campos ocultos al serializar (JSON/arrays).
      *
      * @var list<string>
      */
@@ -38,7 +38,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Conversión de tipos automática de atributos.
      *
      * @return array<string, string>
      */
@@ -50,17 +50,19 @@ class User extends Authenticatable
         ];
     }
 
-    // Relaciones
+    // Perfil asociado al usuario
     public function profile()
     {
         return $this->hasOne(Profile::class);
     }
 
+    // Personajes creados por el usuario
     public function characters()
     {
         return $this->hasMany(Character::class);
     }
 
+    // Campañas en las que participa el usuario (pivot campaign_user_character)
     public function campaigns()
     {
         return $this->belongsToMany(Campaign::class, 'campaign_user_character')

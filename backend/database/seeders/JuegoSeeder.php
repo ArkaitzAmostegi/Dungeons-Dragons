@@ -1,3 +1,4 @@
+```php
 <?php
 
 namespace Database\Seeders;
@@ -7,6 +8,10 @@ use Illuminate\Database\Seeder;
 
 class JuegoSeeder extends Seeder
 {
+    /**
+     * Seeder de "juegos/modos":
+     * crea un conjunto base de modos si no existen (evita duplicados con firstOrCreate).
+     */
     public function run(): void
     {
         $modos = [
@@ -22,3 +27,4 @@ class JuegoSeeder extends Seeder
         }
     }
 }
+```

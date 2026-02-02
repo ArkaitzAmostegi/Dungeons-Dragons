@@ -1,3 +1,4 @@
+```php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -7,7 +8,10 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Crea las tablas del sistema de colas (queue) en base de datos:
+     * - jobs: trabajos pendientes/en proceso
+     * - job_batches: información de lotes (batching)
+     * - failed_jobs: trabajos que han fallado con su excepción
      */
     public function up(): void
     {
@@ -46,7 +50,7 @@ return new class extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Elimina las tablas creadas en up().
      */
     public function down(): void
     {
@@ -55,3 +59,4 @@ return new class extends Migration
         Schema::dropIfExists('failed_jobs');
     }
 };
+```

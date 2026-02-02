@@ -7,13 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Migration para borrar tabla pivote.
+     * Elimina la tabla pivot character_profile (limpieza de modelo/relación que ya no se usa).
+     * Se usa dropIfExists para que no falle si la tabla no existe.
      */
     public function up(): void
     {
         Schema::dropIfExists('character_profile');
     }
 
+    /**
+     * Revierte el cambio recreando la tabla character_profile.
+     */
     public function down(): void
     {
         Schema::create('character_profile', function (Blueprint $table) {
@@ -23,5 +27,4 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
 };
