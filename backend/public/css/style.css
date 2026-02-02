@@ -225,7 +225,6 @@ box-shadow:
     color: var(--color-primary);
 }
 
-.auth-form{ display: grid; gap: 18px; }
 .auth-field{ display: grid; gap: 8px; }
 
 .auth-label{
@@ -315,10 +314,13 @@ box-shadow:
     text-align: center;
 }
 
-/* En register suele haber más campos: compacta un poco */
-.auth-form{
-    gap: 14px; /* antes 18px */
+.auth-form { display: grid; gap: 14px; }
+
+@media (min-width: 768px) {
+    .auth-form { gap: 18px; }
 }
+
+
 
 /*------------------------------
         PROFILE
@@ -790,13 +792,6 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
             padding: 0 !important;
         }
 
-        /* Tarjetas cuadradas */
-        .monster-card {
-            aspect-ratio: 1 / 1 !important;
-            border-radius: 12px;
-            padding: 1rem;
-        }
-
         /* Mejorar índice de letras con colores de tus otras páginas */
         .letter-btn {
             background-color: #fff;
@@ -809,23 +804,55 @@ body div.ui-tooltip.ui-widget.ui-widget-content * {
         }
         /* Tarjetas más pequeñas y cuadradas */
 .monster-card {
-    aspect-ratio: 5 / 3 !important;
-    border-radius: 12px !important;
-    padding: 1rem !important;
-    background-color: #f5f5f5 !important;
-    border: 2px solid #6d51b7 !important;
-    max-width: 200px; /* tamaño máximo de cada tarjeta */
-    width: 100%;       /* ocupa todo el espacio de su columna */
-    margin: 0 auto;    /* centrar dentro de la celda */
+    aspect-ratio: 7 / 3;
+    border-radius: 12px;
+    padding: 1rem;
+    background-color: #f5f5f5;
+    border: 2px solid #6d51b7;
+    width: 100%;
+    margin: 0 auto;
+    transition: transform .2s ease, box-shadow .2s ease;
 }
+
+@media (min-width: 768px) {
+    .monster-card {
+        aspect-ratio: 7 / 3;
+        max-width: none;
+    }
+}
+
 #monsterGrid {
-  grid-template-columns: repeat(4, 1fr);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
 }
-.monster-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-    background-color: #e8e0f8; /* ligero cambio de color */
+
+@media (min-width: 640px) {
+  #monsterGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
+
+@media (min-width: 768px) {
+  #monsterGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  #monsterGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (hover: hover) {
+    .monster-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        background-color: #e8e0f8;
+    }
+}
+
 .user-status {
   width: 8px;
   height: 8px;
@@ -935,3 +962,4 @@ button:focus, a:focus {
     outline-offset: 3px;
     box-shadow: 0 0 0 3px rgba(118, 83, 139, 0.5);
 }
+

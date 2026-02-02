@@ -18,8 +18,7 @@
                     :value="old('email')"
                     required
                     autofocus
-                    autocomplete="username"
-                />
+                    autocomplete="username" />
                 <x-input-error :messages="$errors->get('email')" class="auth-error" />
             </div>
 
@@ -32,8 +31,7 @@
                     type="password"
                     name="password"
                     required
-                    autocomplete="current-password"
-                />
+                    autocomplete="current-password" />
                 <x-input-error :messages="$errors->get('password')" class="auth-error" />
             </div>
 
@@ -46,9 +44,9 @@
             <div class="auth-actions">
                 {{-- Si no lo quieres (en la imagen no aparece), elimina este bloque --}}
                 @if (Route::has('password.request'))
-                    <a class="auth-link" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
+                <a class="auth-link" href="{{ route('password.request') }}">
+                    {{ __('Forgot your password?') }}
+                </a>
                 @endif
 
                 <x-primary-button class="auth-button">
@@ -56,5 +54,17 @@
                 </x-primary-button>
             </div>
         </form>
+        <div class="auth-register">
+            <span>¿No tienes cuenta?</span>
+            <a href="{{ route('register') }}" class="auth-link">Regístrate</a>
+        </div>
     </div>
 </x-guest-layout>
+<style>
+    .auth-register {
+        font-size: 15px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+</style>
