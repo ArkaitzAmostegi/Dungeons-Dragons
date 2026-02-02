@@ -39,10 +39,9 @@ services:
     networks:
       - dnd_net
     volumes:
-      - ./backend/storage:/var/www/html/storage
-      - ./backend/bootstrap/cache:/var/www/html/bootstrap/cache
       - ./backend/.env:/var/www/html/.env
-    entrypoint: /bin/sh -c "chown -R www-data:www-data storage bootstrap/cache && chmod -R 775 storage bootstrap/cache && apache2-foreground"
+      # No montes storage ni bootstrap/cache desde host, que Laravel se encargue dentro del contenedor
+
 
   db:
     image: mysql:8.0
