@@ -29,4 +29,4 @@ class PersonajeController extends Controller
             ->get();                            
     }
 }
-```
+

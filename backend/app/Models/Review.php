@@ -15,4 +15,3 @@ class Review extends Model
      */
     protected $fillable = ['nombre', 'title', 'descripcion', 'rating', 'is_public'];
 }
-```

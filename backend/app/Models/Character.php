@@ -42,4 +42,3 @@ class Character extends Model
             ->withTimestamps();
     }
 }
-```

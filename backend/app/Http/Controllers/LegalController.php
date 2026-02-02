@@ -50,4 +50,4 @@ class LegalController extends Controller
         return redirect()->back()->with('success', 'Tu mensaje ha sido enviado correctamente.');
     }
 }
-``
+
