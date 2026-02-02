@@ -42,6 +42,7 @@ services:
     volumes:
       - ./backend/storage:/var/www/html/storage
       - ./backend/bootstrap/cache:/var/www/html/bootstrap/cache
+      - ./backend/.env:/var/www/html/.env
 
   db:
     image: mysql:8.0
