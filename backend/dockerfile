@@ -26,11 +26,10 @@ COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
 
 WORKDIR /var/www/html
 
-# Copiar composer.json y lock para instalar dependencias
+# Copiar dependencias para instalarlas primero
 COPY composer.json composer.lock ./
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts
 
-# Copiar package.json y lock para instalar dependencias npm
 COPY package.json package-lock.json ./
 RUN npm config set bin-links true \
  && npm config set fund false \
@@ -40,8 +39,8 @@ RUN npm config set bin-links true \
 # Copiar todo el proyecto
 COPY . .
 
-# Crear carpetas necesarias y dar permisos
-RUN mkdir -p bootstrap/cache storage \
+# Crear carpetas necesarias y dar permisos a www-data
+RUN mkdir -p bootstrap/cache storage/framework/views storage/framework/sessions storage/framework/cache storage/logs \
  && chown -R www-data:www-data bootstrap/cache storage \
  && chmod -R 775 bootstrap/cache storage
 
@@ -52,5 +51,5 @@ RUN php artisan package:discover --ansi
 # Build assets con Vite
 RUN npx vite build
 
-# Asegurar permisos finales
-RUN chown -R www-data:www-data /var/www/html
+# Ejecutar Laravel en Apache
+USER www-data

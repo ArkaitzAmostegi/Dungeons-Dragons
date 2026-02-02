@@ -39,8 +39,11 @@ services:
     networks:
       - dnd_net
     volumes:
-      # Solo montamos .env, no storage ni bootstrap/cache
-      - ./backend/.env:/var/www/html/.env:ro
+      # Montamos el .env desde host
+      - ./backend/.env:/var/www/html/.env
+      # Montamos storage/cache para persistencia sin tocar permisos
+      - ./backend/storage:/var/www/html/storage:cached
+      - ./backend/bootstrap/cache:/var/www/html/bootstrap/cache:cached
 
   db:
     image: mysql:8.0
@@ -52,8 +55,7 @@ services:
       MYSQL_PASSWORD: dndpass
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - ./docker/db:/var/lib/mysql
-      - ./docker/backups:/backups
+      - db_data:/var/lib/mysql
     ports:
       - "3307:3306"
     networks:
@@ -75,3 +77,6 @@ services:
 networks:
   dnd_net:
     driver: bridge
+
+volumes:
+  db_data:
