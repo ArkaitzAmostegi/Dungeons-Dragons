@@ -1,20 +1,27 @@
-
 <x-app-layout :title="'Mis Partidas'">
 
     @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <!-- Cargar CSS personalizado -->
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @endpush
+
     <div class="page-partidas">
         <div class="card-partidas">
-        <div class="d20-box">
-    <button id="rollD20" class="btn-d20">🎲 Tirar d20</button>
-    <div id="d20" class="d20-face">20</div>
-</div>
+
+            <!-- Caja del dado D20 -->
+            <div class="d20-box">
+                <button id="rollD20" class="btn-d20">🎲 Tirar d20</button>
+                <div id="d20" class="d20-face">20</div>
+            </div>
+
+            <!-- Título principal -->
             <h1 class="title">Mis Partidas</h1>
 
+            <!-- Comprobar si el usuario tiene partidas -->
             @if($campaigns->isEmpty())
                 <p class="empty">No tienes partidas aún.</p>
             @else
+                <!-- Pestañas para cada partida -->
                 <div id="tabs-partidas" class="tabs-partidas">
                     <ul>
                         @foreach($campaigns as $campaign)
@@ -25,16 +32,20 @@
                             </li>
                         @endforeach
                     </ul>
-                    
+
                     @foreach($campaigns as $campaign)
                         @php
+                            // Agrupar miembros por usuario
                             $byUser = $campaign->memberships->groupBy('user_id');
                         @endphp
 
                         <div id="tab-{{ $campaign->id }}" class="tab-panel">
                             <div class="tab-header">
                                 <div class="actions-title">
+                                    <!-- Título de la partida -->
                                     <h3 class="tab-title">{{ $campaign->title }}</h3>
+
+                                    <!-- Botones de acciones: Finalizar, Editar, Borrar -->
                                     <div class="char-actions">
                                         {{-- FINALIZAR --}}
                                         <form action="{{ route('partidas.finalizar', $campaign) }}" method="POST"
@@ -42,18 +53,21 @@
                                             @csrf
                                             @method('PATCH')
                                             <button class="icon-btn success" type="submit" title="Finalizar" aria-label="Finalizar">
+                                                <!-- Icono -->
                                                 <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
                                                     <path d="M10 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H10v-2h9V5h-9V3z"/>
                                                     <path d="M10 12l-3-3v2H3v2h4v2l3-3z"/>
                                                 </svg>
                                             </button>
                                         </form>
+
                                         {{-- EDITAR --}}
                                         <a class="icon-btn" href="{{ route('partidas.edit', $campaign) }}" title="Editar" aria-label="Editar">
                                             <svg viewBox="0 0 24 24" class="icon">
                                                 <path d="M3 17.25V21h3.75L17.8 9.95l-3.75-3.75L3 17.25Zm18-11.5a1 1 0 0 0 0-1.4l-1.85-1.85a1 1 0 0 0-1.4 0l-1.45 1.45 3.75 3.75L21 5.75Z"/>
                                             </svg>
                                         </a>
+
                                         {{-- BORRAR --}}
                                         <form action="{{ route('partidas.destroy', $campaign) }}" method="POST"
                                             onsubmit="return confirm('¿Seguro que quieres borrar esta partida?');">
@@ -68,6 +82,7 @@
                                     </div>
                                 </div>
 
+                                <!-- Modo de juego -->
                                 <div class="sub">
                                     @if($campaign->juego)
                                         <strong>Modo de juego:</strong>
@@ -78,11 +93,14 @@
                                         <span class="js-tooltip" title="Sin modo de juego">—</span>
                                     @endif
                                 </div>
+
+                                <!-- Descripción de la partida -->
                                 @if($campaign->description)
                                     <p class="tab-desc">{{ $campaign->description }}</p>
                                 @endif
                             </div>
 
+                            <!-- Sección de jugadores y personajes -->
                             <div class="tab-section">
                                 <h4 style="font-weight: bold;">Jugadores y personajes</h4>
 
@@ -96,6 +114,7 @@
                                             @foreach($rows as $m)
                                                 @php
                                                     $c = $m->character;
+                                                    // Tooltip con información del personaje
                                                     $tooltip = $c
                                                         ? trim(
                                                             $c->name
@@ -116,11 +135,6 @@
                                                                 </span>
                                                             </span>
                                                         </span>
-
-                                                        @php
-                                                            $role = $m->getAttribute('role') ?? data_get($m, 'attributes.role');
-                                                        @endphp
-
                                                     </div>
                                                 </li>
                                             @endforeach
@@ -134,6 +148,7 @@
                 </div>
             @endif
 
+            <!-- Botón para crear nueva partida -->
             <div style="margin:20px 10px;">
                 <a href="{{ route('partidas.create') }}" class="btn-new-partida"
                     style="padding:8px 16px; background:#6d51b7; color:white; border-radius:8px; text-decoration:none; font-weight:600; margin-top:10px">
@@ -146,20 +161,23 @@
 
     @push('scripts')
     <script>
+        // Funcionalidad del dado D20
         document.getElementById('rollD20')?.addEventListener('click', () => {
-    const dice = document.getElementById('d20');
+            const dice = document.getElementById('d20');
 
-    dice.classList.remove('d20-rolling');
-    void dice.offsetWidth; // reinicia animación
-    dice.classList.add('d20-rolling');
+            dice.classList.remove('d20-rolling');
+            void dice.offsetWidth; // reinicia animación
+            dice.classList.add('d20-rolling');
 
-    let rolls = 10;
-    const interval = setInterval(() => {
-        dice.textContent = Math.floor(Math.random() * 20) + 1;
-        rolls--;
-        if (rolls === 0) clearInterval(interval);
-    }, 80);
-});
+            let rolls = 10;
+            const interval = setInterval(() => {
+                dice.textContent = Math.floor(Math.random() * 20) + 1;
+                rolls--;
+                if (rolls === 0) clearInterval(interval);
+            }, 80);
+        });
+
+        // Inicializar pestañas y tooltips con jQuery UI
         $(function() {
             $("#tabs-partidas").tabs();
             $(document).tooltip({
@@ -167,9 +185,10 @@
                 track: true,
                 position: { my: "left+12 top+12", at: "left bottom" }
             });
-              $("#tabs-partidas").on("tabsactivate", function () {
-            document.getElementById('page-loader')?.classList.add('hidden');
-        });
+
+            $("#tabs-partidas").on("tabsactivate", function () {
+                document.getElementById('page-loader')?.classList.add('hidden');
+            });
         });
     </script>
     @endpush
