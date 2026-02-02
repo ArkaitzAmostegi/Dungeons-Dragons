@@ -30,7 +30,7 @@
             <div class="auth-logo">
                 <a href="/">
                     <img
-                        src="{{ asset('images/logo-sinfondo.png') }}"
+                        src="{{ asset('images/Logo-sinfondo.png') }}"
                         alt="Dungeons & Dragons"
                         class="auth-logo-img"
                     />
