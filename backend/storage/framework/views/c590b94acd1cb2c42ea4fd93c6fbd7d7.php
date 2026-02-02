@@ -353,6 +353,7 @@
                     <div class="font-medium text-base text-gray-800"><?php echo e(Auth::user()->name); ?></div>
                     <div class="font-medium text-sm text-gray-500"><?php echo e(Auth::user()->email); ?></div>
                 </div>
+                
                 <div class="mt-3 space-y-1">
                     <?php if (isset($component)) { $__componentOriginald69b52d99510f1e7cd3d80070b28ca18 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald69b52d99510f1e7cd3d80070b28ca18 = $attributes; } ?>
