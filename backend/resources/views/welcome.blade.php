@@ -64,7 +64,7 @@
         @endif
 
         <!-- Para el API de las reseñas-->
-        <script>
+        <!-- <script>
             document.addEventListener('DOMContentLoaded', async () => {
             const slot = document.getElementById('review-slot');
             slot.innerHTML = '<p class="reviews-status">Cargando reseñas...</p>';
@@ -113,7 +113,7 @@
                 }[c]));
             }
             });
-        </script>
+        </script> -->
 
 
     </body>
