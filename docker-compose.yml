@@ -38,11 +38,9 @@ services:
       - db
     networks:
       - dnd_net
-    # Volúmenes limitados solo a storage y bootstrap/cache
     volumes:
-      - ./backend/storage:/var/www/html/storage
-      - ./backend/bootstrap/cache:/var/www/html/bootstrap/cache
-      - ./backend/.env:/var/www/html/.env
+      # Solo montamos .env, no storage ni bootstrap/cache
+      - ./backend/.env:/var/www/html/.env:ro
 
   db:
     image: mysql:8.0
