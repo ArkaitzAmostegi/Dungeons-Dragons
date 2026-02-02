@@ -1,4 +1,3 @@
-```php
 <?php
 
 // app/Models/Juego.php
