@@ -39,11 +39,10 @@ services:
     networks:
       - dnd_net
     volumes:
-      # Montamos el .env desde host
+      - ./backend/storage:/var/www/html/storage
+      - ./backend/bootstrap/cache:/var/www/html/bootstrap/cache
       - ./backend/.env:/var/www/html/.env
-      # Montamos storage/cache para persistencia sin tocar permisos
-      - ./backend/storage:/var/www/html/storage:cached
-      - ./backend/bootstrap/cache:/var/www/html/bootstrap/cache:cached
+    entrypoint: /bin/sh -c "chown -R www-data:www-data storage bootstrap/cache && chmod -R 775 storage bootstrap/cache && apache2-foreground"
 
   db:
     image: mysql:8.0
