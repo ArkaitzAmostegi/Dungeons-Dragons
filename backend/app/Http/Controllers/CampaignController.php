@@ -6,6 +6,7 @@ use App\Models\Campaign;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Juego;
+use App\Models\Character;
 
 class CampaignController extends Controller
 {
@@ -49,10 +50,15 @@ class CampaignController extends Controller
             ->with('success', 'Partida marcada como finalizada');
     }
 
-    public function create()
-    {
-        return view('partidas.create');
-    }
+  
+public function create()
+{
+    $characters = Character::with('race')->get();
+    $byClass = $characters->groupBy(fn($c) => $c->class ?? 'Sin Clase');
+
+    return view('partidas.create', compact('byClass'));
+}
+
 
     public function store(Request $request)
     {
@@ -154,11 +160,15 @@ class CampaignController extends Controller
         return redirect()->route('partidas.index')->with('success', 'Partida actualizada');
     }
 
-    // Elimina la campaña y sus relaciones en el pivot
     public function destroy(Request $request, Campaign $campaign)
     {
         if (!$this->userIsInCampaign($request->user()->id, $campaign)) {
             abort(403);
         }
 
-        $ca
+        $campaign->memberships()->delete(); // borra campaign_user_character
+        $campaign->delete();
+
+        return redirect()->route('partidas.index')->with('success', 'Partida eliminada');
+    }
+}

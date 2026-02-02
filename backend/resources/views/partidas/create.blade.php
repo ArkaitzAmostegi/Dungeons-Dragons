@@ -22,10 +22,8 @@
                 </div>
 
                 <!-- Selección de personajes -->
-                @php
-                $characters = \App\Models\Character::all();
-                $byClass = $characters->groupBy(fn($c) => $c->class ?? 'Sin Clase');
-                @endphp
+                @foreach($byClass as $className => $chars)
+
 
                 <div class="form-group personajes-flex">
 
