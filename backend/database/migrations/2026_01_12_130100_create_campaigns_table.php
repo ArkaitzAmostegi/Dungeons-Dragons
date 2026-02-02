@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Crea la tabla campaigns para guardar las campañas/partidas.
+     * Incluye un estado (activa o finalizada) para separar partidas en curso del historial.
      */
     public function up(): void
     {
@@ -21,7 +22,7 @@ return new class extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Elimina la tabla campaigns.
      */
     public function down(): void
     {

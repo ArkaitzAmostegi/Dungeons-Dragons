@@ -8,13 +8,14 @@ use Illuminate\Http\Request;
 
 class PersonajeController extends Controller
 {
+    // Lista personajes y permite filtrar por nombre con ?q=
     public function index(Request $request)
     {
-        $q = $request->query('q');
+        $q = $request->query('q'); // Texto de búsqueda (query string)
 
         return Character::query()
-            ->when($q, fn($qry) => $qry->where('name', 'like', "%{$q}%"))
-            ->latest()
-            ->get();
+            ->when($q, fn($qry) => $qry->where('name', 'like', "%{$q}%")) // Aplica filtro si hay q
+            ->latest() // Ordena por created_at desc
+            ->get();   // Devuelve JSON con los resultados
     }
 }

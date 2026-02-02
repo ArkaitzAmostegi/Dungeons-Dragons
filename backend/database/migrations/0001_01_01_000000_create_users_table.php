@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Crea las tablas base de autenticación:
+     * - users (usuarios)
+     * - password_reset_tokens (tokens de recuperación)
+     * - sessions (sesiones, si usas session driver database)
      */
     public function up(): void
     {
@@ -38,7 +41,7 @@ return new class extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Revierte la migración eliminando las tablas creadas en up().
      */
     public function down(): void
     {

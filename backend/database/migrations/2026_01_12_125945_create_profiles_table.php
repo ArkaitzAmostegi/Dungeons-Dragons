@@ -1,3 +1,4 @@
+```php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -7,7 +8,9 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Crea la tabla profiles y la relaciona 1:1 con users.
+     * - user_id es único para garantizar un perfil por usuario
+     * - al borrar el usuario, se borra su perfil (cascadeOnDelete)
      */
     public function up(): void
     {
@@ -22,10 +25,11 @@ return new class extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Elimina la tabla profiles.
      */
     public function down(): void
     {
         Schema::dropIfExists('profiles');
     }
 };
+```

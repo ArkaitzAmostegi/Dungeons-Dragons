@@ -13,13 +13,21 @@ use Illuminate\Support\Facades\Hash;
 
 class DndSeeder extends Seeder
 {
+    /**
+     * Seeder principal de datos “D&D”:
+     * - Asegura datos base (razas)
+     * - Crea usuarios (incluyendo admins) y sus perfiles
+     * - Crea personajes repartidos entre usuarios
+     * - Crea campañas y vincula personajes a campañas mediante la tabla pivot (con roles)
+     */
     public function run(): void
     {
-        // 1) Asegura que existan razas
+        // Asegura que existan razas antes de crear personajes
         if (Race::count() === 0) {
             $this->call(RaceSeeder::class);
         }
-        // 2) Crear usuarios predefinidos con role
+
+        // Usuarios predefinidos (players y admins)
         $usersData = [
             ['name' => 'Alice', 'email' => 'alice@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
             ['name' => 'Bob', 'email' => 'bob@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
@@ -27,12 +35,12 @@ class DndSeeder extends Seeder
             ['name' => 'Diana', 'email' => 'diana@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
             ['name' => 'Ethan', 'email' => 'ethan@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
 
-            // Admins
             ['name' => 'Jokin', 'email' => 'jokin@gmail.com', 'password' => 'admin', 'role' => User::ROLE_ADMIN],
             ['name' => 'Arkaitz', 'email' => 'arkaitz@gmail.com', 'password' => 'admin', 'role' => User::ROLE_ADMIN],
             ['name' => 'Admin', 'email' => 'admin@admin.com', 'password' => 'admin', 'role' => User::ROLE_ADMIN],
         ];
 
+        // Crea/actualiza usuarios y asegura que cada uno tenga un perfil
         $users = collect();
 
         foreach ($usersData as $u) {
@@ -45,7 +53,6 @@ class DndSeeder extends Seeder
                 ]
             );
 
-            // Profile
             Profile::updateOrCreate(
                 ['user_id' => $user->id],
                 ['user_id' => $user->id]
@@ -54,7 +61,7 @@ class DndSeeder extends Seeder
             $users->push($user);
         }
 
-        // 3) Crear personajes predefinidos
+        // Personajes predefinidos; se asignan a los usuarios de forma rotativa
         $charactersData = [
             ['name' => 'Thalion', 'race' => 'Elfo', 'class' => 'Arquero', 'level' => 5, 'description' => 'Un elfo ágil y preciso con el arco.'],
             ['name' => 'Gorim', 'race' => 'Enano', 'class' => 'Guerrero', 'level' => 6, 'description' => 'Enano fuerte y resistente, experto en combate cuerpo a cuerpo.'],
@@ -78,6 +85,7 @@ class DndSeeder extends Seeder
             ['name' => 'Eryndor', 'race' => 'Elfo', 'class' => 'Arquero', 'level' => 5, 'description' => 'Arquero elfo con puntería infalible.'],
         ];
 
+        // Crea personajes y guarda la colección completa para usarlos en campañas
         $allCharacters = collect();
         $userCount = $users->count();
 
@@ -96,7 +104,8 @@ class DndSeeder extends Seeder
 
             $allCharacters->push($character);
         }
-        // 4) Crear campañas
+
+        // Crea campañas con títulos/descriciones predefinidas y asigna participantes
         $juegoIds = Juego::pluck('id');
 
         $campaignsData = [
@@ -131,7 +140,7 @@ class DndSeeder extends Seeder
             $myChars = $allCharacters->where('user_id', $user->id)->values();
             if ($myChars->isEmpty()) continue;
 
-            $userCampaigns = $campaignsData; // copia para cada usuario
+            $userCampaigns = $campaignsData;
             $numCampaigns = min(5, count($userCampaigns));
 
             for ($i = 0; $i < $numCampaigns; $i++) {
@@ -139,22 +148,22 @@ class DndSeeder extends Seeder
                 $key = array_rand($keys);
                 $title = $keys[$key];
                 $description = $userCampaigns[$title];
-                unset($userCampaigns[$title]); // elimina solo de la copia
+                unset($userCampaigns[$title]);
 
                 $campaign = Campaign::factory()->create([
-                    'juego_id' => fn() => $juegoIds->random(),
+                    'juego_id' => fn () => $juegoIds->random(),
                     'title' => $title,
                     'description' => $description,
                 ]);
 
-                // Owner
+                // Añade un personaje del usuario como owner de la campaña
                 $ownerChar = $myChars->random();
                 $campaign->characters()->attach($ownerChar->id, [
                     'user_id' => $user->id,
                     'role' => 'owner',
                 ]);
 
-                // Jugadores extra
+                // Añade personajes de otros usuarios como jugadores
                 $extraCount = rand(2, 5);
                 $extrasPool = $allCharacters->where('user_id', '!=', $user->id)->values();
                 $extras = $extrasPool->random(min($extraCount, $extrasPool->count()));
@@ -169,5 +178,3 @@ class DndSeeder extends Seeder
         }
     }
 }
-
-

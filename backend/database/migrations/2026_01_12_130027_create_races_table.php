@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Crea la tabla races para almacenar razas (nombre único) y sus bonificaciones en JSON.
      */
     public function up(): void
     {
@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('description')->nullable();
-            $table->json('bonuses')->nullable(); // ej: {"str":1,"dex":2}
+            $table->json('bonuses')->nullable(); // Ej: {"str":1,"dex":2}
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
+     * Elimina la tabla races.
      */
     public function down(): void
     {
