@@ -29,4 +29,3 @@ class Juego extends Model
         return $this->hasMany(\App\Models\Campaign::class, 'juego_id');
     }
 }
-```

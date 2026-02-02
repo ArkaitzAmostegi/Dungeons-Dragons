@@ -32,4 +32,4 @@ class CampaignFactory extends Factory
         ];
     }
 }
-``
+

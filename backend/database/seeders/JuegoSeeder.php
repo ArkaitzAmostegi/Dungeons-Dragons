@@ -27,4 +27,4 @@ class JuegoSeeder extends Seeder
         }
     }
 }
-```
+

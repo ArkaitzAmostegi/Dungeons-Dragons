@@ -14,30 +14,34 @@ class CampaignController extends Controller
     {
         $user = $request->user();
 
-        // IDs de campañas en las que participa el usuario (tabla pivot)
+        // Campañas donde participa el user (por pivot)
         $campaignIds = DB::table('campaign_user_character')
             ->where('user_id', $user->id)
             ->pluck('campaign_id')
             ->unique();
 
-        // Campañas activas (no finalizadas) con sus relaciones necesarias
         $campaigns = Campaign::query()
             ->whereIn('id', $campaignIds)
             ->where('status', '!=', 'finished')
-            ->with(['juego', 'memberships.user', 'memberships.character.race'])
+            ->with([
+                'juego',
+                'memberships.user',
+                'memberships.character.race',
+            ])
             ->orderByDesc('created_at')
             ->get();
+
 
         return view('partidas.index', compact('campaigns'));
     }
 
-    // Comprueba que el usuario participa en la campaña
+    // Autorización mínima (solo si el usuario participa)
     private function userIsInCampaign(int $userId, Campaign $campaign): bool
     {
         return $campaign->memberships()->where('user_id', $userId)->exists();
     }
 
-    // Marca la campaña como finalizada
+    // método finalizar() que cambia status y redirige a historial
     public function finalizar(Request $request, Campaign $campaign)
     {
         if (!$this->userIsInCampaign($request->user()->id, $campaign)) {
@@ -60,9 +64,12 @@ public function create()
 }
 
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        // Valida datos del formulario
+        // 1️⃣ Validar campos
         $data = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
@@ -70,23 +77,22 @@ public function create()
             'personajes' => 'nullable|string',
         ]);
 
-        // Exige al menos un personaje seleccionado
+        // 2️⃣ Comprobar que haya al menos un personaje
         if (empty($data['personajes'])) {
             return redirect()->back()
                 ->withInput()
                 ->withErrors(['personajes' => 'Debes seleccionar al menos un personaje.']);
         }
 
-        // Crea la campaña
         $campaign = new Campaign();
         $campaign->title = $data['nombre'];
         $campaign->description = $data['descripcion'] ?? '';
-        $campaign->juego_id = $data['juego_id'];
+        $campaign->juego_id = $data['juego_id']; // guardar el modo en juego_id
         $campaign->save();
 
         $userId = $request->user()->id;
 
-        // Vincula personajes a la campaña guardando también el user_id en el pivot
+        // 3️⃣ Vincular personajes con user_id
         $ids = explode(',', $data['personajes']);
         $syncData = [];
         foreach ($ids as $id) {
@@ -94,38 +100,50 @@ public function create()
         }
         $campaign->characters()->sync($syncData);
 
-        // Vincula usuario a la campaña (sin borrar otros)
+        // 4️⃣ Asociar usuario a la campaña
         $campaign->users()->syncWithoutDetaching([$userId]);
 
+        // 5️⃣ Redirigir con éxito
         return redirect()->route('partidas.index')
             ->with('success', 'Partida creada correctamente');
     }
 
+
+    /**
+     * Display the specified resource.
+     */
     public function show(Campaign $campaign)
     {
         //
     }
-
-    // Historial de campañas finalizadas del usuario
+    /**
+     * Mostrar todas las campañas terminadas (historial)
+     */
     public function historial(Request $request)
-    {
-        $user = $request->user();
+{
+    $user = $request->user();
 
-        $campaignIds = DB::table('campaign_user_character')
-            ->where('user_id', $user->id)
-            ->pluck('campaign_id')
-            ->unique();
+    $campaignIds = DB::table('campaign_user_character')
+        ->where('user_id', $user->id)
+        ->pluck('campaign_id')
+        ->unique();
 
-        $finishedCampaigns = Campaign::whereIn('id', $campaignIds)
-            ->where('status', 'finished')
-            ->with(['juego', 'memberships.user', 'memberships.character.race'])
-            ->orderByDesc('created_at')
-            ->get();
+    $finishedCampaigns = Campaign::whereIn('id', $campaignIds)
+        ->where('status', 'finished')
+        ->with([
+            'juego',
+            'memberships.user',
+            'memberships.character.race',
+        ])
+        ->orderByDesc('created_at')
+        ->get();
 
-        return view('partidas.show', compact('finishedCampaigns'));
-    }
+    return view('partidas.show', compact('finishedCampaigns'));
+}
 
-    // Formulario de edición (solo si participa)
+    /**
+     * Devuelve una vista con el formulario
+     */
     public function edit(Request $request, Campaign $campaign)
     {
         if (!$this->userIsInCampaign($request->user()->id, $campaign)) {
@@ -138,7 +156,10 @@ public function create()
         return view('partidas.edit', compact('campaign', 'juegos'));
     }
 
-    // Actualiza los campos principales de la campaña
+
+    /**
+     * Actualiza título/descripcion/juego (ajusta nombres de campos al form)
+     */
     public function update(Request $request, Campaign $campaign)
     {
         if (!$this->userIsInCampaign($request->user()->id, $campaign)) {
