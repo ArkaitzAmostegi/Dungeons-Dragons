@@ -62,7 +62,7 @@
                     Observaciones y datos de contacto
                 </h2>
                 <p>
-                    Si encuentras barreras de accesibilidad en este sitio web o deseas comunicar incidencias, puedes contactar mediante:
+                    Si encuentras barreras de accesibilidad en este sitio web o deseas comunicar incidencias, puedes contactarnos mediante:
                 </p>
                 <ul style="padding-left: 20px; margin-bottom: 16px;">
                     <li>Correo electrónico: <strong>arkaitzamostegi@gmail.com</strong></li>
