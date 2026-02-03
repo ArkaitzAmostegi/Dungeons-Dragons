@@ -81,7 +81,9 @@ Route::get('/bestiario/{monster}', [BestiarioController::class, 'show'])
     ->name('bestiario.show');
 
 // About
-Route::get('/about', [AboutController::class, 'index'])->name('about.index');
+Route::get('/about', [AboutController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('about.index');
 
 //Rutas para la API del frontend, para que el user() funcione en la API
 Route::get('/me', function () {
