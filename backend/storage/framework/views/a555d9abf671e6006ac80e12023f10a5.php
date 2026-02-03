@@ -1,4 +1,3 @@
-
 <?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54 = $attributes; } ?>
 <?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -11,14 +10,18 @@
 <?php $component->withAttributes(['title' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute('Mis Partidas')]); ?>
 
     <?php $__env->startPush('styles'); ?>
-    <link rel="stylesheet" href="<?php echo e(asset('css/style.css')); ?>">
+        <link rel="stylesheet" href="<?php echo e(asset('css/style.css')); ?>">
     <?php $__env->stopPush(); ?>
+
     <div class="page-partidas">
         <div class="card-partidas">
-        <div class="d20-box">
-    <button id="rollD20" class="btn-d20">🎲 Tirar d20</button>
-    <div id="d20" class="d20-face">20</div>
-</div>
+
+            <!-- Caja del dado D20 -->
+            <div class="d20-box">
+                <button id="rollD20" class="btn-d20">🎲 Tirar d20</button>
+                <div id="d20" class="d20-face">20</div>
+            </div>
+
             <h1 class="title">Mis Partidas</h1>
 
             <?php if($campaigns->isEmpty()): ?>
@@ -35,16 +38,13 @@
                             </li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
-                    
-                    <?php $__currentLoopData = $campaigns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $campaign): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <?php
-                            $byUser = $campaign->memberships->groupBy('user_id');
-                        ?>
 
+                    <?php $__currentLoopData = $campaigns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $campaign): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div id="tab-<?php echo e($campaign->id); ?>" class="tab-panel">
                             <div class="tab-header">
                                 <div class="actions-title">
                                     <h3 class="tab-title"><?php echo e($campaign->title); ?></h3>
+
                                     <div class="char-actions">
                                         
                                         <form action="<?php echo e(route('partidas.finalizar', $campaign)); ?>" method="POST"
@@ -58,12 +58,14 @@
                                                 </svg>
                                             </button>
                                         </form>
+
                                         
                                         <a class="icon-btn" href="<?php echo e(route('partidas.edit', $campaign)); ?>" title="Editar" aria-label="Editar">
                                             <svg viewBox="0 0 24 24" class="icon">
                                                 <path d="M3 17.25V21h3.75L17.8 9.95l-3.75-3.75L3 17.25Zm18-11.5a1 1 0 0 0 0-1.4l-1.85-1.85a1 1 0 0 0-1.4 0l-1.45 1.45 3.75 3.75L21 5.75Z"/>
                                             </svg>
                                         </a>
+
                                         
                                         <form action="<?php echo e(route('partidas.destroy', $campaign)); ?>" method="POST"
                                             onsubmit="return confirm('¿Seguro que quieres borrar esta partida?');">
@@ -78,6 +80,7 @@
                                     </div>
                                 </div>
 
+                                
                                 <div class="sub">
                                     <?php if($campaign->juego): ?>
                                         <strong>Modo de juego:</strong>
@@ -88,49 +91,34 @@
                                         <span class="js-tooltip" title="Sin modo de juego">—</span>
                                     <?php endif; ?>
                                 </div>
+
+                                
                                 <?php if($campaign->description): ?>
                                     <p class="tab-desc"><?php echo e($campaign->description); ?></p>
                                 <?php endif; ?>
                             </div>
 
+                            
                             <div class="tab-section">
                                 <h4 style="font-weight: bold;">Jugadores y personajes</h4>
 
-                                <?php $__currentLoopData = $byUser; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $userId => $rows): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <?php $u = $rows->first()->user; ?>
+                                <?php $__currentLoopData = $campaign->byUser; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $userId => $members): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php $u = $members->first()->user; ?>
                                     <div class="member">
                                         <div class="member-user">
                                             <span class="sub"><span class="tab-title"><?php echo e($u?->name ?? 'Usuario'); ?></span></span>
                                         </div>
                                         <ul class="member-chars">
-                                            <?php $__currentLoopData = $rows; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $m): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <?php
-                                                    $c = $m->character;
-                                                    $tooltip = $c
-                                                        ? trim(
-                                                            $c->name
-                                                            . ($c->race?->name ? " | Raza: {$c->race->name}" : "")
-                                                            . " | Nivel: {$c->level}"
-                                                            . ($c->class ? " | Clase: {$c->class}" : "")
-                                                            . ($c->description ? " — {$c->description}" : "")
-                                                        )
-                                                        : "Personaje no disponible";
-                                                ?>
-
+                                            <?php $__currentLoopData = $members; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $membership): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <li class="char-row">
                                                     <div class="char-left">
-                                                        <span class="js-tooltip" title="<?php echo e($tooltip); ?>">
+                                                        <span class="js-tooltip" title="<?php echo e($membership->tooltip); ?>">
                                                             <span class="sub"> Personaje - 
                                                                 <span class="badge-role">
-                                                                    <?php echo e($c?->name ?? 'Personaje'); ?> 
+                                                                    <?php echo e($membership->character?->name ?? 'Personaje'); ?> 
                                                                 </span>
                                                             </span>
                                                         </span>
-
-                                                        <?php
-                                                            $role = $m->getAttribute('role') ?? data_get($m, 'attributes.role');
-                                                        ?>
-
                                                     </div>
                                                 </li>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -144,6 +132,7 @@
                 </div>
             <?php endif; ?>
 
+            
             <div style="margin:20px 10px;">
                 <a href="<?php echo e(route('partidas.create')); ?>" class="btn-new-partida"
                     style="padding:8px 16px; background:#6d51b7; color:white; border-radius:8px; text-decoration:none; font-weight:600; margin-top:10px">
@@ -157,19 +146,18 @@
     <?php $__env->startPush('scripts'); ?>
     <script>
         document.getElementById('rollD20')?.addEventListener('click', () => {
-    const dice = document.getElementById('d20');
+            const dice = document.getElementById('d20');
+            dice.classList.remove('d20-rolling');
+            void dice.offsetWidth;
+            dice.classList.add('d20-rolling');
+            let rolls = 10;
+            const interval = setInterval(() => {
+                dice.textContent = Math.floor(Math.random() * 20) + 1;
+                rolls--;
+                if (rolls === 0) clearInterval(interval);
+            }, 80);
+        });
 
-    dice.classList.remove('d20-rolling');
-    void dice.offsetWidth; // reinicia animación
-    dice.classList.add('d20-rolling');
-
-    let rolls = 10;
-    const interval = setInterval(() => {
-        dice.textContent = Math.floor(Math.random() * 20) + 1;
-        rolls--;
-        if (rolls === 0) clearInterval(interval);
-    }, 80);
-});
         $(function() {
             $("#tabs-partidas").tabs();
             $(document).tooltip({
@@ -177,9 +165,9 @@
                 track: true,
                 position: { my: "left+12 top+12", at: "left bottom" }
             });
-              $("#tabs-partidas").on("tabsactivate", function () {
-            document.getElementById('page-loader')?.classList.add('hidden');
-        });
+            $("#tabs-partidas").on("tabsactivate", function () {
+                document.getElementById('page-loader')?.classList.add('hidden');
+            });
         });
     </script>
     <?php $__env->stopPush(); ?>

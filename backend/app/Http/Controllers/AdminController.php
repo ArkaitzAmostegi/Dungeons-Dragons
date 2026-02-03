@@ -3,16 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Campaign;
+use App\Models\Character;
 use Illuminate\Http\Request; 
-use Illuminate\Support\Facades\Hash; 
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
     // Muestra el dashboard de administración
     public function index()
-    {
-        return view('admin.dashboard');
-    }
+{
+    return view('admin.dashboard', [
+        'usersCount' => User::count(),
+        'campaignsCount' => Campaign::count(),
+        'charactersCount' => Character::count(),
+    ]);
+}
+
 
     // LISTADO DE CAMPAÑAS
     public function campaigns()
