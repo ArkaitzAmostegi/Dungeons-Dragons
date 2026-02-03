@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function ($middleware) {
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'premium' => \App\Http\Middleware\PremiumMiddleware::class,
         ]);
     })
     // Punto para configurar el manejo de excepciones (reporting/rendering) si se necesita
