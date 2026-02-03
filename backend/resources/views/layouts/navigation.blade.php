@@ -33,6 +33,13 @@
                     <x-nav-link :href="route('bestiario.index')" :active="request()->routeIs('bestiario.index')">Bestiario</x-nav-link>
                     <x-nav-link :href="route('partidas.show')" :active="request()->routeIs('partidas.show')">Historial</x-nav-link>
                     <x-nav-link :href="route('about.index')" :active="request()->routeIs('about.index')">About</x-nav-link>
+                    <x-nav-link :href="route('premium.index')" :active="request()->routeIs('premium.index')">
+                        <span class="premium-btn">
+                            PREMIUM <svg class="w-4 h-4 inline-block ms-1 animate-bounce" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                        </span>
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -111,6 +118,7 @@
                 <x-responsive-nav-link href="/personajes/" :active="request()->is('personajes*')">Personajes</x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('bestiario.index')" :active="request()->routeIs('bestiario.index')">Bestiario</x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('partidas.show')" :active="request()->routeIs('partidas.show')">Historial</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('premium.index')" :active="request()->routeIs('premium.index')">PREMIUM</x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('about.index')" :active="request()->routeIs('about.index')">About</x-responsive-nav-link>
             </div>
 
@@ -119,7 +127,7 @@
                     <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
-                
+
                 <div class="mt-3 space-y-1">
                     <x-responsive-nav-link :href="route('profile.edit')">Profile</x-responsive-nav-link>
                     <form method="POST" action="{{ route('logout') }}">
@@ -134,7 +142,9 @@
 </nav>
 
 <style>
-    #barra { background-color: white; }
+    #barra {
+        background-color: white;
+    }
 
     /* Skip link */
     .skip-link {
@@ -148,20 +158,38 @@
         text-decoration: none;
         transition: top 0.3s ease;
     }
+
     .skip-link:focus {
         top: 10px;
         left: 10px;
     }
 
     /* Foco accesible para botones y enlaces */
-button:focus, a:focus {
-    outline: none; /* opcional si quieres quitar el borde */
-    box-shadow: none;
+    button:focus,
+    a:focus {
+        outline: none;
+        /* opcional si quieres quitar el borde */
+        box-shadow: none;
 
-    /* Cambiar el fondo de todo el body */
-    background-color: #cccccc; /* gris */
-    outline: 2px solid #76538B; /* Verde destacado */
-    outline-offset: 2px;
+        /* Cambiar el fondo de todo el body */
+        background-color: #cccccc;
+        /* gris */
+        outline: 2px solid #76538B;
+        /* Verde destacado */
+        outline-offset: 2px;
+    }
+    .premium-btn {
+    background: linear-gradient(45deg, #facc15, #f87171);
+    color: #111;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.premium-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 </style>
