@@ -37,7 +37,8 @@ services:
     depends_on:
       - db
     volumes:
-      - ./backend:/var/www/html
+      - ./backend/.env:/var/www/html/.env
+      # No montes storage ni bootstrap/cache desde host, que Laravel se encargue dentro del contenedor
     networks:
       - dnd_net
 
