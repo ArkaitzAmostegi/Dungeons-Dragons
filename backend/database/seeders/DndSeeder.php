@@ -29,15 +29,11 @@ class DndSeeder extends Seeder
 
         // Usuarios predefinidos (players y admins)
         $usersData = [
-            ['name' => 'Alice', 'email' => 'alice@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
-            ['name' => 'Bob', 'email' => 'bob@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
-            ['name' => 'Charlie', 'email' => 'charlie@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
-            ['name' => 'Diana', 'email' => 'diana@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
-            ['name' => 'Ethan', 'email' => 'ethan@example.com', 'password' => 'password', 'role' => User::ROLE_USER],
-
-            ['name' => 'Jokin', 'email' => 'jokin@gmail.com', 'password' => 'admin', 'role' => User::ROLE_ADMIN],
-            ['name' => 'Arkaitz', 'email' => 'arkaitz@gmail.com', 'password' => 'admin', 'role' => User::ROLE_ADMIN],
-            ['name' => 'Admin', 'email' => 'admin@admin.com', 'password' => 'admin', 'role' => User::ROLE_ADMIN],
+            ['name' => 'Alice', 'email' => 'alice@example.com', 'password' => 'password', 'role' => User::ROLE_USER, 'is_premium' => true],
+            ['name' => 'Bob', 'email' => 'bob@example.com', 'password' => 'password', 'role' => User::ROLE_USER, 'is_premium' => true],
+            ['name' => 'Charlie', 'email' => 'charlie@example.com', 'password' => 'password', 'role' => User::ROLE_USER, 'is_premium' => false],
+            ['name' => 'Diana', 'email' => 'diana@example.com', 'password' => 'password', 'role' => User::ROLE_USER, 'is_premium' => false],
+            ['name' => 'Ethan', 'email' => 'ethan@example.com', 'password' => 'password', 'role' => User::ROLE_USER, 'is_premium' => false],
         ];
 
         // Crea/actualiza usuarios y asegura que cada uno tenga un perfil
