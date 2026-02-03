@@ -8,6 +8,7 @@ use App\Http\Controllers\BestiarioController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LegalController;
+use App\Http\Controllers\PremiumController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -108,7 +109,20 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/contacto/enviar', [LegalController::class, 'enviarContacto'])->name('legal.contacto.enviar');
 });
 
+// Rutas premium
+Route::middleware('auth')->group(function () {
+    // Contenido exclusivo para premium
+    Route::middleware('premium')->group(function () {
+        Route::get('/premium', [PremiumController::class, 'index'])->name('premium.index');
+        // otras rutas premium aquí
+    });
 
+    // Checkout de suscripción (no requiere ser premium todavía)
+    Route::post('/premium/checkout', [PremiumController::class, 'checkout'])->name('premium.checkout');
+
+    // Confirmación de suscripción
+    Route::get('/premium/success', [PremiumController::class, 'success'])->name('premium.success');
+});
 
 
 
