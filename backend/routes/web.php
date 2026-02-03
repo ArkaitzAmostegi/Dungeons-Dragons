@@ -21,7 +21,7 @@ Route::get('/dashboard', function () {
     }
 
     return redirect()->route('partidas.index');
-})->middleware(['auth', 'verified', 'admin'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Dashboard admin
 Route::get('/admin', [AdminController::class, 'index'])

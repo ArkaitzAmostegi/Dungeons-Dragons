@@ -37,20 +37,11 @@
                             </button>
                             <ul class="characters-list" style="display:none;">
                                 @foreach($chars as $c)
-                                @php
-                                $bonusesText = '';
-                                if (!empty($c->race?->bonuses) && is_array($c->race->bonuses)) {
-                                    $bonusesText = collect($c->race->bonuses)
-                                    ->map(fn($v, $k) => "$k: $v")
-                                    ->implode(', ');
-                                }
-                                @endphp
-
                                 <!-- Cada personaje con datos para arrastrar a la partida -->
                                 <li class="personaje" draggable="true"
                                     data-id="{{ $c->id }}"
                                     data-info="Nivel {{ $c->level }} | {{ $c->race?->name ?? '' }}"
-                                    data-bonuses="{{ e(collect($c->race->bonuses ?? [])->map(fn($v, $k) => "$k=$v")->implode(',')) }}"
+                                    data-bonuses="{{ e(collect($c->race->bonuses ?? [])->map(fn($v, $k) => "$k+$v")->implode(',')) }}"
                                     data-race="{{ $c->race?->name ?? '' }}">
                                     {{ $c->name ?? 'Sin nombre' }}
                                 </li>
@@ -110,7 +101,6 @@
     <!-- Scripts para drag & drop, modal y descripción de personajes -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Variables principales
             const dropzone = document.getElementById('dropzone');
             const input = document.getElementById('personajesInput');
             const personajeDescripcion = document.getElementById('personajeDescripcion');
@@ -152,7 +142,6 @@
                 div.dataset.id = id;
                 div.innerHTML = `<strong>${text}</strong><br>${info}`;
 
-                // Quitar personaje al hacer click
                 div.addEventListener('click', () => {
                     dropzone.removeChild(div);
                     seleccionados = seleccionados.filter(sid => sid !== id);
@@ -165,7 +154,6 @@
                 actualizarDescripcion();
             });
 
-            // Función para actualizar la descripción de bonuses
             function actualizarDescripcion() {
                 const bonusesPorRaza = {};
                 seleccionados.forEach(id => {

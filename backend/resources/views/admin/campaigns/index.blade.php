@@ -1,4 +1,7 @@
 <x-admin-layout>
+     @push('styles')
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @endpush
     <div class="max-w-7xl mx-auto py-10 px-4">
         <h1 class="text-3xl font-bold mb-6 text-gray-800 text-center">Todas las Campañas</h1>
 
