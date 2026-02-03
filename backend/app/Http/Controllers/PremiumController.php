@@ -16,7 +16,7 @@ class PremiumController extends Controller
 
     public function checkout(Request $request)
 {
-    Stripe::setApiKey(env('STRIPE_SECRET'));
+    Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
 
     $session = Session::create([
         'payment_method_types' => ['card'],
