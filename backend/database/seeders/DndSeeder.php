@@ -34,6 +34,10 @@ class DndSeeder extends Seeder
             ['name' => 'Charlie', 'email' => 'charlie@example.com', 'password' => 'password', 'role' => User::ROLE_USER, 'is_premium' => false],
             ['name' => 'Diana', 'email' => 'diana@example.com', 'password' => 'password', 'role' => User::ROLE_USER, 'is_premium' => false],
             ['name' => 'Ethan', 'email' => 'ethan@example.com', 'password' => 'password', 'role' => User::ROLE_USER, 'is_premium' => false],
+
+            ['name' => 'Jokin', 'email' => 'jokin@gmail.com', 'password' => 'admin', 'role' => User::ROLE_ADMIN],
+            ['name' => 'Arkaitz', 'email' => 'arkaitz@gmail.com', 'password' => 'admin', 'role' => User::ROLE_ADMIN],
+            ['name' => 'Admin', 'email' => 'admin@admin.com', 'password' => 'admin', 'role' => User::ROLE_ADMIN],
         ];
 
         // Crea/actualiza usuarios y asegura que cada uno tenga un perfil
@@ -49,10 +53,16 @@ class DndSeeder extends Seeder
                 ]
             );
 
-            Profile::updateOrCreate(
-                ['user_id' => $user->id],
-                ['user_id' => $user->id]
+            $user = User::updateOrCreate(
+                ['email' => $u['email']],
+                [
+                    'name' => $u['name'],
+                    'password' => Hash::make($u['password']),
+                    'role' => $u['role'],
+                    'is_premium' => $u['is_premium'] ?? false,
+                ]
             );
+
 
             $users->push($user);
         }
@@ -147,7 +157,7 @@ class DndSeeder extends Seeder
                 unset($userCampaigns[$title]);
 
                 $campaign = Campaign::factory()->create([
-                    'juego_id' => fn () => $juegoIds->random(),
+                    'juego_id' => fn() => $juegoIds->random(),
                     'title' => $title,
                     'description' => $description,
                 ]);
