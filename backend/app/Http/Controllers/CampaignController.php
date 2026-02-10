@@ -11,29 +11,51 @@ use App\Models\Character;
 class CampaignController extends Controller
 {
     public function index(Request $request)
-    {
-        $user = $request->user();
+{
+    $user = $request->user();
 
-        // Campañas donde participa el user (por pivot)
-        $campaignIds = DB::table('campaign_user_character')
-            ->where('user_id', $user->id)
-            ->pluck('campaign_id')
-            ->unique();
+    // Campañas donde participa el usuario
+    $campaignIds = DB::table('campaign_user_character')
+        ->where('user_id', $user->id)
+        ->pluck('campaign_id')
+        ->unique();
 
-        $campaigns = Campaign::query()
-            ->whereIn('id', $campaignIds)
-            ->where('status', '!=', 'finished')
-            ->with([
-                'juego',
-                'memberships.user',
-                'memberships.character.race',
-            ])
-            ->orderByDesc('created_at')
-            ->get();
+    $campaigns = Campaign::query()
+        ->whereIn('id', $campaignIds)
+        ->where('status', '!=', 'finished')
+        ->with([
+            'juego',
+            'memberships.user',
+            'memberships.character.race',
+        ])
+        ->orderByDesc('created_at')
+        ->get();
 
+    // Preparar agrupación por usuario y tooltips
+    $campaigns->each(function($campaign) {
+        $campaign->byUser = $campaign->memberships->groupBy('user_id');
 
-        return view('partidas.index', compact('campaigns'));
-    }
+        $campaign->byUser->each(function($members) {
+            $members->each(function($membership) {
+                $c = $membership->character;
+                if ($c) {
+                    $membership->tooltip = trim(
+                        $c->name
+                        . ($c->race?->name ? " | Raza: {$c->race->name}" : "")
+                        . " | Nivel: {$c->level}"
+                        . ($c->class ? " | Clase: {$c->class}" : "")
+                        . ($c->description ? " — {$c->description}" : "")
+                    );
+                } else {
+                    $membership->tooltip = "Personaje no disponible";
+                }
+            });
+        });
+    });
+
+    return view('partidas.index', compact('campaigns'));
+}
+
 
     // Autorización mínima (solo si el usuario participa)
     private function userIsInCampaign(int $userId, Campaign $campaign): bool
@@ -54,15 +76,16 @@ class CampaignController extends Controller
             ->with('success', 'Partida marcada como finalizada');
     }
 
-  
-public function create()
-{
-    $characters = Character::with('race')->get();
-    $byClass = $characters->groupBy(fn($c) => $c->class ?? 'Sin Clase');
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $characters = \App\Models\Character::with('race')->get();
+        $byClass = $characters->groupBy(fn($c) => $c->class ?? 'Sin Clase');
 
-    return view('partidas.create', compact('byClass'));
-}
-
+        return view('partidas.create', compact('byClass'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -123,21 +146,35 @@ public function create()
 {
     $user = $request->user();
 
+    // Obtener IDs de campañas donde participa el usuario
     $campaignIds = DB::table('campaign_user_character')
         ->where('user_id', $user->id)
         ->pluck('campaign_id')
         ->unique();
 
+    // Obtener campañas finalizadas con relaciones necesarias
     $finishedCampaigns = Campaign::whereIn('id', $campaignIds)
         ->where('status', 'finished')
         ->with([
             'juego',
             'memberships.user',
-            'memberships.character.race',
         ])
         ->orderByDesc('created_at')
-        ->get();
+        ->get()
+        ->map(function($c) {
+            // Preparar nombres de participantes
+            $c->participantsNames = $c->memberships->pluck('user.name')->implode(', ');
 
+            // Nombre del juego o N/A si no existe
+            $c->juegoNombre = $c->juego->nombre ?? 'N/A';
+
+            // Fecha formateada
+            $c->createdAt = $c->created_at->format('d/m/Y');
+
+            return $c;
+        });
+
+    // Retornar la vista con los datos ya procesados
     return view('partidas.show', compact('finishedCampaigns'));
 }
 

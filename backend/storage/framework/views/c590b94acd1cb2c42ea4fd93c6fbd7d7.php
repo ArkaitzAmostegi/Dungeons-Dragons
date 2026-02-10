@@ -123,6 +123,31 @@
 <?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
 <?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
 <?php endif; ?>
+                    <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('premium.index'),'active' => request()->routeIs('premium.index')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('premium.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('premium.index'))]); ?>
+                        <span class="premium-btn">
+                            PREMIUM <svg class="w-4 h-4 inline-block ms-1 animate-bounce" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                        </span>
+                     <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__attributesOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
                 </div>
             </div>
 
@@ -329,6 +354,25 @@
 <?php endif; ?>
                 <?php if (isset($component)) { $__componentOriginald69b52d99510f1e7cd3d80070b28ca18 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald69b52d99510f1e7cd3d80070b28ca18 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.responsive-nav-link','data' => ['href' => route('premium.index'),'active' => request()->routeIs('premium.index')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('responsive-nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('premium.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('premium.index'))]); ?>PREMIUM <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginald69b52d99510f1e7cd3d80070b28ca18)): ?>
+<?php $attributes = $__attributesOriginald69b52d99510f1e7cd3d80070b28ca18; ?>
+<?php unset($__attributesOriginald69b52d99510f1e7cd3d80070b28ca18); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginald69b52d99510f1e7cd3d80070b28ca18)): ?>
+<?php $component = $__componentOriginald69b52d99510f1e7cd3d80070b28ca18; ?>
+<?php unset($__componentOriginald69b52d99510f1e7cd3d80070b28ca18); ?>
+<?php endif; ?>
+                <?php if (isset($component)) { $__componentOriginald69b52d99510f1e7cd3d80070b28ca18 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginald69b52d99510f1e7cd3d80070b28ca18 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.responsive-nav-link','data' => ['href' => route('about.index'),'active' => request()->routeIs('about.index')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('responsive-nav-link'); ?>
 <?php if ($component->shouldRender()): ?>
@@ -353,7 +397,7 @@
                     <div class="font-medium text-base text-gray-800"><?php echo e(Auth::user()->name); ?></div>
                     <div class="font-medium text-sm text-gray-500"><?php echo e(Auth::user()->email); ?></div>
                 </div>
-                
+
                 <div class="mt-3 space-y-1">
                     <?php if (isset($component)) { $__componentOriginald69b52d99510f1e7cd3d80070b28ca18 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald69b52d99510f1e7cd3d80070b28ca18 = $attributes; } ?>
@@ -404,7 +448,9 @@
 </nav>
 
 <style>
-    #barra { background-color: white; }
+    #barra {
+        background-color: white;
+    }
 
     /* Skip link */
     .skip-link {
@@ -418,21 +464,38 @@
         text-decoration: none;
         transition: top 0.3s ease;
     }
+
     .skip-link:focus {
         top: 10px;
         left: 10px;
     }
 
     /* Foco accesible para botones y enlaces */
-button:focus, a:focus {
-    outline: none; /* opcional si quieres quitar el borde */
-    box-shadow: none;
+    button:focus,
+    a:focus {
+        outline: none;
+        /* opcional si quieres quitar el borde */
+        box-shadow: none;
 
-    /* Cambiar el fondo de todo el body */
-    background-color: #cccccc; /* gris */
-    outline: 2px solid #76538B; /* Verde destacado */
-    outline-offset: 2px;
+        /* Cambiar el fondo de todo el body */
+        background-color: #cccccc;
+        /* gris */
+        outline: 2px solid #76538B;
+        /* Verde destacado */
+        outline-offset: 2px;
+    }
+    .premium-btn {
+    background: linear-gradient(45deg, #facc15, #f87171);
+    color: #111;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-</style>
-<?php /**PATH /var/www/html/resources/views/layouts/navigation.blade.php ENDPATH**/ ?>
+.premium-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+</style><?php /**PATH /var/www/html/resources/views/layouts/navigation.blade.php ENDPATH**/ ?>

@@ -1,7 +1,6 @@
 <x-app-layout :title="'Mis Partidas'">
 
     @push('styles')
-        <!-- Cargar CSS personalizado -->
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @endpush
 
@@ -14,14 +13,11 @@
                 <div id="d20" class="d20-face">20</div>
             </div>
 
-            <!-- Título principal -->
             <h1 class="title">Mis Partidas</h1>
 
-            <!-- Comprobar si el usuario tiene partidas -->
             @if($campaigns->isEmpty())
                 <p class="empty">No tienes partidas aún.</p>
             @else
-                <!-- Pestañas para cada partida -->
                 <div id="tabs-partidas" class="tabs-partidas">
                     <ul>
                         @foreach($campaigns as $campaign)
@@ -34,18 +30,11 @@
                     </ul>
 
                     @foreach($campaigns as $campaign)
-                        @php
-                            // Agrupar miembros por usuario
-                            $byUser = $campaign->memberships->groupBy('user_id');
-                        @endphp
-
                         <div id="tab-{{ $campaign->id }}" class="tab-panel">
                             <div class="tab-header">
                                 <div class="actions-title">
-                                    <!-- Título de la partida -->
                                     <h3 class="tab-title">{{ $campaign->title }}</h3>
 
-                                    <!-- Botones de acciones: Finalizar, Editar, Borrar -->
                                     <div class="char-actions">
                                         {{-- FINALIZAR --}}
                                         <form action="{{ route('partidas.finalizar', $campaign) }}" method="POST"
@@ -53,7 +42,6 @@
                                             @csrf
                                             @method('PATCH')
                                             <button class="icon-btn success" type="submit" title="Finalizar" aria-label="Finalizar">
-                                                <!-- Icono -->
                                                 <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
                                                     <path d="M10 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H10v-2h9V5h-9V3z"/>
                                                     <path d="M10 12l-3-3v2H3v2h4v2l3-3z"/>
@@ -82,7 +70,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Modo de juego -->
+                                {{-- Modo de juego --}}
                                 <div class="sub">
                                     @if($campaign->juego)
                                         <strong>Modo de juego:</strong>
@@ -94,44 +82,30 @@
                                     @endif
                                 </div>
 
-                                <!-- Descripción de la partida -->
+                                {{-- Descripción de la partida --}}
                                 @if($campaign->description)
                                     <p class="tab-desc">{{ $campaign->description }}</p>
                                 @endif
                             </div>
 
-                            <!-- Sección de jugadores y personajes -->
+                            {{-- Jugadores y personajes --}}
                             <div class="tab-section">
                                 <h4 style="font-weight: bold;">Jugadores y personajes</h4>
 
-                                @foreach($byUser as $userId => $rows)
-                                    @php $u = $rows->first()->user; @endphp
+                                @foreach($campaign->byUser as $userId => $members)
+                                    @php $u = $members->first()->user; @endphp
                                     <div class="member">
                                         <div class="member-user">
                                             <span class="sub"><span class="tab-title">{{ $u?->name ?? 'Usuario' }}</span></span>
                                         </div>
                                         <ul class="member-chars">
-                                            @foreach($rows as $m)
-                                                @php
-                                                    $c = $m->character;
-                                                    // Tooltip con información del personaje
-                                                    $tooltip = $c
-                                                        ? trim(
-                                                            $c->name
-                                                            . ($c->race?->name ? " | Raza: {$c->race->name}" : "")
-                                                            . " | Nivel: {$c->level}"
-                                                            . ($c->class ? " | Clase: {$c->class}" : "")
-                                                            . ($c->description ? " — {$c->description}" : "")
-                                                        )
-                                                        : "Personaje no disponible";
-                                                @endphp
-
+                                            @foreach($members as $membership)
                                                 <li class="char-row">
                                                     <div class="char-left">
-                                                        <span class="js-tooltip" title="{{ $tooltip }}">
+                                                        <span class="js-tooltip" title="{{ $membership->tooltip }}">
                                                             <span class="sub"> Personaje - 
                                                                 <span class="badge-role">
-                                                                    {{ $c?->name ?? 'Personaje' }} 
+                                                                    {{ $membership->character?->name ?? 'Personaje' }} 
                                                                 </span>
                                                             </span>
                                                         </span>
@@ -148,7 +122,7 @@
                 </div>
             @endif
 
-            <!-- Botón para crear nueva partida -->
+            {{-- Botón crear nueva partida --}}
             <div style="margin:20px 10px;">
                 <a href="{{ route('partidas.create') }}" class="btn-new-partida"
                     style="padding:8px 16px; background:#6d51b7; color:white; border-radius:8px; text-decoration:none; font-weight:600; margin-top:10px">
@@ -161,14 +135,11 @@
 
     @push('scripts')
     <script>
-        // Funcionalidad del dado D20
         document.getElementById('rollD20')?.addEventListener('click', () => {
             const dice = document.getElementById('d20');
-
             dice.classList.remove('d20-rolling');
-            void dice.offsetWidth; // reinicia animación
+            void dice.offsetWidth;
             dice.classList.add('d20-rolling');
-
             let rolls = 10;
             const interval = setInterval(() => {
                 dice.textContent = Math.floor(Math.random() * 20) + 1;
@@ -177,7 +148,6 @@
             }, 80);
         });
 
-        // Inicializar pestañas y tooltips con jQuery UI
         $(function() {
             $("#tabs-partidas").tabs();
             $(document).tooltip({
@@ -185,7 +155,6 @@
                 track: true,
                 position: { my: "left+12 top+12", at: "left bottom" }
             });
-
             $("#tabs-partidas").on("tabsactivate", function () {
                 document.getElementById('page-loader')?.classList.add('hidden');
             });

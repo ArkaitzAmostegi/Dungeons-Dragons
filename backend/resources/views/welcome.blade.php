@@ -29,7 +29,7 @@
             <img src="{{ asset('images/DandDLogo.png') }}" alt="Dragon" class="welcome-dragon"/>
         </div>
 
-        <!-- Rewies -- API -->
+        <!-- Reviews -- API -->
         <section class="reviews">
             <div id="review-slot" class="review-card"></div>
         </section>

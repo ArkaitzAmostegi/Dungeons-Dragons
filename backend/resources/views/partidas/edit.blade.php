@@ -22,8 +22,7 @@
                 <label>Modo de juego</label>
                 <select name="juego_id" required>
                     @foreach($juegos as $j)
-                        <option value="{{ $j->id }}"
-                            @selected(old('juego_id', $campaign->juego_id) == $j->id)>
+                        <option value="{{ $j->id }}" @selected(old('juego_id', $campaign->juego_id) == $j->id)>
                             {{ $j->nombre }}
                         </option>
                     @endforeach
