@@ -37,8 +37,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./backend/.env:/var/www/html/.env
-      # No montes storage ni bootstrap/cache desde host, que Laravel se encargue dentro del contenedor
+      - ./backend:/var/www/html
     networks:
       - dnd_net
 
@@ -52,8 +51,8 @@ services:
       MYSQL_PASSWORD: dndpass
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - /Dragons/docker/db:/var/lib/mysql
-      - /Dragons/backups/db:/backups
+    - /Dragons/docker/db:/var/lib/mysql
+    - /Dragons/backups/db:/backups
     ports:
       - "3307:3306"
     networks:
