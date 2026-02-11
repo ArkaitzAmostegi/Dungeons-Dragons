@@ -21,10 +21,6 @@
                     <textarea name="descripcion" placeholder="Describe la partida..." aria-label="Descripcion"></textarea>
                 </div>
 
-                <!-- Selección de personajes -->
-                @foreach($byClass as $className => $chars)
-
-
                 <div class="form-group personajes-flex">
 
                     <!-- Lista de clases y personajes disponibles -->
