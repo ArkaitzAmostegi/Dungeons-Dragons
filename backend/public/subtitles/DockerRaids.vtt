@@ -1,37 +1,37 @@
 WEBVTT
 
 00:00:00.422 --> 00:00:01.268
-en este vídeo (música celta de fondo)
+En este vídeo (música celta de fondo)
 
 00:00:01.422 --> 00:00:07.288
-mostramos el despliegue con docker del proyecto dungeons on dragons y cómo aseguramos persistencia mantenimiento con raid
+mostramos el despliegue con docker del proyecto dungeons and dragons, y cómo aseguramos persistencia mantenimiento con raid
 
 00:00:07.742 --> 00:00:10.617
-más automatizaciones con crontab backup diario
+más automatizaciones con crontab, backup diario
 
 00:00:10.982 --> 00:00:13.388
-a raid y limpieza rotación de logs
+a raid y limpieza rotación de logs.
 
 00:00:15.150 --> 00:00:16.189
-como vemos aquí
+Como vemos aquí
 
 00:00:16.250 --> 00:00:20.794
-la app está contenerizada con docker compose y entra por un puerto en Nginx
+la app está contenerizada con docker compose y entra por un puerto Nginx
 
 00:00:20.890 --> 00:00:22.851
 aquí tenemos el puerto en Nginx que es el único
 
 00:00:22.870 --> 00:00:24.054
-expuesto al exterior
+expuesto al exterior,
 
 00:00:24.947 --> 00:00:28.526
 que después nos da paso al backend a frontend, phpmyadmind
 
 00:00:28.587 --> 00:00:30.629
-y dnd - base de datos
+y dnd  base de datos.
 
 00:00:32.074 --> 00:00:34.793
-vemos aquí también los servicios
+Vemos aquí también los servicios
 
 00:00:35.234 --> 00:00:38.965
 que tiene el docker compose en el dockercompose.yml
@@ -52,19 +52,19 @@ y
 el phpmyadmin. Esos son los servicios que tiene nuestra aplicación
 
 00:00:55.953 --> 00:00:58.993
-también los podemos ver en la máquina virtual
+también los podemos ver en la máquina virtual,
 
 00:01:02.714 --> 00:01:07.674
-con el comando docker compose ps aquí vemos el backend
+con el comando docker compose ps, aquí vemos el backend
 
 00:01:07.994 --> 00:01:10.166
-la base de datos el frontend
+la base de datos, el frontend,
 
 00:01:10.594 --> 00:01:13.883
-y phpmyadmin y el proxy
+y phpmyadmin, y el proxy.
 
 00:01:19.952 --> 00:01:25.087
-después podemos ver las rutas si vamos al despliegue
+Después podemos ver las rutas, si vamos al despliegue,
 
 00:01:25.352 --> 00:01:29.010
 vemos la ruta de local host eh directamente al backend
@@ -85,13 +85,13 @@ en cuanto a la raids. Decir que tenemos dos Raids
 la Raid md5
 
 00:01:50.183 --> 00:01:51.988
-se llama dragons y la raid
+se llama dragons, y la raid
 
 00:01:52.943 --> 00:01:54.988
-md0 se llama dungeons
+md0 se llama dungeons,
 
 00:01:56.117 --> 00:01:58.008
-aquí podemos ver con el cat(comando)
+aquí podemos ver con el cat(comando),
 
 00:02:03.520 --> 00:02:06.250
 la raid y aquí podemos ver con el sudo
@@ -124,16 +124,16 @@ vemos que al volver a ver el
 intercomando sigue ahí persiste si ve si está a la vez vemos que no hay nada
 
 00:02:47.236 --> 00:02:48.342
-y al volver a montar
+y al volver a montar,
 
 00:02:49.456 --> 00:02:51.387
-eh se vuelven a montar
+eh se vuelven a montar.
 
 00:02:51.916 --> 00:02:54.563
-vuelven a poner el comando comprobación
+Vuelven a poner el comando comprobación,
 
 00:02:54.696 --> 00:02:57.627
-vemos que las raids vuelven a aparecer con lo cual
+vemos que las raids vuelven a aparecer, con lo cual
 
 00:02:57.976 --> 00:03:00.627
 hay persistencia de raids, las raids se montan
@@ -145,31 +145,31 @@ cuando se vuelven a requerir su montaje.
 Para esto lo clave ha sido poner el u u id
 
 00:03:10.001 --> 00:03:14.299
-en el /etc/fstat para que se monte siempre de igual manera
+en el /etc/fstat, para que se monte siempre de igual manera.
 
 00:03:15.561 --> 00:03:19.889
-eso está en los apuntes de despliegue de raids
+Eso está en los apuntes de despliegue de raids.
 
 00:03:21.710 --> 00:03:25.446
 En cuanto a las automatizaciones automatizaciones decir que tenemos
 
 00:03:26.010 --> 00:03:28.269
-dos automatizaciones hechas con crontab
+dos automatizaciones hechas con crontab.
 
 00:03:28.995 --> 00:03:32.283
-una relativo a los backups
+Una relativo a los backups,
 
 00:03:32.555 --> 00:03:36.003
-y van directamente a la raid cinco y otra
+y van directamente a la raid cinco, y otra
 
 00:03:36.875 --> 00:03:39.444
-en cuanto a los log y limpieza de los log
+en cuanto a los log y limpieza de los log,
 
 00:03:39.795 --> 00:03:42.422
 que al cabo de unos días
 
 00:03:42.715 --> 00:03:46.063
-eh los log se van borrando se van eliminando
+eh los log se van borrando, se van eliminando.
 
 00:03:46.717 --> 00:03:48.562
 esto lo vemos con el comando
@@ -178,10 +178,10 @@ esto lo vemos con el comando
 sudo crontab -l que nos muestra
 
 00:03:52.057 --> 00:03:54.362
-las automatizaciones realizadas
+las automatizaciones realizadas.
 
 00:03:56.334 --> 00:03:59.625
-y sin más hasta aquí el vídeo de raid (la música se desvanece)
+Y sin más hasta aquí el vídeo de raid (la música se desvanece)
 
 00:04:00.454 --> 00:04:01.969
 y despliegue con docker
