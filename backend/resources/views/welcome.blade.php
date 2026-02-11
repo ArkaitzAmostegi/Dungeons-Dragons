@@ -41,6 +41,9 @@
                         <a href="{{ url('/dashboard') }}" class="btn-auth btn-auth--primary">
                             Mis Partidas
                         </a>
+                        <a href="{{ url('/personajes') }}" class="btn-auth btn-auth--primary">
+                            Personajes
+                        </a>
                     @else
                         <a href="{{ route('login') }}" class="btn-auth btn-auth--primary">
                             Log in
@@ -51,6 +54,9 @@
                                 Register
                             </a>
                         @endif
+                        <a href="{{ url('/personajes') }}" class="btn-auth btn-auth--primary">
+                            Personajes
+                        </a>
                     @endauth
                 </nav>
 
