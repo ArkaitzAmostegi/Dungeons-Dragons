@@ -1,0 +1,136 @@
+WEBVTT
+Kind: captions
+Language: es-ES
+
+00:00:01.640 --> 00:00:06.680
+Muy buenas, somos el grupo Cyberpunk y vamos a&nbsp;
+presentaros nuestra aplicación de Dungeons and&nbsp;&nbsp;
+
+00:00:06.680 --> 00:00:15.720
+Dragons. Esta es la landing page, con unas reseñas&nbsp;
+dinámicas como API interna y bueno ya nos hemos&nbsp;&nbsp;
+
+00:00:15.720 --> 00:00:22.840
+logueado para saltarnos el paso del Laravel Breeze&nbsp;
+que ofrece el breeze de nuestro framework Laravel&nbsp;&nbsp;
+
+00:00:22.840 --> 00:00:31.080
+para loguearnos y registrarnos. Esta es la primera&nbsp;
+pestaña de nuestro navbar: Mis Partidas. Esta&nbsp;&nbsp;
+
+00:00:31.080 --> 00:00:39.520
+aplicación sirve para complementar una partida&nbsp;
+real de rol de dragones y mazmorras. Por tanto,&nbsp;&nbsp;
+
+00:00:39.520 --> 00:00:43.280
+nos sirve para hacer un seguimiento. Por&nbsp;
+ejemplo, tenemos un dado de veinte caras&nbsp;&nbsp;
+
+00:00:43.280 --> 00:00:49.960
+que podemos utilizar. Tenemos una lista de&nbsp;
+las partidas que hemos empezado, con su nombre,&nbsp;&nbsp;
+
+00:00:49.960 --> 00:00:56.920
+su modo de juego con una descripción, otra&nbsp;
+descripción personal hecha por el jugador y&nbsp;&nbsp;
+
+00:00:56.920 --> 00:01:02.920
+una lista de jugadores que participan cada&nbsp;
+uno con su respectivo personaje. Con su raza,&nbsp;&nbsp;
+
+00:01:02.920 --> 00:01:11.280
+el nivel, clase y descripción también. Podemos&nbsp;
+dar aquí a finalizar partida, editar o eliminar.&nbsp;&nbsp;
+
+00:01:11.280 --> 00:01:17.600
+Si le damos a finalizar, la partida pasará a la&nbsp;
+pestaña de Historial de partidas. Vamos a crear&nbsp;&nbsp;
+
+00:01:17.600 --> 00:01:25.680
+una partida. Tenemos también esta animación de&nbsp;
+cargando que hemos implementado con JavaScript.&nbsp;&nbsp;
+
+00:01:26.760 --> 00:01:34.360
+Y, vale, aquí podemos crear una partida.&nbsp;
+Tenemos este tabs donde podemos elegir todos los&nbsp;&nbsp;
+
+00:01:34.360 --> 00:01:42.520
+personajes disponibles. Vemos que se va ampliando&nbsp;
+la información de cada personaje y podemos añadir&nbsp;&nbsp;
+
+00:01:42.520 --> 00:01:49.560
+hasta un máximo de cinco, con este drag and drop&nbsp;
+que hemos incorporado. Es máximo cinco. Aquí vemos&nbsp;&nbsp;
+
+00:01:49.560 --> 00:01:57.440
+el nivel, la raza y los bonuses que aporta cada&nbsp;
+personaje por raza, y aquí se amplía. Elegimos el&nbsp;&nbsp;
+
+00:01:57.440 --> 00:02:03.600
+modo de juego que nos explicará debajo en qué&nbsp;
+consiste y creamos la partida.
+
+00:02:03.600 --> 00:02:30.080
+Ya estaría aquí la partida. Si le damos a finalizar partida...&nbsp;
+Aparecerá aquí en partidas terminadas. Ahora&nbsp;&nbsp;
+
+00:02:30.080 --> 00:02:34.920
+estamos en la pestaña Historial y nos muestra&nbsp;
+todas las partidas en las que ha participado&nbsp;&nbsp;
+
+00:02:34.920 --> 00:02:40.680
+Alice, en este caso, que somos nosotros, y&nbsp;
+están finalizadas. Luego tenemos personajes&nbsp;&nbsp;
+
+00:02:40.680 --> 00:02:48.000
+que sería la única vista que se sale del Laravel&nbsp;
+y pertenece solo al frontend, que es una lista de&nbsp;&nbsp;
+
+00:02:48.000 --> 00:02:53.360
+todos los personajes disponibles con su barra&nbsp;
+de búsqueda. Tenemos el bestiario, que es una&nbsp;&nbsp;
+
+00:02:53.360 --> 00:03:04.040
+API externa que hemos implementado también con su&nbsp;
+barra de búsqueda, su índice y su ampliación para&nbsp;&nbsp;
+
+00:03:04.040 --> 00:03:14.560
+cada bestia, para aportar profundidad al juego&nbsp;
+y al lore. Tenemos... el About también. Es una&nbsp;&nbsp;
+
+00:03:14.560 --> 00:03:21.960
+pestaña que nos ampliará y nos explicará en qué&nbsp;
+consiste esta aplicación con un vídeo incorporado&nbsp;&nbsp;
+
+00:03:21.960 --> 00:03:28.440
+y la pestaña de Premium que nos mostrará una&nbsp;
+vista u otra, depende de si el usuario es&nbsp;&nbsp;
+
+00:03:28.440 --> 00:03:33.640
+premium o no es premium, que este es un middleware&nbsp;
+personalizado que hemos creado En este caso el&nbsp;&nbsp;
+
+00:03:33.640 --> 00:03:37.760
+usuario es premium, así que no hay nada más que&nbsp;
+mostrar, pero si no fuese premium nos mostraría&nbsp;&nbsp;
+
+00:03:37.760 --> 00:03:45.560
+una vista para suscribirnos mensualmente. Tenemos&nbsp;
+también esta otra animación de latido de colores&nbsp;&nbsp;
+
+00:03:45.560 --> 00:03:51.920
+que podemos elegir, personalizar el color y&nbsp;
+se guardará como local storage* para la próxima vez&nbsp;&nbsp;
+
+00:03:51.920 --> 00:03:58.240
+que abramos el navegador se abrirá con el color&nbsp;
+que hayamos elegido. Y aquí abajo en el footer,&nbsp;&nbsp;
+
+00:03:58.240 --> 00:04:03.120
+pues tenemos la política de privacidad, la&nbsp;
+accesibilidad, términos de uso y contacto que&nbsp;&nbsp;
+
+00:04:03.120 --> 00:04:09.120
+están desarrollados y lo podréis ver. Así que&nbsp;
+esta sería nuestra aplicación. Muchas gracias
+
