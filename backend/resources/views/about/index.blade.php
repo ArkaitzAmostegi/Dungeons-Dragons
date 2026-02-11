@@ -39,5 +39,27 @@
                     style="border: 2px solid var(--color-secondary-container);">
             </iframe>
         </div>
+        <div class="flex justify-center mt-6">
+            <video
+                class="rounded-lg shadow-lg w-full max-w-2xl"
+                style="border: 2px solid var(--color-secondary-container);"
+                controls
+                preload="metadata"
+            >
+                <source src="{{ asset('videos/DockerRaids.mp4') }}" type="video/mp4">
+
+                {{-- Subtítulos en español (por defecto) --}}
+                <track
+                    src="{{ asset('subtitles/DockerRaids.vtt') }}"
+                    kind="subtitles"
+                    srclang="es"
+                    label="Español"
+                    default
+                >
+
+                Tu navegador no soporta el elemento video.
+            </video>
+        </div>
+
     </div>
 </x-app-layout>
